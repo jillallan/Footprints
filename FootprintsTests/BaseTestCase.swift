@@ -10,11 +10,11 @@ import XCTest
 @testable import Footprints
 
 final class BaseTestCase: XCTestCase {
-    var container: MockJournalDataContainer!
+    var container: MockDataContainer!
     var modelContext: ModelContext!
 
-    override func setUpWithError() throws {
-        container = MockJournalDataContainer(inMemory: true)
+    @MainActor override func setUpWithError() throws {
+        container = MockDataContainer(inMemory: true)
         modelContext = container.container.mainContext
     }
 
