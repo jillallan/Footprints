@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import Journal
+@testable import Footprints
 
 final class StringExtensionTests: XCTestCase {
     

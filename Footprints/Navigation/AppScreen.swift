@@ -13,7 +13,7 @@ import SwiftUI
 // This way we can reference them in those views
 // instead of declaring them twice
 
-enum AppScreen: Codable, Hashable, Identifiable, CaseIterable {
+enum AppScreen: String, Codable, Hashable, Identifiable, CaseIterable {
     case trips
     case steps
     case placemarks

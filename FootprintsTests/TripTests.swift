@@ -5,31 +5,46 @@
 //  Created by Jill Allan on 27/10/2023.
 //
 
+import SwiftData
 import XCTest
+@testable import Footprints
 
-final class TripTests: XCTestCase {
+final class TripTests: BaseTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    @MainActor override func setUpWithError() throws {
+        try super.setUpWithError()
+        
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        try super.tearDownWithError()
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    func testTrip_AddTrip_AddsTrip() throws {
+        let descriptor = FetchDescriptor<Trip>()
+        let trips = try modelContext.fetchCount(descriptor)
+        
+        XCTAssertEqual(trips, 0)
+        
+        modelContext.insert(Trip.bedminsterToBeijing)
+        let tripsCount = try modelContext.fetchCount(descriptor)
+        
+        XCTAssertEqual(tripsCount, 1)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testTrip_ChangeTitle_ChangesDebugDescription() {
+        // if
+        let trip = Trip.bedminsterToBeijing
+        modelContext.insert(trip)
+        
+        let randomWord = String.randomWord()
+        
+        // when
+        trip.title = randomWord
+        let newDebugDescription = trip.debugDescription
+        
+        // then
+        XCTAssertNotEqual(newDebugDescription, randomWord)
     }
 
 }

@@ -9,7 +9,7 @@ import SwiftData
 import XCTest
 @testable import Footprints
 
-final class BaseTestCase: XCTestCase {
+class BaseTestCase: XCTestCase {
     var container: MockDataContainer!
     var modelContext: ModelContext!
 
