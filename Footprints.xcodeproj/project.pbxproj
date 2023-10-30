@@ -38,6 +38,10 @@
 		78709C872AEC04F700E53D1C /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78709C862AEC04F700E53D1C /* StringExtensionTests.swift */; };
 		78DAEB742AED168F004350D7 /* NavigationUITests_Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DAEB732AED168F004350D7 /* NavigationUITests_Mac.swift */; };
 		78DAEB762AED168F004350D7 /* FootprintsUITests_MacLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DAEB752AED168F004350D7 /* FootprintsUITests_MacLaunchTests.swift */; };
+		78E7C8A52AF042CB00450A0E /* TripDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E7C8A42AF042CB00450A0E /* TripDetailView.swift */; };
+		78E7C8A72AF0440B00450A0E /* SampleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E7C8A62AF0440B00450A0E /* SampleContainer.swift */; };
+		78E7C8A92AF045B100450A0E /* SampleDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E7C8A82AF045B100450A0E /* SampleDataGenerator.swift */; };
+		78E7C8AB2AF0469300450A0E /* ModelPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E7C8AA2AF0469300450A0E /* ModelPreview.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +107,10 @@
 		78DAEB752AED168F004350D7 /* FootprintsUITests_MacLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootprintsUITests_MacLaunchTests.swift; sourceTree = "<group>"; };
 		78DAEB7C2AED17A0004350D7 /* TestPlan (macOS).xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "TestPlan (macOS).xctestplan"; sourceTree = "<group>"; };
 		78DAEB7D2AED17BF004350D7 /* TestPlan (iOS).xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "TestPlan (iOS).xctestplan"; sourceTree = "<group>"; };
+		78E7C8A42AF042CB00450A0E /* TripDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailView.swift; sourceTree = "<group>"; };
+		78E7C8A62AF0440B00450A0E /* SampleContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleContainer.swift; sourceTree = "<group>"; };
+		78E7C8A82AF045B100450A0E /* SampleDataGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDataGenerator.swift; sourceTree = "<group>"; };
+		78E7C8AA2AF0469300450A0E /* ModelPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPreview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,6 +247,7 @@
 			children = (
 				782D637A2AEBE51400C1C48A /* TripView.swift */,
 				781448ED2AEC3D7200090E89 /* AddTripView.swift */,
+				78E7C8A42AF042CB00450A0E /* TripDetailView.swift */,
 				78709C752AEC014100E53D1C /* Trip.swift */,
 			);
 			path = Trips;
@@ -248,6 +257,9 @@
 			isa = PBXGroup;
 			children = (
 				78709C7B2AEC02E700E53D1C /* Trip-SampleData.swift */,
+				78E7C8A62AF0440B00450A0E /* SampleContainer.swift */,
+				78E7C8AA2AF0469300450A0E /* ModelPreview.swift */,
+				78E7C8A82AF045B100450A0E /* SampleDataGenerator.swift */,
 			);
 			path = "Sample Data";
 			sourceTree = "<group>";
@@ -424,6 +436,8 @@
 			files = (
 				78709C852AEC04E600E53D1C /* String+Extension.swift in Sources */,
 				782D63762AEBE4C200C1C48A /* AppDetailColumn.swift in Sources */,
+				78E7C8A52AF042CB00450A0E /* TripDetailView.swift in Sources */,
+				78E7C8A92AF045B100450A0E /* SampleDataGenerator.swift in Sources */,
 				782D63812AEBE51400C1C48A /* StatisticsView.swift in Sources */,
 				782D63822AEBE51400C1C48A /* PlacemarkView.swift in Sources */,
 				782D63372AEBDF0500C1C48A /* ContentView.swift in Sources */,
@@ -437,6 +451,8 @@
 				782D63752AEBE4C200C1C48A /* AppSidebarList.swift in Sources */,
 				782D63832AEBE51400C1C48A /* StepView.swift in Sources */,
 				782D63782AEBE4C200C1C48A /* AppTabView.swift in Sources */,
+				78E7C8AB2AF0469300450A0E /* ModelPreview.swift in Sources */,
+				78E7C8A72AF0440B00450A0E /* SampleContainer.swift in Sources */,
 				782D63352AEBDF0500C1C48A /* FootprintsApp.swift in Sources */,
 				782D63772AEBE4C200C1C48A /* AppScreen.swift in Sources */,
 			);
