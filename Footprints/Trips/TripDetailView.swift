@@ -6,6 +6,7 @@
 //
 
 import MapKit
+import SwiftData
 import SwiftUI
 
 struct TripDetailView: View {
@@ -17,14 +18,19 @@ struct TripDetailView: View {
                 
             }
             .navigationTitle(trip.title)
+#if os(iOS)
             .toolbarBackground(.hidden, for: .navigationBar)
+            .toolbar(.hidden, for: .tabBar)
+#endif
     }
 }
 
 #Preview {
-    ModelPreview {
-        NavigationStack {
-            TripDetailView(trip: .bedminsterToBeijing)
+    ModelPreview(SampleContainer.sample) {
+        TabView {
+            NavigationStack {
+                TripDetailView(trip: .bedminsterToBeijing)
+            }
         }
     }
 }

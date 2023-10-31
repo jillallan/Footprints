@@ -9,6 +9,7 @@ import SwiftData
 import SwiftUI
 
 struct TripView: View {
+    @Environment(\.modelContext) private var modelContext
     @Query var trips: [Trip]
     @State var navPath = NavigationPath()
     
@@ -18,7 +19,9 @@ struct TripView: View {
         NavigationStack(path: $navPath) {
             List {
                 ForEach(trips) { trip in
-                    Text(trip.title)
+                    NavigationLink(value: trip) {
+                        Text(trip.title)
+                    }
                 }
             }
             .navigationTitle(AppScreen.trips.rawValue.capitalized)
@@ -32,26 +35,29 @@ struct TripView: View {
                 }
                 ToolbarItem {
                     Button("Samples") {
-                        createData()
+                        Task {
+                            await createData()
+                        }
+                        
                     }
                 }
             }
             .navigationDestination(for: Trip.self) { trip in
-                
+                TripDetailView(trip: trip)
             }
             .sheet(isPresented: $isAddTripViewPresented) {
                 AddTripView(navigationPath: $navPath)
             }
         }
     }
-    func createData() {
-
+    func createData() async {
+        await SampleDataGenerator.generateSampleData(modelContext: modelContext)
     }
 }
 
 #Preview {
     NavigationStack {
         TripView()
-            .modelContainer(for: Trip.self, inMemory: true)
+            .modelContainer(SampleContainer.sample())
     }
 }

@@ -8,8 +8,9 @@
 import Foundation
 import SwiftData
 
+
 struct SampleDataGenerator {
-    static func generateSampleData(modelContext: ModelContext) async {
+    @MainActor static func generateSampleData(modelContext: ModelContext) async {
         modelContext.insert(Trip.bedminsterToBeijing)
         modelContext.insert(Trip.mountains)
     }

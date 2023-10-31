@@ -9,16 +9,19 @@ import Foundation
 import SwiftData
 
 struct SampleContainer {
-    let container: ModelContainer
-    
-    init(inMemory: Bool) {
+    static var sample: () -> ModelContainer = {
         do {
-            let configuration = ModelConfiguration(isStoredInMemoryOnly: inMemory)
-            container = try ModelContainer(for: Trip.self, configurations: configuration)
+            let schema = Schema([Trip.self])
+            let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+            let container = try ModelContainer(for: schema, configurations: [configuration])
+            Task { @MainActor in
+                await SampleDataGenerator.generateSampleData(modelContext: container.mainContext)
+//                container.mainContext.insert(Trip.bedminsterToBeijing)
+//                container.mainContext.insert(Trip.mountains)
+            }
+            return container
         } catch {
-            fatalError("Unable to load model container: \(error.localizedDescription)")
+            fatalError("Error loading SampleContainer")
         }
-        
-        print("Container initialized")
     }
 }
