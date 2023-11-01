@@ -33,6 +33,7 @@ struct TripView: View {
                         Label("Add trip", systemImage: "plus")
                     }
                 }
+                #if DEBUG
                 ToolbarItem {
                     Button("Samples") {
                         Task {
@@ -41,6 +42,7 @@ struct TripView: View {
                         
                     }
                 }
+                #endif
             }
             .navigationDestination(for: Trip.self) { trip in
                 TripDetailView(trip: trip)
@@ -50,9 +52,11 @@ struct TripView: View {
             }
         }
     }
+#if DEBUG
     func createData() async {
         await SampleDataGenerator.generateSampleData(modelContext: modelContext)
     }
+#endif
 }
 
 #Preview {

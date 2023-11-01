@@ -111,10 +111,10 @@ final class DateExtensionTests: XCTestCase {
         let randomDate = Date.randomBetween(start: startDate, end: endDate)
         
         // then
-//        assertBetweenDates(randomDate, between: startDate, and: endDate)
+        assertBetweenDates(randomDate, between: startDate, and: endDate)
         
-//        XCTAssertGreaterThanOrEqual(randomDate, startDate, "Random date: \(randomDate), should be greater than or equal to start date: \(startDate)")
-//        XCTAssertLessThanOrEqual(randomDate, endDate, "Random date: \(randomDate), should be less than or equal to end date: \(endDate)")
+        XCTAssertGreaterThanOrEqual(randomDate, startDate, "Random date: \(randomDate), should be greater than or equal to start date: \(startDate)")
+        XCTAssertLessThanOrEqual(randomDate, endDate, "Random date: \(randomDate), should be less than or equal to end date: \(endDate)")
     }
     
     func testDate_RandomDateWithDistantPast_returnsARandomDate() {

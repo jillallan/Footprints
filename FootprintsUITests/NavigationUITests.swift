@@ -22,25 +22,25 @@ final class NavigationUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testContentView_whenViewLoadsOnIOS_tabbarShouldBeHittable() throws {
-#if (iOS)
+    func testContentView_whenViewLoadsOnPhoneOrTV_tabbarShouldBeHittable() throws {
+//#if (iOS)
         if (UIDevice.current.userInterfaceIdiom == .phone || UIDevice.current.userInterfaceIdiom == .tv) {
             let tabBar = app.tabBars.firstMatch
             XCTAssert(tabBar.isHittable)
         }
-#endif
+//#endif
     }
     
-    func testContentView_whenViewLoadsOnmacOS_sidebarButtonShouldBeHittable() throws {
-#if (iOS)
+    func testContentView_whenViewLoadsOnIpad_sidebarButtonShouldBeHittable() throws {
+//#if (iOS)
         if (UIDevice.current.userInterfaceIdiom == .mac || UIDevice.current.userInterfaceIdiom == .pad) {
             let sidebar = app.navigationBars.buttons["ToggleSidebar"] //.element(matching: .button, identifier: "ToggleSidebar")
             XCTAssert(sidebar.isHittable)
         }
-#elseif os(macOS)
+//#elseif os(macOS)
         let sidebar = app.buttons["Hide Sidebar"]
         XCTAssert(sidebar.exists)
-#endif
+//#endif
     }
 
 

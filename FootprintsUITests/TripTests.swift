@@ -18,7 +18,7 @@ final class TripTests: XCTestCase {
 #if os(iOS)
         window = app.windows.firstMatch
 #elseif os(macOS)
-        window = app/*@START_MENU_TOKEN@*/.windows["Footprints.ContentView-1-AppWindow-1"]/*[[".windows[\"Trips\"]",".windows[\"Footprints.ContentView-1-AppWindow-1\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+        window = app/*@START_MENU_TOKEN@*/.windows["Trips"]/*[[".windows[\"Trips\"]",".windows[\"Footprints.ContentView-1-AppWindow-1\"]"],[[[-1,1],[-1,0]]],[1]]@END_MENU_TOKEN@*/
 #endif
         continueAfterFailure = false
 
@@ -28,21 +28,46 @@ final class TripTests: XCTestCase {
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
-    func testAddTripButton_whenTappedOrClicked_BringsUpAddTripSheet() throws {
+    
+    func testTripView_whenAddTripButtonTapped_BringsUpAddTripSheet() {
         let addTripButton = app.buttons["Add trip"].firstMatch
-        
-#if os(iOS)
         
         XCTAssert(addTripButton.isHittable)
         addTripButton.tap()
-#elseif os(macOS)
-
-        XCTAssert(addTripButton.exists)
-        addTripButton.click()
-#endif
 
         let addTripNavigationTitle = app.staticTexts["Add Trip"]
         XCTAssert(addTripNavigationTitle.exists)
+    }
+    
+    func testAddTripView_whenSaveButtonPressed_SavesTripAndOpensTripDetailView() throws {
+        let title = "Hello"
+       
+        addTrip(title: title, startDate: .now, endDate: .distantFuture)
+    }
+    
+    func addTrip(title: String, startDate: Date, endDate: Date) {
+        // launch add trip sheet
+        testTripView_whenAddTripButtonTapped_BringsUpAddTripSheet()
+
+        // get title text view, check it exists, tap to give it focus
+        // and enter title
+        let titleTextField = app.textViews["Title"]
+        XCTAssert(titleTextField.isHittable)
+        titleTextField.tap()
+        titleTextField.typeText(title)
+        
+        // get startDatePicker, check it exists, tap to open it
+//        let startDatePicker = app.datePickers.element(boundBy: 0)
+//        XCTAssert(startDatePicker.isHittable)
+//        startDatePicker.tap()
+//        
+//        pickDate(app: app, newDate: startDate)
+//        
+//        // get endDatePicker, check it exists, tap to open it
+//        let endDatePicker = app.datePickers.element(boundBy: 1)
+//        XCTAssert(endDatePicker.isHittable)
+//        endDatePicker.tap()
+//
+//        pickDate(app: app, newDate: startDate)
     }
 }

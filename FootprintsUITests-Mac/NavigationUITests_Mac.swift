@@ -23,4 +23,11 @@ final class NavigationUITests_Mac: XCTestCase {
         XCTAssert(sidebar.exists)
 
     }
+    
+    func testContentView_whenViewLoadsOnIpad_sidebarButtonShouldBeHittable() {
+        let sidebarToggleButton = app/*@START_MENU_TOKEN@*/.windows["Footprints.ContentView-1-AppWindow-1"]/*[[".windows[\"Trips\"]",".windows[\"Footprints.ContentView-1-AppWindow-1\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.toolbars.children(matching: .button)["Hide Sidebar"]
+        XCTAssert(sidebarToggleButton.isHittable)
+//        .click()
+        
+    }
 }

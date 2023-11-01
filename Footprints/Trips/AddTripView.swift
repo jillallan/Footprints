@@ -18,6 +18,14 @@ struct AddTripView: View {
     @State private var startDate = Date.now
     @State private var endDate = Date.now
     
+    var saveDisabled: Bool {
+        if title == "" {
+            true
+        } else {
+            false
+        }
+    }
+    
     var body: some View {
         NavigationStack {
             Form {
@@ -56,6 +64,7 @@ struct AddTripView: View {
                         addTrip()
                         dismiss()
                     }
+                    .disabled(saveDisabled)
                 }
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel", role: .cancel) {
