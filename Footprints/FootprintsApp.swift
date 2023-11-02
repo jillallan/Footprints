@@ -5,6 +5,7 @@
 //  Created by Jill Allan on 27/10/2023.
 //
 
+import SwiftData
 import SwiftUI
 
 @main
@@ -13,5 +14,6 @@ struct FootprintsApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: Trip.self, inMemory: true)
     }
 }
