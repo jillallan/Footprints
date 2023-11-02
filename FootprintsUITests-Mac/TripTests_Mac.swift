@@ -17,7 +17,7 @@ final class TripTests_Mac: XCTestCase {
     }
 
     func testTripView_whenAddTripButtonClicked_BringsUpAddTripSheet() {
-//        let addTripButton = app.buttons["Add trip"].firstMatch
+
         let addTripButton = app/*@START_MENU_TOKEN@*/.windows["Trips"]/*[[".windows[\"Trips\"]",".windows[\"Footprints.ContentView-1-AppWindow-1\"]"],[[[-1,1],[-1,0]]],[1]]@END_MENU_TOKEN@*/.toolbars.children(matching: .button)["Add trip"]
         
         XCTAssert(addTripButton.isHittable)
@@ -28,48 +28,48 @@ final class TripTests_Mac: XCTestCase {
         XCTAssert(addTripNavigationTitle.exists)
     }
     
-    func testAddTripView_whenSaveButtonPressed_SavesTripAndOpensTripDetailView() throws {
-        testTripView_whenAddTripButtonClicked_BringsUpAddTripSheet()
-        let title = "Hello"
-       
-        let titleTextField = app/*@START_MENU_TOKEN@*/.windows["Trips"]/*[[".windows[\"Trips\"]",".windows[\"Footprints.ContentView-1-AppWindow-1\"]"],[[[-1,1],[-1,0]]],[1]]@END_MENU_TOKEN@*/.sheets/*@START_MENU_TOKEN@*/.groups/*[[".scrollViews.groups",".groups"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.textFields["Title"]
-        XCTAssert(titleTextField.isHittable)
+    func testAddTripView_WhenSaveButtonPressed_MovesToTripDetailView() {
         
-        titleTextField.tap()
-        titleTextField.typeText(title)
+        testTripView_whenAddTripButtonClicked_BringsUpAddTripSheet()
+        
+        let title = String.randomWord()
+        let startDate = Date.randomBetween(start: "2020-01-01", end: "2023-01-01", format: "yyyy-MM-dd")
+        let endDate = Date.randomBetween(start: "2023-01-01", end: "2025-01-01", format: "yyyy-MM-dd")
+        
+        addTrip(title: title, startDate: startDate, endDate: endDate)
+        
+        let navigationBarTitle = app.windows[title].staticTexts[title]
+        print(navigationBarTitle)
+        
+        XCTAssert(navigationBarTitle.exists)
     }
     
-    func testExample() {
+    func addTrip(title: String, startDate: Date, endDate: Date) {
+        let startDateComponents = Calendar.current.dateComponents([.year, .month, .day], from: startDate)
+        let startDay = startDateComponents.day ?? 0
+        let startMonth = startDateComponents.month ?? 0
+        let startYear = startDateComponents.year ?? 0
         
-        let app = XCUIApplication()
-        let footprintsContentview1Appwindow1Window = app/*@START_MENU_TOKEN@*/.windows["Trips"]/*[[".windows[\"Trips\"]",".windows[\"Footprints.ContentView-1-AppWindow-1\"]"],[[[-1,1],[-1,0]]],[1]]@END_MENU_TOKEN@*/
-        footprintsContentview1Appwindow1Window/*@START_MENU_TOKEN@*/.outlines["Sidebar"]/*[[".splitGroups[\"Footprints.ContentView-1-AppWindow-1, SidebarNavigationSplitView\"]",".groups",".scrollViews.outlines[\"Sidebar\"]",".outlines[\"Sidebar\"]"],[[[-1,3],[-1,2],[-1,1,2],[-1,0,1]],[[-1,3],[-1,2],[-1,1,2]],[[-1,3],[-1,2]]],[0]]@END_MENU_TOKEN@*/.children(matching: .outlineRow).element(boundBy: 1).cells.containing(.button, identifier:"Steps").element.click()
+        let endDateComponents = Calendar.current.dateComponents([.year, .month, .day], from: endDate)
+        let endDay = endDateComponents.day ?? 0
+        let endMonth = endDateComponents.month ?? 0
+        let endYear = endDateComponents.year ?? 0
         
-        let footprintsContentview1Appwindow1Window2 = app/*@START_MENU_TOKEN@*/.windows["Footprints.ContentView-1-AppWindow-1"]/*[[".windows[\"Footprints\"]",".windows[\"Footprints.ContentView-1-AppWindow-1\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
-        footprintsContentview1Appwindow1Window2/*@START_MENU_TOKEN@*/.outlines["Sidebar"].buttons["Locations"]/*[[".splitGroups[\"Footprints.ContentView-1-AppWindow-1, SidebarNavigationSplitView\"]",".groups",".scrollViews.outlines[\"Sidebar\"]",".outlineRows",".cells.buttons[\"Locations\"]",".buttons[\"Locations\"]",".outlines[\"Sidebar\"]"],[[[-1,6,3],[-1,2,3],[-1,1,2],[-1,0,1]],[[-1,6,3],[-1,2,3],[-1,1,2]],[[-1,6,3],[-1,2,3]],[[-1,5],[-1,4],[-1,3,4]],[[-1,5],[-1,4]]],[0,0]]@END_MENU_TOKEN@*/.click()
-        footprintsContentview1Appwindow1Window2/*@START_MENU_TOKEN@*/.outlines["Sidebar"].buttons["Trips"]/*[[".splitGroups[\"Footprints.ContentView-1-AppWindow-1, SidebarNavigationSplitView\"]",".groups",".scrollViews.outlines[\"Sidebar\"]",".outlineRows",".cells.buttons[\"Trips\"]",".buttons[\"Trips\"]",".outlines[\"Sidebar\"]"],[[[-1,6,3],[-1,2,3],[-1,1,2],[-1,0,1]],[[-1,6,3],[-1,2,3],[-1,1,2]],[[-1,6,3],[-1,2,3]],[[-1,5],[-1,4],[-1,3,4]],[[-1,5],[-1,4]]],[0,0]]@END_MENU_TOKEN@*/.click()
-        
-        let addTripButton = footprintsContentview1Appwindow1Window.toolbars.children(matching: .button)["Add trip"].children(matching: .button)["Add trip"]
-        addTripButton.click()
-        
-        let tripsCell = footprintsContentview1Appwindow1Window/*@START_MENU_TOKEN@*/.outlines["Sidebar"].cells.containing(.button, identifier:"Trips").element/*[[".splitGroups[\"Footprints.ContentView-1-AppWindow-1, SidebarNavigationSplitView\"]",".groups",".scrollViews.outlines[\"Sidebar\"]",".outlineRows.cells.containing(.button, identifier:\"Trips\").element",".cells.containing(.button, identifier:\"Trips\").element",".outlines[\"Sidebar\"]"],[[[-1,5,3],[-1,2,3],[-1,1,2],[-1,0,1]],[[-1,5,3],[-1,2,3],[-1,1,2]],[[-1,5,3],[-1,2,3]],[[-1,4],[-1,3]]],[0,0]]@END_MENU_TOKEN@*/
-        tripsCell.typeText("New Trip")
-        
-        let sheetsQuery = footprintsContentview1Appwindow1Window.sheets
-        let saveButton = sheetsQuery/*@START_MENU_TOKEN@*/.buttons["Save"]/*[[".groups.buttons[\"Save\"]",".buttons[\"Save\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
-        saveButton.click()
-        app/*@START_MENU_TOKEN@*/.windows["Footprints.ContentView-1-AppWindow-1"].toolbars.buttons["Back"]/*[[".windows[\"New Trip\"].toolbars",".groups.buttons[\"Back\"]",".buttons[\"Back\"]",".windows[\"Footprints.ContentView-1-AppWindow-1\"].toolbars"],[[[-1,3,1],[-1,0,1]],[[-1,2],[-1,1]]],[0,0]]@END_MENU_TOKEN@*/.click()
-        addTripButton.click()
-        
-        let titleTextField = sheetsQuery/*@START_MENU_TOKEN@*/.groups/*[[".scrollViews.groups",".groups"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.textFields["Title"]
+        // Enter trip title
+        let titleTextField = app/*@START_MENU_TOKEN@*/.windows["Trips"]/*[[".windows[\"Trips\"]",".windows[\"Footprints.ContentView-1-AppWindow-1\"]"],[[[-1,1],[-1,0]]],[1]]@END_MENU_TOKEN@*/.sheets/*@START_MENU_TOKEN@*/.groups/*[[".scrollViews.groups",".groups"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.textFields["Title"]
+        XCTAssert(titleTextField.isHittable)
         titleTextField.click()
+        titleTextField.typeText(title)
+      
+        // Tab across to start date and enter start date
+        // then tab to end date and enter end date
         
-        let scrollViewsQuery = sheetsQuery/*@START_MENU_TOKEN@*/.scrollViews/*[[".groups.scrollViews",".scrollViews"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
-        scrollViewsQuery/*@START_MENU_TOKEN@*/.groups.containing(.staticText, identifier:"Start Date").element/*[[".groups.containing(.staticText, identifier:\"End Date\").element",".groups.containing(.staticText, identifier:\"Start Date\").element"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.click()
-        scrollViewsQuery/*@START_MENU_TOKEN@*/.groups.containing(.staticText, identifier:"Start Date")/*[[".groups.containing(.staticText, identifier:\"End Date\")",".groups.containing(.staticText, identifier:\"Start Date\")"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.children(matching: .datePicker).element(boundBy: 0).steppers.children(matching: .incrementArrow).element.click()
-        titleTextField.click()
-        tripsCell.typeText("New Trip2")
+        titleTextField.typeText("\t\(startDay)\t\(startMonth)\t\(startYear)\t\(endDay)\t\(endMonth)\t\(endYear)")
+        
+        let saveButton = app.windows["Trips"].sheets/*@START_MENU_TOKEN@*/.buttons["Save"]/*[[".groups.buttons[\"Save\"]",".buttons[\"Save\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+        XCTAssert(saveButton.isHittable)
         saveButton.click()
         
     }
+
 }

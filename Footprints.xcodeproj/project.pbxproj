@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		781448EC2AEC3C6200090E89 /* TripTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781448EB2AEC3C6200090E89 /* TripTests.swift */; };
+		7804E4422AF3D2C300C5E0CC /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7804E4412AF3D2C300C5E0CC /* ActivityView.swift */; };
+		781448EC2AEC3C6200090E89 /* TripTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781448EB2AEC3C6200090E89 /* TripTests.swift */; platformFilter = ios; };
 		781448EE2AEC3D7200090E89 /* AddTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781448ED2AEC3D7200090E89 /* AddTripView.swift */; };
 		782D63352AEBDF0500C1C48A /* FootprintsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D63342AEBDF0500C1C48A /* FootprintsApp.swift */; };
 		782D63372AEBDF0500C1C48A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D63362AEBDF0500C1C48A /* ContentView.swift */; };
@@ -37,6 +38,14 @@
 		78709C852AEC04E600E53D1C /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78709C842AEC04E600E53D1C /* String+Extension.swift */; };
 		78709C872AEC04F700E53D1C /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78709C862AEC04F700E53D1C /* StringExtensionTests.swift */; };
 		7870EC022AF28B7200080EE3 /* TripTests_Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7870EC012AF28B7200080EE3 /* TripTests_Mac.swift */; };
+		7870EC032AF2900E00080EE3 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78709C842AEC04E600E53D1C /* String+Extension.swift */; };
+		7870EC042AF2900F00080EE3 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78709C842AEC04E600E53D1C /* String+Extension.swift */; };
+		7870EC052AF2901100080EE3 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78709C7E2AEC034000E53D1C /* Date+Extension.swift */; };
+		7870EC062AF2901200080EE3 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78709C7E2AEC034000E53D1C /* Date+Extension.swift */; };
+		7870EC082AF290E600080EE3 /* CalendarPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7870EC072AF290E600080EE3 /* CalendarPicker.swift */; platformFilter = ios; };
+		7870EC0A2AF2913300080EE3 /* DateFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7870EC092AF2913300080EE3 /* DateFormatter+Extension.swift */; };
+		7870EC0B2AF2913A00080EE3 /* DateFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7870EC092AF2913300080EE3 /* DateFormatter+Extension.swift */; };
+		7870EC0C2AF2913A00080EE3 /* DateFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7870EC092AF2913300080EE3 /* DateFormatter+Extension.swift */; };
 		78DAEB742AED168F004350D7 /* NavigationUITests_Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DAEB732AED168F004350D7 /* NavigationUITests_Mac.swift */; };
 		78DAEB762AED168F004350D7 /* FootprintsUITests_MacLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DAEB752AED168F004350D7 /* FootprintsUITests_MacLaunchTests.swift */; };
 		78E7C8A52AF042CB00450A0E /* TripDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E7C8A42AF042CB00450A0E /* TripDetailView.swift */; };
@@ -70,6 +79,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7804E4412AF3D2C300C5E0CC /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		781448EB2AEC3C6200090E89 /* TripTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTests.swift; sourceTree = "<group>"; };
 		781448ED2AEC3D7200090E89 /* AddTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTripView.swift; sourceTree = "<group>"; };
 		782D63312AEBDF0500C1C48A /* Footprints.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Footprints.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,6 +114,8 @@
 		78709C842AEC04E600E53D1C /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		78709C862AEC04F700E53D1C /* StringExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
 		7870EC012AF28B7200080EE3 /* TripTests_Mac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTests_Mac.swift; sourceTree = "<group>"; };
+		7870EC072AF290E600080EE3 /* CalendarPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPicker.swift; sourceTree = "<group>"; };
+		7870EC092AF2913300080EE3 /* DateFormatter+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extension.swift"; sourceTree = "<group>"; };
 		78DAEB712AED168F004350D7 /* FootprintsUITests-Mac.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FootprintsUITests-Mac.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78DAEB732AED168F004350D7 /* NavigationUITests_Mac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationUITests_Mac.swift; sourceTree = "<group>"; };
 		78DAEB752AED168F004350D7 /* FootprintsUITests_MacLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootprintsUITests_MacLaunchTests.swift; sourceTree = "<group>"; };
@@ -218,6 +230,7 @@
 			children = (
 				782D63502AEBDF0600C1C48A /* NavigationUITests.swift */,
 				781448EB2AEC3C6200090E89 /* TripTests.swift */,
+				7870EC072AF290E600080EE3 /* CalendarPicker.swift */,
 				782D63522AEBDF0600C1C48A /* FootprintsUITestsLaunchTests.swift */,
 			);
 			path = FootprintsUITests;
@@ -226,6 +239,7 @@
 		782D63612AEBE1B300C1C48A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				7870EC092AF2913300080EE3 /* DateFormatter+Extension.swift */,
 				78709C842AEC04E600E53D1C /* String+Extension.swift */,
 				78709C7E2AEC034000E53D1C /* Date+Extension.swift */,
 				782D635F2AEBE19100C1C48A /* EnvironmentalValues+Extension.swift */,
@@ -250,6 +264,7 @@
 				782D637A2AEBE51400C1C48A /* TripView.swift */,
 				781448ED2AEC3D7200090E89 /* AddTripView.swift */,
 				78E7C8A42AF042CB00450A0E /* TripDetailView.swift */,
+				7804E4412AF3D2C300C5E0CC /* ActivityView.swift */,
 				78709C752AEC014100E53D1C /* Trip.swift */,
 			);
 			path = Trips;
@@ -455,8 +470,10 @@
 				782D63832AEBE51400C1C48A /* StepView.swift in Sources */,
 				782D63782AEBE4C200C1C48A /* AppTabView.swift in Sources */,
 				78E7C8AB2AF0469300450A0E /* ModelPreview.swift in Sources */,
+				7804E4422AF3D2C300C5E0CC /* ActivityView.swift in Sources */,
 				78E7C8A72AF0440B00450A0E /* SampleContainer.swift in Sources */,
 				782D63352AEBDF0500C1C48A /* FootprintsApp.swift in Sources */,
+				7870EC0A2AF2913300080EE3 /* DateFormatter+Extension.swift in Sources */,
 				782D63772AEBE4C200C1C48A /* AppScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -478,7 +495,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7870EC052AF2901100080EE3 /* Date+Extension.swift in Sources */,
+				7870EC032AF2900E00080EE3 /* String+Extension.swift in Sources */,
 				782D63532AEBDF0600C1C48A /* FootprintsUITestsLaunchTests.swift in Sources */,
+				7870EC0B2AF2913A00080EE3 /* DateFormatter+Extension.swift in Sources */,
+				7870EC082AF290E600080EE3 /* CalendarPicker.swift in Sources */,
 				781448EC2AEC3C6200090E89 /* TripTests.swift in Sources */,
 				782D63512AEBDF0600C1C48A /* NavigationUITests.swift in Sources */,
 			);
@@ -488,6 +509,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7870EC062AF2901200080EE3 /* Date+Extension.swift in Sources */,
+				7870EC042AF2900F00080EE3 /* String+Extension.swift in Sources */,
+				7870EC0C2AF2913A00080EE3 /* DateFormatter+Extension.swift in Sources */,
 				7870EC022AF28B7200080EE3 /* TripTests_Mac.swift in Sources */,
 				78DAEB762AED168F004350D7 /* FootprintsUITests_MacLaunchTests.swift in Sources */,
 				78DAEB742AED168F004350D7 /* NavigationUITests_Mac.swift in Sources */,
