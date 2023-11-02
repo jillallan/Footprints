@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7804E4422AF3D2C300C5E0CC /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7804E4412AF3D2C300C5E0CC /* ActivityView.swift */; };
+		7804E4422AF3D2C300C5E0CC /* ActivityScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7804E4412AF3D2C300C5E0CC /* ActivityScrollView.swift */; };
 		781448EC2AEC3C6200090E89 /* TripTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781448EB2AEC3C6200090E89 /* TripTests.swift */; platformFilter = ios; };
 		781448EE2AEC3D7200090E89 /* AddTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781448ED2AEC3D7200090E89 /* AddTripView.swift */; };
 		782D63352AEBDF0500C1C48A /* FootprintsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D63342AEBDF0500C1C48A /* FootprintsApp.swift */; };
@@ -79,7 +79,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7804E4412AF3D2C300C5E0CC /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
+		7804E4412AF3D2C300C5E0CC /* ActivityScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityScrollView.swift; sourceTree = "<group>"; };
 		781448EB2AEC3C6200090E89 /* TripTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTests.swift; sourceTree = "<group>"; };
 		781448ED2AEC3D7200090E89 /* AddTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTripView.swift; sourceTree = "<group>"; };
 		782D63312AEBDF0500C1C48A /* Footprints.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Footprints.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -264,7 +264,7 @@
 				782D637A2AEBE51400C1C48A /* TripView.swift */,
 				781448ED2AEC3D7200090E89 /* AddTripView.swift */,
 				78E7C8A42AF042CB00450A0E /* TripDetailView.swift */,
-				7804E4412AF3D2C300C5E0CC /* ActivityView.swift */,
+				7804E4412AF3D2C300C5E0CC /* ActivityScrollView.swift */,
 				78709C752AEC014100E53D1C /* Trip.swift */,
 			);
 			path = Trips;
@@ -470,7 +470,7 @@
 				782D63832AEBE51400C1C48A /* StepView.swift in Sources */,
 				782D63782AEBE4C200C1C48A /* AppTabView.swift in Sources */,
 				78E7C8AB2AF0469300450A0E /* ModelPreview.swift in Sources */,
-				7804E4422AF3D2C300C5E0CC /* ActivityView.swift in Sources */,
+				7804E4422AF3D2C300C5E0CC /* ActivityScrollView.swift in Sources */,
 				78E7C8A72AF0440B00450A0E /* SampleContainer.swift in Sources */,
 				782D63352AEBDF0500C1C48A /* FootprintsApp.swift in Sources */,
 				7870EC0A2AF2913300080EE3 /* DateFormatter+Extension.swift in Sources */,

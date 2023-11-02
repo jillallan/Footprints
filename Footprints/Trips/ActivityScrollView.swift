@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ActivityView: View {
+struct ActivityScrollView: View {
 //    @Bindable var trip: Trip
     let trip: Trip
     
@@ -21,14 +21,33 @@ struct ActivityView: View {
                             systemImage: "map",
                             description: Text("No step add your first step")
                         )
+                        .background(.regularMaterial)
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                        .aspectRatio(1.5, contentMode: .fit)
+                        .clipShape(RoundedRectangle(cornerRadius: 25.0, style: .circular))
+                        .containerRelativeFrame([.horizontal], count: 1, spacing: 0.0)
+                        
                         // TODO: Actvities
                     } header: {
+                        
+                        VStack {
+                            Text("Trip Start")
+                        }
+                        
+                        .background(.ultraThickMaterial)
+                        
                         
                         // TODO: Trip Overview
                     } footer: {
                         
+                        VStack {
+                            Text("Trip End")
+                        }
+                        .background(.regularMaterial)
                     }
                 }
+                
+
             }
         }
     }
@@ -37,7 +56,7 @@ struct ActivityView: View {
 #Preview {
     ModelPreview(SampleContainer.sample) {
         NavigationStack {
-            ActivityView(trip: .bedminsterToBeijing)
+            ActivityScrollView(trip: .bedminsterToBeijing)
         }
     }
 }

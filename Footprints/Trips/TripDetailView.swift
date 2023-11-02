@@ -13,15 +13,18 @@ struct TripDetailView: View {
     @Bindable var trip: Trip
     
     var body: some View {
-        Map()
-            .safeAreaInset(edge: .bottom) {
-                
-            }
-            .navigationTitle(trip.title)
-#if os(iOS)
-            .toolbarBackground(.hidden, for: .navigationBar)
-            .toolbar(.hidden, for: .tabBar)
+        GeometryReader { geometry in
+            Map()
+                .safeAreaInset(edge: .bottom) {
+                    ActivityScrollView(trip: trip)
+                        .frame(height: geometry.size.width / 1.5)
+                }
+                .navigationTitle(trip.title)
+    #if os(iOS)
+                .toolbarBackground(.hidden, for: .navigationBar)
+                .toolbar(.hidden, for: .tabBar)
 #endif
+        }
     }
 }
 
