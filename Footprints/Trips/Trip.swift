@@ -15,9 +15,15 @@ final class Trip {
     var startDate: Date
     var endDate: Date
     
+    var steps: [Step]?
+    
     // MARK: - Computed Properties
     var debugDescription: String {
         "Trip named: \(title)"
+    }
+    
+    var tripSteps: [Step] {
+        steps ?? []
     }
     
     // MARK: - Initialization

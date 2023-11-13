@@ -45,7 +45,7 @@ struct TripView: View {
                 #endif
             }
             .navigationDestination(for: Trip.self) { trip in
-                TripDetailView(trip: trip)
+                TripDetailView(trip: trip, navigationPath: $navPath)
             }
             .sheet(isPresented: $isAddTripViewPresented) {
                 AddTripView(navigationPath: $navPath)

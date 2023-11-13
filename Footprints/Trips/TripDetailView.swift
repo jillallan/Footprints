@@ -11,18 +11,22 @@ import SwiftUI
 
 struct TripDetailView: View {
     @Bindable var trip: Trip
+    @Binding var navigationPath: NavigationPath
+    @State private var width: CGFloat = .zero
     
     var body: some View {
         GeometryReader { geometry in
             Map()
                 .safeAreaInset(edge: .bottom) {
-                    ActivityScrollView(trip: trip)
-                        .frame(height: geometry.size.width / 1.5)
+                    ActivityScroll(trip: trip, navigationPath: $navigationPath)
                 }
                 .navigationTitle(trip.title)
     #if os(iOS)
                 .toolbarBackground(.hidden, for: .navigationBar)
                 .toolbar(.hidden, for: .tabBar)
+                .task(id: geometry.size.width) {
+                    width = geometry.size.width
+                }
 #endif
         }
     }
@@ -32,7 +36,7 @@ struct TripDetailView: View {
     ModelPreview(SampleContainer.sample) {
         TabView {
             NavigationStack {
-                TripDetailView(trip: .bedminsterToBeijing)
+                TripDetailView(trip: .bedminsterToBeijing, navigationPath: .constant(NavigationPath()))
             }
         }
     }
