@@ -12,18 +12,24 @@ struct ActivityScroll: View {
     @Binding var navigationPath: NavigationPath
     @State var width: CGFloat = .zero
     
+    var scrollAxis: Axis.Set {
+        .vertical
+    }
+    
     var body: some View {
 
-        ScrollView(.horizontal) {
-            LazyHStack {
+        ScrollView(scrollAxis) {
+            LazyStack(axes: scrollAxis) {
+//            LazyHStack {
                 ForEach([trip]) { trip in
                     Section {
                         if trip.tripSteps.isEmpty {
                             AddFirstStepCard()
                         } else {
-                            StepCard(image: UIImage(resource: .beach))
+                            ForEach(trip.tripSteps) { step in
+                                StepCard(image: UIImage(resource: .beach))
+                            }
                         }
-                        
                     } header: {
                         TripSummaryCard()
                     } footer: {
@@ -31,7 +37,7 @@ struct ActivityScroll: View {
                     }
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 25.0, style: .circular))
-                .containerRelativeFrame([.horizontal], count: 1, spacing: 0.0)
+                .containerRelativeFrame([scrollAxis], count: 1, spacing: 0.0)
             }
         }
         .getWidth($width)
@@ -39,12 +45,25 @@ struct ActivityScroll: View {
     }
 }
 
-#Preview {
+#Preview("Trip with steps") {
     ModelPreview(SampleContainer.sample) {
         GeometryReader { geometry in
             NavigationStack {
                 ActivityScroll(
                     trip: .bedminsterToBeijing, 
+                    navigationPath: .constant(NavigationPath())
+                )
+            }
+        }
+    }
+}
+
+#Preview("Trip with no steps") {
+    ModelPreview(SampleContainer.sample) {
+        GeometryReader { geometry in
+            NavigationStack {
+                ActivityScroll(
+                    trip: .mountains,
                     navigationPath: .constant(NavigationPath())
                 )
             }

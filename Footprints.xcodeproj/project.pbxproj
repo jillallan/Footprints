@@ -36,6 +36,9 @@
 		785FDB1E2B01689F00B1BF0E /* StepCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785FDB1D2B01689F00B1BF0E /* StepCard.swift */; };
 		785FDB202B02712800B1BF0E /* TripSummaryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785FDB1F2B02712800B1BF0E /* TripSummaryCard.swift */; };
 		785FDB222B02717600B1BF0E /* TripStatisticsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785FDB212B02717600B1BF0E /* TripStatisticsCard.swift */; };
+		785FDB242B02734E00B1BF0E /* Step-SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785FDB232B02734E00B1BF0E /* Step-SampleData.swift */; };
+		785FDB272B02D04100B1BF0E /* ActivityLazyStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785FDB262B02D04100B1BF0E /* ActivityLazyStack.swift */; };
+		785FDB292B02D09600B1BF0E /* LazyStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785FDB282B02D09600B1BF0E /* LazyStack.swift */; };
 		78709C762AEC014100E53D1C /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78709C752AEC014100E53D1C /* Trip.swift */; };
 		78709C782AEC020100E53D1C /* BaseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78709C772AEC020100E53D1C /* BaseTestCase.swift */; };
 		78709C7A2AEC025C00E53D1C /* MockDataContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78709C792AEC025C00E53D1C /* MockDataContainer.swift */; };
@@ -120,6 +123,9 @@
 		785FDB1D2B01689F00B1BF0E /* StepCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCard.swift; sourceTree = "<group>"; };
 		785FDB1F2B02712800B1BF0E /* TripSummaryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSummaryCard.swift; sourceTree = "<group>"; };
 		785FDB212B02717600B1BF0E /* TripStatisticsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripStatisticsCard.swift; sourceTree = "<group>"; };
+		785FDB232B02734E00B1BF0E /* Step-SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Step-SampleData.swift"; sourceTree = "<group>"; };
+		785FDB262B02D04100B1BF0E /* ActivityLazyStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityLazyStack.swift; sourceTree = "<group>"; };
+		785FDB282B02D09600B1BF0E /* LazyStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyStack.swift; sourceTree = "<group>"; };
 		78709C752AEC014100E53D1C /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		78709C772AEC020100E53D1C /* BaseTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTestCase.swift; sourceTree = "<group>"; };
 		78709C792AEC025C00E53D1C /* MockDataContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataContainer.swift; sourceTree = "<group>"; };
@@ -209,6 +215,7 @@
 				782D637C2AEBE51400C1C48A /* StatisticsView.swift */,
 				782D637E2AEBE51400C1C48A /* StepView.swift */,
 				785FC2E92AEBF916004F32BF /* Trips */,
+				785FDB252B02D01300B1BF0E /* Activity */,
 				782D63792AEBE4C700C1C48A /* Navigation */,
 				782D63612AEBE1B300C1C48A /* Extensions */,
 				782D63382AEBDF0600C1C48A /* Assets.xcassets */,
@@ -282,11 +289,10 @@
 				781448ED2AEC3D7200090E89 /* AddTripView.swift */,
 				78E7C8A42AF042CB00450A0E /* TripDetailView.swift */,
 				7804E4412AF3D2C300C5E0CC /* ActivityScrollView.swift */,
-				785FDB152AFE75D600B1BF0E /* ActivityScroll.swift */,
+				785FDB1F2B02712800B1BF0E /* TripSummaryCard.swift */,
 				785FDB212B02717600B1BF0E /* TripStatisticsCard.swift */,
 				785FDB1B2B0166D200B1BF0E /* AddFirstStepCard.swift */,
 				785FDB1D2B01689F00B1BF0E /* StepCard.swift */,
-				785FDB1F2B02712800B1BF0E /* TripSummaryCard.swift */,
 				7804E4432AF3E60F00C5E0CC /* StepDetailView.swift */,
 				78709C752AEC014100E53D1C /* Trip.swift */,
 				7804E4452AF3E75400C5E0CC /* Step.swift */,
@@ -294,10 +300,21 @@
 			path = Trips;
 			sourceTree = "<group>";
 		};
+		785FDB252B02D01300B1BF0E /* Activity */ = {
+			isa = PBXGroup;
+			children = (
+				785FDB152AFE75D600B1BF0E /* ActivityScroll.swift */,
+				785FDB282B02D09600B1BF0E /* LazyStack.swift */,
+				785FDB262B02D04100B1BF0E /* ActivityLazyStack.swift */,
+			);
+			path = Activity;
+			sourceTree = "<group>";
+		};
 		78709C7D2AEC02EC00E53D1C /* Sample Data */ = {
 			isa = PBXGroup;
 			children = (
 				78709C7B2AEC02E700E53D1C /* Trip-SampleData.swift */,
+				785FDB232B02734E00B1BF0E /* Step-SampleData.swift */,
 				78E7C8A62AF0440B00450A0E /* SampleContainer.swift */,
 				78E7C8AA2AF0469300450A0E /* ModelPreview.swift */,
 				78E7C8A82AF045B100450A0E /* SampleDataGenerator.swift */,
@@ -480,6 +497,7 @@
 				7804E4442AF3E60F00C5E0CC /* StepDetailView.swift in Sources */,
 				782D63762AEBE4C200C1C48A /* AppDetailColumn.swift in Sources */,
 				785FDB162AFE75D600B1BF0E /* ActivityScroll.swift in Sources */,
+				785FDB292B02D09600B1BF0E /* LazyStack.swift in Sources */,
 				78E7C8A52AF042CB00450A0E /* TripDetailView.swift in Sources */,
 				78E7C8A92AF045B100450A0E /* SampleDataGenerator.swift in Sources */,
 				782D63812AEBE51400C1C48A /* StatisticsView.swift in Sources */,
@@ -497,7 +515,9 @@
 				782D63832AEBE51400C1C48A /* StepView.swift in Sources */,
 				782D63782AEBE4C200C1C48A /* AppTabView.swift in Sources */,
 				78E7C8AB2AF0469300450A0E /* ModelPreview.swift in Sources */,
+				785FDB242B02734E00B1BF0E /* Step-SampleData.swift in Sources */,
 				7804E4422AF3D2C300C5E0CC /* ActivityScrollView.swift in Sources */,
+				785FDB272B02D04100B1BF0E /* ActivityLazyStack.swift in Sources */,
 				785FDB222B02717600B1BF0E /* TripStatisticsCard.swift in Sources */,
 				785FDB202B02712800B1BF0E /* TripSummaryCard.swift in Sources */,
 				78E7C8A72AF0440B00450A0E /* SampleContainer.swift in Sources */,

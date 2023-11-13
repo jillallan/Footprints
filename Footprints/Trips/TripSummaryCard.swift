@@ -14,7 +14,9 @@ struct TripSummaryCard: View {
                 .font(.largeTitle)
             Spacer()
         }
-        .frame(maxWidth: .infinity)
+//        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, maxHeight:  .infinity)
+        .padding()
         .background(.regularMaterial)
     }
 }
