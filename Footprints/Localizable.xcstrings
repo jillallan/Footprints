@@ -4,10 +4,19 @@
     "" : {
 
     },
+    "A 6 day trip to the Maldives" : {
+
+    },
+    "Add Step" : {
+
+    },
     "Add trip" : {
 
     },
     "Add Trip" : {
+
+    },
+    "Add your first step." : {
 
     },
     "Cancel" : {
@@ -35,6 +44,9 @@
           }
         }
       }
+    },
+    "No Steps Added Yet" : {
+
     },
     "Pick something from the list." : {
       "localizations" : {
@@ -86,6 +98,9 @@
       }
     },
     "Title" : {
+
+    },
+    "Trip End" : {
 
     },
     "Trips" : {

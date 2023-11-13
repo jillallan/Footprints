@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		7804E4422AF3D2C300C5E0CC /* ActivityScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7804E4412AF3D2C300C5E0CC /* ActivityScrollView.swift */; };
+		7804E4442AF3E60F00C5E0CC /* StepDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7804E4432AF3E60F00C5E0CC /* StepDetailView.swift */; };
+		7804E4462AF3E75400C5E0CC /* Step.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7804E4452AF3E75400C5E0CC /* Step.swift */; };
 		781448EC2AEC3C6200090E89 /* TripTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781448EB2AEC3C6200090E89 /* TripTests.swift */; platformFilter = ios; };
 		781448EE2AEC3D7200090E89 /* AddTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781448ED2AEC3D7200090E89 /* AddTripView.swift */; };
 		782D63352AEBDF0500C1C48A /* FootprintsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D63342AEBDF0500C1C48A /* FootprintsApp.swift */; };
@@ -28,6 +30,12 @@
 		782D63822AEBE51400C1C48A /* PlacemarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D637D2AEBE51400C1C48A /* PlacemarkView.swift */; };
 		782D63832AEBE51400C1C48A /* StepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D637E2AEBE51400C1C48A /* StepView.swift */; };
 		782D63852AEBEFEC00C1C48A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 782D63842AEBEFEC00C1C48A /* Localizable.xcstrings */; };
+		785FDB162AFE75D600B1BF0E /* ActivityScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785FDB152AFE75D600B1BF0E /* ActivityScroll.swift */; };
+		785FDB1A2AFE7D2700B1BF0E /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785FDB192AFE7D2700B1BF0E /* View+Extension.swift */; };
+		785FDB1C2B0166D200B1BF0E /* AddFirstStepCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785FDB1B2B0166D200B1BF0E /* AddFirstStepCard.swift */; };
+		785FDB1E2B01689F00B1BF0E /* StepCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785FDB1D2B01689F00B1BF0E /* StepCard.swift */; };
+		785FDB202B02712800B1BF0E /* TripSummaryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785FDB1F2B02712800B1BF0E /* TripSummaryCard.swift */; };
+		785FDB222B02717600B1BF0E /* TripStatisticsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785FDB212B02717600B1BF0E /* TripStatisticsCard.swift */; };
 		78709C762AEC014100E53D1C /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78709C752AEC014100E53D1C /* Trip.swift */; };
 		78709C782AEC020100E53D1C /* BaseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78709C772AEC020100E53D1C /* BaseTestCase.swift */; };
 		78709C7A2AEC025C00E53D1C /* MockDataContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78709C792AEC025C00E53D1C /* MockDataContainer.swift */; };
@@ -80,6 +88,8 @@
 
 /* Begin PBXFileReference section */
 		7804E4412AF3D2C300C5E0CC /* ActivityScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityScrollView.swift; sourceTree = "<group>"; };
+		7804E4432AF3E60F00C5E0CC /* StepDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepDetailView.swift; sourceTree = "<group>"; };
+		7804E4452AF3E75400C5E0CC /* Step.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step.swift; sourceTree = "<group>"; };
 		781448EB2AEC3C6200090E89 /* TripTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTests.swift; sourceTree = "<group>"; };
 		781448ED2AEC3D7200090E89 /* AddTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTripView.swift; sourceTree = "<group>"; };
 		782D63312AEBDF0500C1C48A /* Footprints.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Footprints.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,6 +114,12 @@
 		782D637D2AEBE51400C1C48A /* PlacemarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacemarkView.swift; sourceTree = "<group>"; };
 		782D637E2AEBE51400C1C48A /* StepView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepView.swift; sourceTree = "<group>"; };
 		782D63842AEBEFEC00C1C48A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		785FDB152AFE75D600B1BF0E /* ActivityScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityScroll.swift; sourceTree = "<group>"; };
+		785FDB192AFE7D2700B1BF0E /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
+		785FDB1B2B0166D200B1BF0E /* AddFirstStepCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFirstStepCard.swift; sourceTree = "<group>"; };
+		785FDB1D2B01689F00B1BF0E /* StepCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCard.swift; sourceTree = "<group>"; };
+		785FDB1F2B02712800B1BF0E /* TripSummaryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSummaryCard.swift; sourceTree = "<group>"; };
+		785FDB212B02717600B1BF0E /* TripStatisticsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripStatisticsCard.swift; sourceTree = "<group>"; };
 		78709C752AEC014100E53D1C /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		78709C772AEC020100E53D1C /* BaseTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTestCase.swift; sourceTree = "<group>"; };
 		78709C792AEC025C00E53D1C /* MockDataContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataContainer.swift; sourceTree = "<group>"; };
@@ -243,6 +259,7 @@
 				78709C842AEC04E600E53D1C /* String+Extension.swift */,
 				78709C7E2AEC034000E53D1C /* Date+Extension.swift */,
 				782D635F2AEBE19100C1C48A /* EnvironmentalValues+Extension.swift */,
+				785FDB192AFE7D2700B1BF0E /* View+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -265,7 +282,14 @@
 				781448ED2AEC3D7200090E89 /* AddTripView.swift */,
 				78E7C8A42AF042CB00450A0E /* TripDetailView.swift */,
 				7804E4412AF3D2C300C5E0CC /* ActivityScrollView.swift */,
+				785FDB152AFE75D600B1BF0E /* ActivityScroll.swift */,
+				785FDB212B02717600B1BF0E /* TripStatisticsCard.swift */,
+				785FDB1B2B0166D200B1BF0E /* AddFirstStepCard.swift */,
+				785FDB1D2B01689F00B1BF0E /* StepCard.swift */,
+				785FDB1F2B02712800B1BF0E /* TripSummaryCard.swift */,
+				7804E4432AF3E60F00C5E0CC /* StepDetailView.swift */,
 				78709C752AEC014100E53D1C /* Trip.swift */,
+				7804E4452AF3E75400C5E0CC /* Step.swift */,
 			);
 			path = Trips;
 			sourceTree = "<group>";
@@ -453,11 +477,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				78709C852AEC04E600E53D1C /* String+Extension.swift in Sources */,
+				7804E4442AF3E60F00C5E0CC /* StepDetailView.swift in Sources */,
 				782D63762AEBE4C200C1C48A /* AppDetailColumn.swift in Sources */,
+				785FDB162AFE75D600B1BF0E /* ActivityScroll.swift in Sources */,
 				78E7C8A52AF042CB00450A0E /* TripDetailView.swift in Sources */,
 				78E7C8A92AF045B100450A0E /* SampleDataGenerator.swift in Sources */,
 				782D63812AEBE51400C1C48A /* StatisticsView.swift in Sources */,
 				782D63822AEBE51400C1C48A /* PlacemarkView.swift in Sources */,
+				7804E4462AF3E75400C5E0CC /* Step.swift in Sources */,
 				782D63372AEBDF0500C1C48A /* ContentView.swift in Sources */,
 				781448EE2AEC3D7200090E89 /* AddTripView.swift in Sources */,
 				78709C7C2AEC02E700E53D1C /* Trip-SampleData.swift in Sources */,
@@ -471,10 +498,15 @@
 				782D63782AEBE4C200C1C48A /* AppTabView.swift in Sources */,
 				78E7C8AB2AF0469300450A0E /* ModelPreview.swift in Sources */,
 				7804E4422AF3D2C300C5E0CC /* ActivityScrollView.swift in Sources */,
+				785FDB222B02717600B1BF0E /* TripStatisticsCard.swift in Sources */,
+				785FDB202B02712800B1BF0E /* TripSummaryCard.swift in Sources */,
 				78E7C8A72AF0440B00450A0E /* SampleContainer.swift in Sources */,
+				785FDB1C2B0166D200B1BF0E /* AddFirstStepCard.swift in Sources */,
 				782D63352AEBDF0500C1C48A /* FootprintsApp.swift in Sources */,
 				7870EC0A2AF2913300080EE3 /* DateFormatter+Extension.swift in Sources */,
+				785FDB1A2AFE7D2700B1BF0E /* View+Extension.swift in Sources */,
 				782D63772AEBE4C200C1C48A /* AppScreen.swift in Sources */,
+				785FDB1E2B01689F00B1BF0E /* StepCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
