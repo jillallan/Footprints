@@ -12,6 +12,14 @@ extension View {
     func getWidth(_ width: Binding<CGFloat>) -> some View {
         modifier(getWidthModifier(width: width))
     }
+    
+    @ViewBuilder func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
+         if condition {
+             transform(self)
+         } else {
+             self
+         }
+     }
 }
 
 struct getWidthModifier: ViewModifier {
