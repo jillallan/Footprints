@@ -13,6 +13,10 @@ extension View {
         modifier(getWidthModifier(width: width))
     }
     
+    func getHeight(_ height: Binding<CGFloat>) -> some View {
+        modifier(getHeightModifier(height: height))
+    }
+    
     @ViewBuilder func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
          if condition {
              transform(self)
@@ -32,6 +36,22 @@ struct getWidthModifier: ViewModifier {
                     Color.clear
                         .task(id: geometry.size.width) {
                             $width.wrappedValue = max(proxyWidth, 0)
+                        }
+                }
+            )
+    }
+}
+
+struct getHeightModifier: ViewModifier {
+    @Binding var height: CGFloat
+    func body(content: Content) -> some View {
+        content
+            .background(
+                GeometryReader { geometry in
+                    let proxyHeight = geometry.size.height
+                    Color.clear
+                        .task(id: geometry.size.height) {
+                            $height.wrappedValue = max(proxyHeight, 0)
                         }
                 }
             )
