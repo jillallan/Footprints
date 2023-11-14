@@ -11,6 +11,7 @@ struct ActivityScroll: View {
     let trip: Trip
     @Binding var navigationPath: NavigationPath
     @State var width: CGFloat = .zero
+    @State var height: CGFloat = .zero
     
     var scrollAxis: Axis.Set {
         .vertical
@@ -20,7 +21,6 @@ struct ActivityScroll: View {
 
         ScrollView(scrollAxis) {
             LazyStack(axes: scrollAxis) {
-//            LazyHStack {
                 ForEach([trip]) { trip in
                     Section {
                         if trip.tripSteps.isEmpty {
@@ -41,7 +41,17 @@ struct ActivityScroll: View {
             }
         }
         .getWidth($width)
-        .frame(height: width / 1.5)
+        .getHeight($height)
+        .if(scrollAxis == .vertical) { view in
+            view
+                .frame(width: height)
+        }
+        .if(scrollAxis == .horizontal) { view in
+            view
+                .frame(height: width / 1.5)
+        }
+//        .frame(height: width / 1.5)
+//        .frame(width: height)
     }
 }
 
