@@ -12,7 +12,8 @@ import SwiftUI
 struct TripDetailView: View {
     @Bindable var trip: Trip
     @Binding var navigationPath: NavigationPath
-    @State private var width: CGFloat = .zero
+//    @State private var width: CGFloat = .zero // FIXME: Do I need these here
+//    @State private var height: CGFloat = .zero
     
     var activityScrollEdge: EdgeCustom {
         .leading
@@ -62,9 +63,12 @@ struct TripDetailView: View {
     #if os(iOS)
                 .toolbarBackground(.hidden, for: .navigationBar)
                 .toolbar(.hidden, for: .tabBar)
-                .task(id: geometry.size.width) {
-                    width = geometry.size.width
-                }
+//                .task(id: geometry.size.width) {
+//                    width = geometry.size.width
+//                }
+//                .task(id: geometry.size.height) {
+//                    height = geometry.size.height
+//                }
 #endif
         }
     }
