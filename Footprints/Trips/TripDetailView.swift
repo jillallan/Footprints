@@ -14,12 +14,50 @@ struct TripDetailView: View {
     @Binding var navigationPath: NavigationPath
     @State private var width: CGFloat = .zero
     
+    var activityScrollEdge: EdgeCustom {
+        .leading
+    }
+    
+    var verticleEdge: VerticalEdge? {
+        switch activityScrollEdge {
+        case .top:
+            return VerticalEdge.top
+        case .bottom:
+            return VerticalEdge.bottom
+        default:
+            return nil
+        }
+    }
+    
+    var horizontalEdge: HorizontalEdge? {
+        switch activityScrollEdge {
+        case .leading:
+            return HorizontalEdge.leading
+        case .trailing:
+            return HorizontalEdge.trailing
+        default:
+            return nil
+        }
+    }
+    
     var body: some View {
         GeometryReader { geometry in
             Map()
-                .safeAreaInset(edge: .bottom) {
-                    ActivityScroll(trip: trip, navigationPath: $navigationPath)
+                .if(verticleEdge != nil) { map in
+                    map.safeAreaInset(edge: verticleEdge ?? .top) {
+                        ActivityScroll(trip: trip, navigationPath: $navigationPath)
+                    }
                 }
+                .if(horizontalEdge != nil) { map in
+                    map.safeAreaInset(edge: horizontalEdge ?? .leading) {
+                        ActivityScroll(trip: trip, navigationPath: $navigationPath)
+                    }
+                }
+            
+            
+//                .safeAreaInset(edge: .bottom) {
+//                    ActivityScroll(trip: trip, navigationPath: $navigationPath)
+//                }
                 .navigationTitle(trip.title)
     #if os(iOS)
                 .toolbarBackground(.hidden, for: .navigationBar)
