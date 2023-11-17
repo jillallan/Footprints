@@ -17,7 +17,7 @@ extension View {
         modifier(getHeightModifier(height: height))
     }
     
-    func getAspectRatio(_ aspectRatio: Binding<Double>) -> some View {
+    func getAspectRatio(_ aspectRatio: Binding<AspectRatioTest>) -> some View {
         modifier(getAspectRatioModifier(aspectRatio: aspectRatio))
     }
     
@@ -68,6 +68,7 @@ enum AspectRatioTest {
     case square(aspectRatio: Double)
     case portrait(aspectRatio: Double)
     case tall(aspectRatio: Double)
+    case zero(AspectRatio: Double)
 }
 
 enum AspectRatio {
@@ -84,7 +85,7 @@ struct getAspectRatioModifier: ViewModifier {
                     let proxySize = geometry.size
                     Color.clear
                         .task(id: geometry.size) {
-                            let ratio = max(proxySize.height, 0) / max(proxySize.width, 0)
+                            let ratio = max(proxySize.width, 0) / max(proxySize.height, 0) 
                             switch ratio {
                             case 1.5...:
                                 $aspectRatio.wrappedValue = AspectRatioTest.wide(aspectRatio: ratio)
