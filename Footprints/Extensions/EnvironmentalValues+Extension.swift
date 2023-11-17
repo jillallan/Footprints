@@ -13,10 +13,19 @@ extension EnvironmentValues {
         get { self[PrefersTabNavigationEnvironmentKey.self] }
         set { self[PrefersTabNavigationEnvironmentKey.self] = newValue }
     }
+    
+    var aspectRatio:AspectRatioTest {
+        get { self[AspectRatioEnvironmentKey.self] }
+        set { self[AspectRatioEnvironmentKey.self] = newValue }
+    }
 }
 
 struct PrefersTabNavigationEnvironmentKey: EnvironmentKey {
     static var defaultValue: Bool = false
+}
+
+struct AspectRatioEnvironmentKey: EnvironmentKey {
+    static var defaultValue: AspectRatioTest = .zero(AspectRatio: 0.0)
 }
 
 #if os(iOS)

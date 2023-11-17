@@ -10,13 +10,25 @@ import SwiftData
 import SwiftUI
 
 struct TripDetailView: View {
+    @Environment(\.aspectRatio) private var aspectRatio
     @Bindable var trip: Trip
     @Binding var navigationPath: NavigationPath
-//    @State private var width: CGFloat = .zero // FIXME: Do I need these here
-//    @State private var height: CGFloat = .zero
     
     var activityScrollEdge: EdgeCustom {
-        .leading
+        switch aspectRatio {
+        case .wide(_):
+            return .leading
+        case .landscape(_):
+            return .leading
+        case .square(_):
+            return .bottom
+        case .portrait(_):
+            return .bottom
+        case .tall(_):
+            return .bottom
+        case .zero(AspectRatio: _):
+            return .bottom
+        }
     }
     
     var verticleEdge: VerticalEdge? {
@@ -42,35 +54,26 @@ struct TripDetailView: View {
     }
     
     var body: some View {
-        GeometryReader { geometry in
-            Map()
-                .if(verticleEdge != nil) { map in
-                    map.safeAreaInset(edge: verticleEdge ?? .top) {
-                        ActivityScroll(trip: trip, navigationPath: $navigationPath)
-                    }
+        Map()
+            .if(verticleEdge != nil) { map in
+                map.safeAreaInset(edge: verticleEdge ?? .top) {
+                    ActivityScroll(trip: trip, navigationPath: $navigationPath)
                 }
-                .if(horizontalEdge != nil) { map in
-                    map.safeAreaInset(edge: horizontalEdge ?? .leading) {
-                        ActivityScroll(trip: trip, navigationPath: $navigationPath)
-                    }
+            }
+        
+            .if(horizontalEdge != nil) { map in
+                map.safeAreaInset(edge: horizontalEdge ?? .leading) {
+                    ActivityScroll(trip: trip, navigationPath: $navigationPath)
                 }
-            
-            
-//                .safeAreaInset(edge: .bottom) {
-//                    ActivityScroll(trip: trip, navigationPath: $navigationPath)
-//                }
-                .navigationTitle(trip.title)
-    #if os(iOS)
-                .toolbarBackground(.hidden, for: .navigationBar)
-                .toolbar(.hidden, for: .tabBar)
-//                .task(id: geometry.size.width) {
-//                    width = geometry.size.width
-//                }
-//                .task(id: geometry.size.height) {
-//                    height = geometry.size.height
-//                }
+            }
+        
+            .navigationTitle(trip.title)
+
+#if os(iOS)
+            .toolbarBackground(.hidden, for: .navigationBar)
+            .toolbar(.hidden, for: .tabBar)
 #endif
-        }
+        
     }
 }
 
