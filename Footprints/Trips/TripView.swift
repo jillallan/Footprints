@@ -14,8 +14,17 @@ struct TripView: View {
     @State var navPath = NavigationPath()
     
     @State private var isAddTripViewPresented: Bool = false
+
+    @State var aspectRatio: AspectRatioTest = .zero(AspectRatio: 0.0)
+    @State var width: CGFloat = .zero
+    @State var height: CGFloat = .zero
     
     var body: some View {
+//        let _ = print("aspect ration nav stack: \(aspectRatio)")
+        let _ = print("aspect ratio: \(aspectRatio)")
+        let _ = print("width: \(width)")
+        let _ = print("height: \(height)")
+        
         NavigationStack(path: $navPath) {
             List {
                 ForEach(trips) { trip in
@@ -51,6 +60,11 @@ struct TripView: View {
                 AddTripView(navigationPath: $navPath)
             }
         }
+        .getAspectRatio($aspectRatio)
+        .getWidth($width)
+        .getHeight($height)
+        .environment(\.aspectRatio, aspectRatio)
+        
     }
 #if DEBUG
     func createData() async {
