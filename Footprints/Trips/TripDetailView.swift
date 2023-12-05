@@ -10,23 +10,15 @@ import SwiftData
 import SwiftUI
 
 struct TripDetailView: View {
-    @Environment(\.aspectRatio) private var aspectRatio
     @Bindable var trip: Trip
     @Binding var navigationPath: NavigationPath
+    @State var aspectRatio: AspectRatio = .zero(AspectRatio: 0.0)
     
     var activityScrollEdge: EdgeCustom {
         switch aspectRatio {
-        case .wide(_):
+        case .landscape(_), .wide(_):
             return .leading
-        case .landscape(_):
-            return .leading
-        case .square(_):
-            return .bottom
-        case .portrait(_):
-            return .bottom
-        case .tall(_):
-            return .bottom
-        case .zero(AspectRatio: _):
+        case .square(_), .portrait(_), .tall(_), .zero(AspectRatio: _):
             return .bottom
         }
     }
@@ -54,26 +46,30 @@ struct TripDetailView: View {
     }
     
     var body: some View {
-        Map()
-            .if(verticleEdge != nil) { map in
-                map.safeAreaInset(edge: verticleEdge ?? .top) {
-                    ActivityScroll(trip: trip, navigationPath: $navigationPath)
+        let _ = print("aspectRatio tripDetailView :\(aspectRatio)")
+        let _ = print("verticleEdge :\(String(describing: verticleEdge))")
+        let _ = print("horizontalEdge :\(String(describing: horizontalEdge))")
+        VStack {
+            Map()
+                .if(verticleEdge != nil) { map in
+                    map.safeAreaInset(edge: verticleEdge ?? .bottom) {
+                        ActivityScroll(trip: trip, navigationPath: $navigationPath, aspectRatio: $aspectRatio)
+                    }
                 }
-            }
-        
-            .if(horizontalEdge != nil) { map in
-                map.safeAreaInset(edge: horizontalEdge ?? .leading) {
-                    ActivityScroll(trip: trip, navigationPath: $navigationPath)
+            
+                .if(horizontalEdge != nil) { map in
+                    map.safeAreaInset(edge: horizontalEdge ?? .leading) {
+                        ActivityScroll(trip: trip, navigationPath: $navigationPath, aspectRatio: $aspectRatio)
+                    }
                 }
-            }
-        
-            .navigationTitle(trip.title)
+                .navigationTitle(trip.title)
 
 #if os(iOS)
-            .toolbarBackground(.hidden, for: .navigationBar)
-            .toolbar(.hidden, for: .tabBar)
+                .toolbarBackground(.hidden, for: .navigationBar)
+                .toolbar(.hidden, for: .tabBar)
 #endif
-        
+        }
+        .getAspectRatio($aspectRatio)
     }
 }
 

@@ -13,13 +13,14 @@ struct LazyStack<Content: View>: View {
     
     var body: some View {
         if axes == .horizontal {
-            LazyHStack {
+            LazyHStack(spacing: 0.0) {
                 content()
             }
         } else if axes == .vertical {
-            LazyVStack {
+            LazyVStack(spacing: 0.0) {
                 content()
             }
+    
         }
     }
 }

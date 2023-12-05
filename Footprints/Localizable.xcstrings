@@ -4,9 +4,6 @@
     "" : {
 
     },
-    "A 6 day trip to the Maldives" : {
-
-    },
     "Add Step" : {
 
     },
@@ -23,6 +20,9 @@
 
     },
     "End Date" : {
+
+    },
+    "Hello, World!" : {
 
     },
     "Journal" : {
@@ -100,7 +100,7 @@
     "Title" : {
 
     },
-    "Trip End" : {
+    "Trip Summary" : {
 
     },
     "Trips" : {

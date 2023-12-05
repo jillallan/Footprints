@@ -8,14 +8,17 @@
 import SwiftUI
 
 struct StepCard: View {
-    let image: UIImage
+    let image: Image
     
     var body: some View {
-        Image(uiImage: image)
+        image
+//        Image(uiImage: image)
             .resizable()
+        
+        
     }
 }
 
 #Preview {
-    StepCard(image: UIImage(resource: .beach))
+    StepCard(image: Image(.beach))
 }

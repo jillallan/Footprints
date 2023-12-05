@@ -9,11 +9,13 @@ import SwiftUI
 
 struct AppDetailColumn: View {
     var screen: AppScreen?
-    
+    @State var aspectRatio: AspectRatio = .zero(AspectRatio: 0.0)
+
     var body: some View {
         Group {
             if let screen {
                 screen.destination
+//                    .getAspectRatio($aspectRatio)
             } else {
                 ContentUnavailableView(
                     "Select a View",
@@ -22,10 +24,12 @@ struct AppDetailColumn: View {
                 )
             }
         }
+        // .getAspectRatio($aspectRatio)
 #if os(macOS)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background()
 #endif
+        
     }
 }
 

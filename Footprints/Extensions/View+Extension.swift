@@ -17,8 +17,13 @@ extension View {
         modifier(getHeightModifier(height: height))
     }
     
-    func getAspectRatio(_ aspectRatio: Binding<AspectRatioTest>) -> some View {
+    func getAspectRatio(_ aspectRatio: Binding<AspectRatio>) -> some View {
         modifier(getAspectRatioModifier(aspectRatio: aspectRatio))
+    }
+    
+    func setAspectRatio(_ aspectRatio: AspectRatio) -> some View {
+        let _ = print("Aspect ratio set: \(aspectRatio)")
+        return environment(\.aspectRatio, aspectRatio)
     }
     
     @ViewBuilder func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
@@ -62,7 +67,7 @@ struct getHeightModifier: ViewModifier {
     }
 }
 
-enum AspectRatioTest {
+enum AspectRatio {
     case wide(aspectRatio: Double)
     case landscape(aspectRatio: Double)
     case square(aspectRatio: Double)
@@ -71,34 +76,32 @@ enum AspectRatioTest {
     case zero(AspectRatio: Double)
 }
 
-enum AspectRatio {
-    case wide, landscape, square, portrait, tall
-}
-
 struct getAspectRatioModifier: ViewModifier {
-    @Binding var aspectRatio: AspectRatioTest
+    @Binding var aspectRatio: AspectRatio
     
     func body(content: Content) -> some View {
         content
-            .background(
+            .overlay(
                 GeometryReader { geometry in
                     let proxySize = geometry.size
+                    let _ = print("get aspect ratio proxySize: \(proxySize)")
                     Color.clear
                         .task(id: geometry.size) {
                             let ratio = max(proxySize.width, 0) / max(proxySize.height, 0) 
+                            print("modifier ratio: \(ratio)")
                             switch ratio {
-                            case 1.5...:
-                                $aspectRatio.wrappedValue = AspectRatioTest.wide(aspectRatio: ratio)
-                            case 1.1..<1.5:
-                                $aspectRatio.wrappedValue = AspectRatioTest.landscape(aspectRatio: ratio)
-                            case 0.9..<1.1:
-                                $aspectRatio.wrappedValue = AspectRatioTest.square(aspectRatio: ratio)
+                            case 2.1...:
+                                $aspectRatio.wrappedValue = AspectRatio.wide(aspectRatio: ratio)
+                            case 1.6..<2.1:
+                                $aspectRatio.wrappedValue = AspectRatio.landscape(aspectRatio: ratio)
+                            case 0.9..<1.6:
+                                $aspectRatio.wrappedValue = AspectRatio.square(aspectRatio: ratio)
                             case 0.75..<0.9:
-                                $aspectRatio.wrappedValue = AspectRatioTest.portrait(aspectRatio: ratio)
+                                $aspectRatio.wrappedValue = AspectRatio.portrait(aspectRatio: ratio)
                             case ..<0.75:
-                                $aspectRatio.wrappedValue = AspectRatioTest.tall(aspectRatio: ratio)
+                                $aspectRatio.wrappedValue = AspectRatio.tall(aspectRatio: ratio)
                             default:
-                                $aspectRatio.wrappedValue = AspectRatioTest.square(aspectRatio: ratio)
+                                $aspectRatio.wrappedValue = AspectRatio.square(aspectRatio: ratio)
                                 
                             }
                         }

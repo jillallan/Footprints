@@ -10,15 +10,56 @@ import SwiftUI
 struct ActivityScroll: View {
     let trip: Trip
     @Binding var navigationPath: NavigationPath
-    @State var width: CGFloat = .zero
-    @State var height: CGFloat = .zero
+    @Binding var aspectRatio: AspectRatio
+    @State private var width: CGFloat = .zero
+    @State private var height: CGFloat = .zero
+
+    var cardAspectRatio: Double {
+        switch aspectRatio {
+        case .wide(_):
+            return 1.0
+        case .landscape(_), .square(_), .portrait(_), .tall(_), .zero(_):
+            return 1.5
+        }
+    }
     
     var scrollAxis: Axis.Set {
-        .vertical
+        switch aspectRatio {
+        case .wide(_), .landscape(_):
+            return .vertical
+        case .square(_), .portrait(_), .tall(_), .zero(_):
+            return .horizontal
+        }
+    }
+    
+    var scrollItemCount: Int {
+        switch aspectRatio {
+        case .wide(_):
+            return 1
+        case .landscape(_):
+            return 2
+        case .square(_):
+            return 2
+        case .portrait(_):
+            return 2
+        case .tall(_):
+            return 1
+        case .zero(_):
+            return 2
+        }
+    }
+    
+    var horizontalScrollHeight: Double {
+        // Round height up, otherwise in some cases the scroll view is bigger than the scroll heigth calculated here
+        ceil(width / (cardAspectRatio * Double(scrollItemCount)))
+    }
+    
+    var verticalScrollWidth: Double {
+        // Round width up, otherwise in some cases the scroll view is bigger than the scroll width calculated here
+        ceil(height * (cardAspectRatio / Double(scrollItemCount)))
     }
     
     var body: some View {
-
         ScrollView(scrollAxis) {
             LazyStack(axes: scrollAxis) {
                 ForEach([trip]) { trip in
@@ -27,7 +68,7 @@ struct ActivityScroll: View {
                             AddFirstStepCard()
                         } else {
                             ForEach(trip.tripSteps) { step in
-                                StepCard(image: UIImage(resource: .beach))
+                                StepCard(image: Image(.beach))
                             }
                         }
                     } header: {
@@ -37,31 +78,51 @@ struct ActivityScroll: View {
                     }
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 25.0, style: .circular))
-                .containerRelativeFrame([scrollAxis], count: 1, spacing: 0.0)
+                .containerRelativeFrame([scrollAxis], count: scrollItemCount, spacing: 0.0)
+                .scrollTransition(axis: .horizontal) { content, phase in
+                    content
+                        .scaleEffect(phase.isIdentity ? 1 : 0.90)
+                }
             }
+            .scrollTargetLayout()
         }
+        .scrollTargetBehavior(.paging)
+        
         .getWidth($width)
         .getHeight($height)
         .if(scrollAxis == .vertical) { view in
             view
-                .frame(width: height)
+                .frame(width: verticalScrollWidth)
         }
         .if(scrollAxis == .horizontal) { view in
             view
-                .frame(height: width / 1.5)
+                .frame(height: horizontalScrollHeight)
         }
-//        .frame(height: width / 1.5)
-//        .frame(width: height)
     }
 }
 
-#Preview("Trip with steps") {
+#Preview("Trip with steps aspect ratio 0.5") {
     ModelPreview(SampleContainer.sample) {
         GeometryReader { geometry in
             NavigationStack {
                 ActivityScroll(
                     trip: .bedminsterToBeijing, 
-                    navigationPath: .constant(NavigationPath())
+                    navigationPath: .constant(NavigationPath()),
+                    aspectRatio: .constant(.tall(aspectRatio: 0.5))
+                )
+            }
+        }
+    }
+}
+
+#Preview("Trip with steps landscape") {
+    ModelPreview(SampleContainer.sample) {
+        GeometryReader { geometry in
+            NavigationStack {
+                ActivityScroll(
+                    trip: .bedminsterToBeijing,
+                    navigationPath: .constant(NavigationPath()),
+                    aspectRatio: .constant(.landscape(aspectRatio: 2.0 / 3.0))
                 )
             }
         }
@@ -74,11 +135,10 @@ struct ActivityScroll: View {
             NavigationStack {
                 ActivityScroll(
                     trip: .mountains,
-                    navigationPath: .constant(NavigationPath())
+                    navigationPath: .constant(NavigationPath()),
+                    aspectRatio: .constant(.tall(aspectRatio: 1.5))
                 )
             }
         }
     }
 }
-
-

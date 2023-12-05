@@ -11,9 +11,15 @@ enum EdgeCustom {
     case top, bottom, leading, trailing
 }
 
-struct SafeAreaInsetCustom<Content: ViewModifier>: ViewModifier {
+//struct SafeAreaInsetCustomModifier: ViewModifier {
+//    func body(content: Content) -> Content {
+//        SafeAreaInsetCustom(edge: EdgeCustom, content: )
+//    }
+//}
+
+struct SafeAreaInsetCustom: ViewModifier {
     let edge: EdgeCustom
-    @ViewBuilder let content: () -> Content
+    let contentClosure: () -> Content
     
     var verticleEdge: VerticalEdge? {
         switch edge {
@@ -37,17 +43,29 @@ struct SafeAreaInsetCustom<Content: ViewModifier>: ViewModifier {
         }
     }
     
-    var body: some View {
-        switch edge {
-        case .top, .bottom:
-            safeAreaInset(edge: verticleEdge ?? .top) {
-                content()
+    func body(content: Content) -> some View {
+        if (verticleEdge != nil) {
+            content.safeAreaInset(edge: verticleEdge ?? .top) {
+                contentClosure()
             }
-        case .leading, .trailing:
-            safeAreaInset(edge: horizontalEdge ?? .leading) {
-                content()
+        } else if (horizontalEdge != nil) {
+            content.safeAreaInset(edge: horizontalEdge ?? .leading) {
+                contentClosure()
             }
-            
         }
     }
+    
+//    var body: some View {
+//        switch edge {
+//        case .top, .bottom:
+//            safeAreaInset(edge: verticleEdge ?? .top) {
+//                content()
+//            }
+//        case .leading, .trailing:
+//            safeAreaInset(edge: horizontalEdge ?? .leading) {
+//                content()
+//            }
+//            
+//        }
+//    }
 }
