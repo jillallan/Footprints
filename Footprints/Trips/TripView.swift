@@ -16,7 +16,7 @@ struct TripView: View {
     @State private var isAddTripViewPresented: Bool = false
     
     var body: some View {
-        
+        let _ = Self._printChanges()
         NavigationStack(path: $navPath) {
             List {
                 ForEach(trips) { trip in
@@ -47,7 +47,9 @@ struct TripView: View {
             }
             .navigationDestination(for: Trip.self) { trip in
                 TripDetailView(trip: trip, navigationPath: $navPath)
+//                TripDetailViewSimple(path: $navPath, trip: trip)
             }
+            
             .sheet(isPresented: $isAddTripViewPresented) {
                 AddTripView(navigationPath: $navPath)
             }

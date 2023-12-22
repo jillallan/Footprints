@@ -17,6 +17,10 @@ extension View {
         modifier(getHeightModifier(height: height))
     }
     
+    func getSize(_ size: Binding<CGSize>) -> some View {
+        modifier(getSizeModifier(size: size))
+    }
+    
     func getAspectRatio(_ aspectRatio: Binding<AspectRatio>) -> some View {
         modifier(getAspectRatioModifier(aspectRatio: aspectRatio))
     }
@@ -67,6 +71,24 @@ struct getHeightModifier: ViewModifier {
     }
 }
 
+struct getSizeModifier: ViewModifier {
+    @Binding var size: CGSize
+    func body(content: Content) -> some View {
+        content
+            .background(
+                GeometryReader { geometry in
+                    let proxySize = geometry.size
+                    Color.clear
+                        .task(id: geometry.size) {
+                            let width = max(proxySize.width, 0)
+                            let height = max(proxySize.height, 0)
+                            $size.wrappedValue = CGSize(width: width, height: height)
+                        }
+                }
+            )
+    }
+}
+
 enum AspectRatio {
     case wide(aspectRatio: Double)
     case landscape(aspectRatio: Double)
@@ -84,11 +106,9 @@ struct getAspectRatioModifier: ViewModifier {
             .overlay(
                 GeometryReader { geometry in
                     let proxySize = geometry.size
-                    let _ = print("get aspect ratio proxySize: \(proxySize)")
                     Color.clear
                         .task(id: geometry.size) {
-                            let ratio = max(proxySize.width, 0) / max(proxySize.height, 0) 
-                            print("modifier ratio: \(ratio)")
+                            let ratio = max(proxySize.width, 0) / max(proxySize.height, 0)
                             switch ratio {
                             case 2.1...:
                                 $aspectRatio.wrappedValue = AspectRatio.wide(aspectRatio: ratio)

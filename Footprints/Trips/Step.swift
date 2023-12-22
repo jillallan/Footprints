@@ -20,3 +20,10 @@ final class Step {
         self.timestamp = timestamp
     }
 }
+
+// Added comparable comformance to enable sorting by timestamp
+extension Step: Comparable {
+    public static func < (lhs: Step, rhs: Step) -> Bool {
+        lhs.timestamp < rhs.timestamp
+    }
+}

@@ -23,7 +23,7 @@ final class Trip {
     }
     
     var tripSteps: [Step] {
-        steps ?? []
+        steps?.sorted() ?? []
     }
     
     // MARK: - Initialization

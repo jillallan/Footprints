@@ -8,36 +8,21 @@
 import SwiftUI
 
 struct TripSummaryCard: View {
-    @State private var height: CGFloat = .zero
-    @State private var width: CGFloat = .zero
+    @Bindable var trip: Trip
+    let stepCount: Int
     
     var body: some View {
-        let _ = print("card height: \(height)")
-        let _ = print("card width: \(width)")
         VStack {
             Text("Trip Summary")
                 .font(.largeTitle)
             Spacer()
+            Text(stepCount, format: .number)
         }
-//        .frame(maxWidth: .infinity)
         .frame(maxWidth: .infinity, maxHeight:  .infinity)
-//        .padding()
         .background(.regularMaterial)
-        .getWidth($width)
-        .getHeight($height)
-        .onChange(of: height) {
-            print("card height: \(height)")
-        }
-        .onChange(of: width) {
-            print("card width: \(width)")
-        }
-        .onAppear {
-            print("card height: \(height)")
-            print("card width: \(width)")
-        }
     }
 }
 
-#Preview {
-    TripSummaryCard()
-}
+//#Preview {
+//    TripSummaryCard()
+//}

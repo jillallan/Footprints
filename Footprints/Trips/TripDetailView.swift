@@ -10,9 +10,47 @@ import SwiftData
 import SwiftUI
 
 struct TripDetailView: View {
+    @Environment(\.modelContext) private var modelContext
     @Bindable var trip: Trip
     @Binding var navigationPath: NavigationPath
     @State var aspectRatio: AspectRatio = .zero(AspectRatio: 0.0)
+    
+    var body: some View {
+        let _ = Self._printChanges()
+        VStack {
+
+            Map()
+            
+                .if(verticleEdge != nil) { map in
+                    map.safeAreaInset(edge: verticleEdge ?? .bottom) {
+                        ActivityScroll(trip: trip, steps: trip.tripSteps, navigationPath: $navigationPath, aspectRatio: $aspectRatio)
+
+                    }
+                }
+            
+                .if(horizontalEdge != nil) { map in
+                    map.safeAreaInset(edge: horizontalEdge ?? .leading) {
+                        ActivityScroll(trip: trip, steps: trip.tripSteps, navigationPath: $navigationPath, aspectRatio: $aspectRatio)
+                    }
+                }
+                .navigationTitle(trip.title)
+                .toolbar {
+                    ToolbarItem(placement: .primaryAction) {
+                        Button {
+                            addStep()
+                        } label: {
+                            Label("Add step", systemImage: "plus")
+                        }
+                    }
+                }
+
+#if os(iOS)
+                .toolbarBackground(.hidden, for: .navigationBar)
+                .toolbar(.hidden, for: .tabBar)
+#endif
+        }
+        .getAspectRatio($aspectRatio)
+    }
     
     var activityScrollEdge: EdgeCustom {
         switch aspectRatio {
@@ -45,31 +83,11 @@ struct TripDetailView: View {
         }
     }
     
-    var body: some View {
-        let _ = print("aspectRatio tripDetailView :\(aspectRatio)")
-        let _ = print("verticleEdge :\(String(describing: verticleEdge))")
-        let _ = print("horizontalEdge :\(String(describing: horizontalEdge))")
-        VStack {
-            Map()
-                .if(verticleEdge != nil) { map in
-                    map.safeAreaInset(edge: verticleEdge ?? .bottom) {
-                        ActivityScroll(trip: trip, navigationPath: $navigationPath, aspectRatio: $aspectRatio)
-                    }
-                }
-            
-                .if(horizontalEdge != nil) { map in
-                    map.safeAreaInset(edge: horizontalEdge ?? .leading) {
-                        ActivityScroll(trip: trip, navigationPath: $navigationPath, aspectRatio: $aspectRatio)
-                    }
-                }
-                .navigationTitle(trip.title)
-
-#if os(iOS)
-                .toolbarBackground(.hidden, for: .navigationBar)
-                .toolbar(.hidden, for: .tabBar)
-#endif
-        }
-        .getAspectRatio($aspectRatio)
+    func addStep() {
+        let newStep = Step(timestamp: .now)
+        newStep.trip = trip
+        modelContext.insert(newStep)
+        navigationPath.append(newStep)
     }
 }
 

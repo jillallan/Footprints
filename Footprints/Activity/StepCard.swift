@@ -8,17 +8,25 @@
 import SwiftUI
 
 struct StepCard: View {
+    let step: Step
     let image: Image
     
     var body: some View {
         image
 //        Image(uiImage: image)
             .resizable()
-        
-        
+            .overlay {
+                VStack {
+                    Text(step.timestamp, style: .date)
+                    Text(step.timestamp, style: .time)
+                }
+                .foregroundStyle(Color.white)
+            }
     }
 }
 
 #Preview {
-    StepCard(image: Image(.beach))
+    ModelPreview(SampleContainer.sample) {
+        StepCard(step: .bedminsterStation, image: Image(.beach))
+    }
 }
