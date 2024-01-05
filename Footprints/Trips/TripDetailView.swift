@@ -16,22 +16,10 @@ struct TripDetailView: View {
     @State var aspectRatio: AspectRatio = .zero(AspectRatio: 0.0)
     
     var body: some View {
-        let _ = Self._printChanges()
         VStack {
-
             Map()
-            
-                .if(verticleEdge != nil) { map in
-                    map.safeAreaInset(edge: verticleEdge ?? .bottom) {
-                        ActivityScroll(trip: trip, steps: trip.tripSteps, navigationPath: $navigationPath, aspectRatio: $aspectRatio)
-
-                    }
-                }
-            
-                .if(horizontalEdge != nil) { map in
-                    map.safeAreaInset(edge: horizontalEdge ?? .leading) {
-                        ActivityScroll(trip: trip, steps: trip.tripSteps, navigationPath: $navigationPath, aspectRatio: $aspectRatio)
-                    }
+                .dynamicSafeAreaInset(edge: scrollEdge) {
+                    ActivityScroll(trip: trip, steps: trip.tripSteps, aspectRatio: $aspectRatio)
                 }
                 .navigationTitle(trip.title)
                 .toolbar {
@@ -43,16 +31,18 @@ struct TripDetailView: View {
                         }
                     }
                 }
-
-#if os(iOS)
-                .toolbarBackground(.hidden, for: .navigationBar)
-                .toolbar(.hidden, for: .tabBar)
-#endif
+            
+            
         }
+#if os(iOS)
+        .toolbarBackground(.hidden, for: .navigationBar)
+        .toolbar(.hidden, for: .tabBar)
+#endif
         .getAspectRatio($aspectRatio)
+
     }
     
-    var activityScrollEdge: EdgeCustom {
+    var scrollEdge: Edge {
         switch aspectRatio {
         case .landscape(_), .wide(_):
             return .leading
@@ -62,7 +52,7 @@ struct TripDetailView: View {
     }
     
     var verticleEdge: VerticalEdge? {
-        switch activityScrollEdge {
+        switch scrollEdge {
         case .top:
             return VerticalEdge.top
         case .bottom:
@@ -73,7 +63,7 @@ struct TripDetailView: View {
     }
     
     var horizontalEdge: HorizontalEdge? {
-        switch activityScrollEdge {
+        switch scrollEdge {
         case .leading:
             return HorizontalEdge.leading
         case .trailing:

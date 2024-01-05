@@ -30,6 +30,14 @@ extension View {
         return environment(\.aspectRatio, aspectRatio)
     }
     
+    func dynamicSafeAreaInset<V>(
+        edge: Edge,
+        @ViewBuilder content: @escaping () -> V
+    ) -> some View where V : View {
+        modifier(DynamicSafeAreaInsetModifier(edge: edge, viewContent: content))
+        
+    }
+    
     @ViewBuilder func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
          if condition {
              transform(self)
@@ -109,6 +117,7 @@ struct getAspectRatioModifier: ViewModifier {
                     Color.clear
                         .task(id: geometry.size) {
                             let ratio = max(proxySize.width, 0) / max(proxySize.height, 0)
+                            print("Aspect ratio: \(ratio)")
                             switch ratio {
                             case 2.1...:
                                 $aspectRatio.wrappedValue = AspectRatio.wide(aspectRatio: ratio)

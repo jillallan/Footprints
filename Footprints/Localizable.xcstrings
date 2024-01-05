@@ -4,6 +4,15 @@
     "" : {
 
     },
+    "1" : {
+
+    },
+    "2" : {
+
+    },
+    "3" : {
+
+    },
     "Add step" : {
 
     },
@@ -22,13 +31,16 @@
     "Cancel" : {
 
     },
-    "Date" : {
-
-    },
     "End Date" : {
 
     },
-    "Hello, World!" : {
+    "Hello" : {
+
+    },
+    "Hello World" : {
+
+    },
+    "Hello, world!" : {
 
     },
     "Journal" : {
@@ -64,6 +76,9 @@
         }
       }
     },
+    "Placemark View" : {
+
+    },
     "Samples" : {
 
     },
@@ -93,6 +108,9 @@
         }
       }
     },
+    "Step Date" : {
+
+    },
     "Steps" : {
       "localizations" : {
         "en" : {
@@ -103,7 +121,13 @@
         }
       }
     },
+    "The Beach" : {
+
+    },
     "Title" : {
+
+    },
+    "Toggle Inspector" : {
 
     },
     "Trip Summary" : {
@@ -118,6 +142,9 @@
           }
         }
       }
+    },
+    "View Settings" : {
+
     }
   },
   "version" : "1.0"

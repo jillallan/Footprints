@@ -1,17 +1,15 @@
 //
-//  ActivityScroll.swift
+//  StepScroll.swift
 //  Footprints
 //
-//  Created by Jill Allan on 15/12/2023.
+//  Created by Jill Allan on 26/12/2023.
 //
 
-import MapKit
 import SwiftData
 import SwiftUI
 
-struct ActivityScroll: View {
-    @Bindable var trip: Trip
-    let steps: [Step]
+struct StepScroll: View {
+    @Bindable var step: Step
     @Binding var aspectRatio: AspectRatio
     @State private var size: CGSize = .zero
     @State var scrollPositionID: PersistentIdentifier?
@@ -19,36 +17,27 @@ struct ActivityScroll: View {
     var body: some View {
         VStack {
             ScrollView(scrollAxis) {
-
                 LazyStack(axes: scrollAxis) {
-                    ForEach([trip]) { trip in
+  
                         Section {
-                            ForEach(steps) { step in
-
-                                NavigationLink(value: step) {
-                                    StepCard(step: step, image: Image(.beach), aspectRatio: cardAspectRatio)
-                                }
-                                
-                                .buttonStyle(.plain)
-                                .opacity(1.0)
-
-                            }
+                            // TODO: Photo assests
+//                            ForEach(steps) { step in
+//                                NavigationLink(value: step) {
+//                                    StepCard(step: step, image: Image(.beach))
+//                                }
+//                            }
                         } header: {
-                            TripSummaryCard(trip: trip, stepCount: trip.tripSteps.count)
+                            StepOverviewCard(step: step, image: Image(.beach))
                         } footer: {
                             TripStatisticsCard()
                         }
-                    }
-                    
+
        
                     .clipShape(RoundedRectangle(cornerRadius: 25.0, style: .circular))
                     .containerRelativeFrame([scrollAxis], count: scrollItemCount, spacing: 0.0)
-                    
                    
                 }
-                
             }
-            
             .scrollPosition(id: $scrollPositionID)
             .scrollTargetBehavior(.paging)
         }
@@ -104,23 +93,10 @@ struct ActivityScroll: View {
     }
 }
 
-#Preview("tall") {
+#Preview {
     ModelPreview(SampleContainer.sample) {
-        ActivityScroll(trip: .bedminsterToBeijing, steps: Trip.bedminsterToBeijing.tripSteps, aspectRatio: .constant(AspectRatio.tall(aspectRatio: 2.0)))
+        StepScroll(step: .bedminsterStation, aspectRatio: .constant(.tall(aspectRatio: 2.2)))
+ 
     }
-}
-
-#Preview("landscape") {
     
-    ModelPreview(SampleContainer.sample) {
-       
-        Map()
-            .dynamicSafeAreaInset(edge: Edge.leading) {
-                ActivityScroll(
-                    trip: Trip.bedminsterToBeijing,
-                    steps: [Step.stJohnsLane, Step.bedminsterStation],
-                    aspectRatio: .constant(AspectRatio.landscape(aspectRatio: 1.5))
-                )
-            }
-    }
 }

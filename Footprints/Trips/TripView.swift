@@ -54,7 +54,9 @@ struct TripView: View {
                 AddTripView(navigationPath: $navPath)
             }
         }
+        .environment(\.navigationPath, navPath)
     }
+        
 #if DEBUG
     func createData() async {
         await SampleDataGenerator.generateSampleData(modelContext: modelContext)
@@ -66,5 +68,17 @@ struct TripView: View {
     NavigationStack {
         TripView()
             .modelContainer(SampleContainer.sample())
+    }
+}
+
+#Preview("iPad") {
+
+    NavigationSplitView {
+        AppSidebarList(selection: .constant(AppScreen.trips))
+    } detail: {
+        NavigationStack {
+            TripView()
+                .modelContainer(SampleContainer.sample())
+        }
     }
 }
