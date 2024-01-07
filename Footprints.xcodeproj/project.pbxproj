@@ -67,6 +67,7 @@
 		788732852B481E730052E3C3 /* PhotoGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788732842B481E730052E3C3 /* PhotoGrid.swift */; };
 		788732872B4820090052E3C3 /* StepInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788732862B4820090052E3C3 /* StepInspector.swift */; };
 		78A41DDC2B2CB335007621BA /* ActivityScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A41DDB2B2CB335007621BA /* ActivityScroll.swift */; };
+		78C1B4992B49EA8700871158 /* ServicesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C1B4982B49EA8700871158 /* ServicesTests.swift */; };
 		78DAEB742AED168F004350D7 /* NavigationUITests_Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DAEB732AED168F004350D7 /* NavigationUITests_Mac.swift */; };
 		78DAEB762AED168F004350D7 /* FootprintsUITests_MacLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DAEB752AED168F004350D7 /* FootprintsUITests_MacLaunchTests.swift */; };
 		78E507992B3AE7B80093D59C /* DynamicSafeAreaInsetOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E507982B3AE7B80093D59C /* DynamicSafeAreaInsetOld.swift */; };
@@ -74,6 +75,7 @@
 		78E7C8A72AF0440B00450A0E /* SampleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E7C8A62AF0440B00450A0E /* SampleContainer.swift */; };
 		78E7C8A92AF045B100450A0E /* SampleDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E7C8A82AF045B100450A0E /* SampleDataGenerator.swift */; };
 		78E7C8AB2AF0469300450A0E /* ModelPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E7C8AA2AF0469300450A0E /* ModelPreview.swift */; };
+		78F12A5B2B48613B00058ECA /* MapSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F12A5A2B48613B00058ECA /* MapSearchService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,6 +161,7 @@
 		788732842B481E730052E3C3 /* PhotoGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGrid.swift; sourceTree = "<group>"; };
 		788732862B4820090052E3C3 /* StepInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepInspector.swift; sourceTree = "<group>"; };
 		78A41DDB2B2CB335007621BA /* ActivityScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityScroll.swift; sourceTree = "<group>"; };
+		78C1B4982B49EA8700871158 /* ServicesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesTests.swift; sourceTree = "<group>"; };
 		78DAEB712AED168F004350D7 /* FootprintsUITests-Mac.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FootprintsUITests-Mac.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78DAEB732AED168F004350D7 /* NavigationUITests_Mac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationUITests_Mac.swift; sourceTree = "<group>"; };
 		78DAEB752AED168F004350D7 /* FootprintsUITests_MacLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootprintsUITests_MacLaunchTests.swift; sourceTree = "<group>"; };
@@ -169,6 +172,7 @@
 		78E7C8A62AF0440B00450A0E /* SampleContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleContainer.swift; sourceTree = "<group>"; };
 		78E7C8A82AF045B100450A0E /* SampleDataGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDataGenerator.swift; sourceTree = "<group>"; };
 		78E7C8AA2AF0469300450A0E /* ModelPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPreview.swift; sourceTree = "<group>"; };
+		78F12A5A2B48613B00058ECA /* MapSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,6 +234,7 @@
 		782D63332AEBDF0500C1C48A /* Footprints */ = {
 			isa = PBXGroup;
 			children = (
+				78F12A592B48612800058ECA /* Services */,
 				782D63342AEBDF0500C1C48A /* FootprintsApp.swift */,
 				782D63362AEBDF0500C1C48A /* ContentView.swift */,
 				782D637D2AEBE51400C1C48A /* PlacemarkView.swift */,
@@ -264,6 +269,7 @@
 				78709C802AEC038B00E53D1C /* DateExtensionTests.swift */,
 				78709C862AEC04F700E53D1C /* StringExtensionTests.swift */,
 				78709C822AEC045000E53D1C /* TripTests.swift */,
+				78C1B4982B49EA8700871158 /* ServicesTests.swift */,
 				782D63462AEBDF0600C1C48A /* EnvironmentalValuesExtensionTests.swift */,
 				78709C772AEC020100E53D1C /* BaseTestCase.swift */,
 				78709C792AEC025C00E53D1C /* MockDataContainer.swift */,
@@ -371,6 +377,14 @@
 				78DAEB752AED168F004350D7 /* FootprintsUITests_MacLaunchTests.swift */,
 			);
 			path = "FootprintsUITests-Mac";
+			sourceTree = "<group>";
+		};
+		78F12A592B48612800058ECA /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				78F12A5A2B48613B00058ECA /* MapSearchService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -552,6 +566,7 @@
 				78709C7C2AEC02E700E53D1C /* Trip-SampleData.swift in Sources */,
 				78709C7F2AEC034000E53D1C /* Date+Extension.swift in Sources */,
 				782D63602AEBE19100C1C48A /* EnvironmentalValues+Extension.swift in Sources */,
+				78F12A5B2B48613B00058ECA /* MapSearchService.swift in Sources */,
 				784DE4FE2B3B61C000E1229B /* StepOverviewCard.swift in Sources */,
 				782D63802AEBE51400C1C48A /* SettingsView.swift in Sources */,
 				784DE5292B40B23A00E1229B /* EqualWidthHStack.swift in Sources */,
@@ -589,6 +604,7 @@
 				78709C7A2AEC025C00E53D1C /* MockDataContainer.swift in Sources */,
 				78709C812AEC038B00E53D1C /* DateExtensionTests.swift in Sources */,
 				78709C872AEC04F700E53D1C /* StringExtensionTests.swift in Sources */,
+				78C1B4992B49EA8700871158 /* ServicesTests.swift in Sources */,
 				78709C832AEC045000E53D1C /* TripTests.swift in Sources */,
 				78709C782AEC020100E53D1C /* BaseTestCase.swift in Sources */,
 				782D63472AEBDF0600C1C48A /* EnvironmentalValuesExtensionTests.swift in Sources */,
