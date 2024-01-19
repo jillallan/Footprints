@@ -11,6 +11,13 @@ import SwiftUI
 struct StepInspector: View {
     @Environment(\.prefersTabNavigation) private var prefersTabNavigation
     @Bindable var step: Step
+    @State private var isLocationSearchPresented: Bool = false
+    @State private var searchDetents = PresentationDetent.large
+    
+    let region = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 51.5, longitude: 0.0),
+        span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+    )
     
     var body: some View {
         VStack {
@@ -19,11 +26,26 @@ struct StepInspector: View {
 //                    .frame(height: 200)
             }
             Form {
+            
+                Section("Date") {
+                    DatePicker("", selection: $step.timestamp, displayedComponents: [.date, .hourAndMinute])
+                        
+                }
                 
-                DatePicker("Step Date", selection: $step.timestamp, displayedComponents: [.date, .hourAndMinute])
-                //                .labelsHidden()
+                Button {
+                    isLocationSearchPresented.toggle()
+                } label: {
+                    Label("Location", systemImage: "globe")
+                }
             }
+
+            
         }
+        .sheet(isPresented: $isLocationSearchPresented) {
+            LocationSearch(region: region, step: step, searchDetent: $searchDetents)
+                .presentationDetents([.large, .medium, .small], selection: $searchDetents)
+        }
+//        .navigationTitle("Current location")
     }
 }
 

@@ -21,6 +21,7 @@ import SwiftUI
     
     @MainActor
     func search(for query: String, in region: MKCoordinateRegion) async {
+        print("search called")
         let searchRequest = MKLocalSearch.Request()
         searchRequest.region = region
         searchRequest.naturalLanguageQuery = query
@@ -30,7 +31,9 @@ import SwiftUI
         
         do {
             let searchResponse = try await search.start()
+            print(searchResponse.mapItems)
             self.searchResults = searchResponse.mapItems
+            
         } catch {
             logger.error("Unable to perform search result: \(error.localizedDescription)")
         }

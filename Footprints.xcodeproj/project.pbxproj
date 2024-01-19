@@ -30,6 +30,14 @@
 		782D63822AEBE51400C1C48A /* PlacemarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D637D2AEBE51400C1C48A /* PlacemarkView.swift */; };
 		782D63832AEBE51400C1C48A /* StepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D637E2AEBE51400C1C48A /* StepView.swift */; };
 		782D63852AEBEFEC00C1C48A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 782D63842AEBEFEC00C1C48A /* Localizable.xcstrings */; };
+		783C22242B5A855500D915FA /* LocationSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C22232B5A855500D915FA /* LocationSearch.swift */; };
+		783C22262B5AAE1F00D915FA /* LocationSearchSuggestionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C22252B5AAE1F00D915FA /* LocationSearchSuggestionRow.swift */; };
+		783C22282B5AB04200D915FA /* SearchResultSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C22272B5AB04200D915FA /* SearchResultSheet.swift */; };
+		783C222A2B5AB8A700D915FA /* Placemark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C22292B5AB8A700D915FA /* Placemark.swift */; };
+		783C222C2B5ACA6100D915FA /* MKCoordinateRegion+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C222B2B5ACA6100D915FA /* MKCoordinateRegion+Extension.swift */; };
+		783C222E2B5ACA8400D915FA /* MKCoordinateSpan+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C222D2B5ACA8400D915FA /* MKCoordinateSpan+Extension.swift */; };
+		783C22302B5ACAA200D915FA /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C222F2B5ACAA200D915FA /* Double+Extension.swift */; };
+		783C22322B5ACAF300D915FA /* CLLocationCoordinate2D+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C22312B5ACAF300D915FA /* CLLocationCoordinate2D+Extension.swift */; };
 		784DE4FA2B3B5ACD00E1229B /* DynamicSafeAreaInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784DE4F92B3B5ACD00E1229B /* DynamicSafeAreaInset.swift */; };
 		784DE4FC2B3B610300E1229B /* StepScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784DE4FB2B3B610300E1229B /* StepScroll.swift */; };
 		784DE4FE2B3B61C000E1229B /* StepOverviewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784DE4FD2B3B61C000E1229B /* StepOverviewCard.swift */; };
@@ -67,7 +75,9 @@
 		788732852B481E730052E3C3 /* PhotoGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788732842B481E730052E3C3 /* PhotoGrid.swift */; };
 		788732872B4820090052E3C3 /* StepInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788732862B4820090052E3C3 /* StepInspector.swift */; };
 		78A41DDC2B2CB335007621BA /* ActivityScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A41DDB2B2CB335007621BA /* ActivityScroll.swift */; };
+		78B4127D2B517DB900B97605 /* StepDetailTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B4127C2B517DB900B97605 /* StepDetailTest.swift */; };
 		78C1B4992B49EA8700871158 /* ServicesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C1B4982B49EA8700871158 /* ServicesTests.swift */; };
+		78C1B49D2B4B48FE00871158 /* MKMapItem+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C1B49C2B4B48FE00871158 /* MKMapItem+Extension.swift */; };
 		78DAEB742AED168F004350D7 /* NavigationUITests_Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DAEB732AED168F004350D7 /* NavigationUITests_Mac.swift */; };
 		78DAEB762AED168F004350D7 /* FootprintsUITests_MacLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DAEB752AED168F004350D7 /* FootprintsUITests_MacLaunchTests.swift */; };
 		78E507992B3AE7B80093D59C /* DynamicSafeAreaInsetOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E507982B3AE7B80093D59C /* DynamicSafeAreaInsetOld.swift */; };
@@ -130,6 +140,14 @@
 		782D637D2AEBE51400C1C48A /* PlacemarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacemarkView.swift; sourceTree = "<group>"; };
 		782D637E2AEBE51400C1C48A /* StepView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepView.swift; sourceTree = "<group>"; };
 		782D63842AEBEFEC00C1C48A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		783C22232B5A855500D915FA /* LocationSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearch.swift; sourceTree = "<group>"; };
+		783C22252B5AAE1F00D915FA /* LocationSearchSuggestionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchSuggestionRow.swift; sourceTree = "<group>"; };
+		783C22272B5AB04200D915FA /* SearchResultSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultSheet.swift; sourceTree = "<group>"; };
+		783C22292B5AB8A700D915FA /* Placemark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Placemark.swift; sourceTree = "<group>"; };
+		783C222B2B5ACA6100D915FA /* MKCoordinateRegion+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKCoordinateRegion+Extension.swift"; sourceTree = "<group>"; };
+		783C222D2B5ACA8400D915FA /* MKCoordinateSpan+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKCoordinateSpan+Extension.swift"; sourceTree = "<group>"; };
+		783C222F2B5ACAA200D915FA /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
+		783C22312B5ACAF300D915FA /* CLLocationCoordinate2D+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Extension.swift"; sourceTree = "<group>"; };
 		784DE4F92B3B5ACD00E1229B /* DynamicSafeAreaInset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicSafeAreaInset.swift; sourceTree = "<group>"; };
 		784DE4FB2B3B610300E1229B /* StepScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepScroll.swift; sourceTree = "<group>"; };
 		784DE4FD2B3B61C000E1229B /* StepOverviewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepOverviewCard.swift; sourceTree = "<group>"; };
@@ -161,7 +179,9 @@
 		788732842B481E730052E3C3 /* PhotoGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGrid.swift; sourceTree = "<group>"; };
 		788732862B4820090052E3C3 /* StepInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepInspector.swift; sourceTree = "<group>"; };
 		78A41DDB2B2CB335007621BA /* ActivityScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityScroll.swift; sourceTree = "<group>"; };
+		78B4127C2B517DB900B97605 /* StepDetailTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepDetailTest.swift; sourceTree = "<group>"; };
 		78C1B4982B49EA8700871158 /* ServicesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesTests.swift; sourceTree = "<group>"; };
+		78C1B49C2B4B48FE00871158 /* MKMapItem+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapItem+Extension.swift"; sourceTree = "<group>"; };
 		78DAEB712AED168F004350D7 /* FootprintsUITests-Mac.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FootprintsUITests-Mac.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78DAEB732AED168F004350D7 /* NavigationUITests_Mac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationUITests_Mac.swift; sourceTree = "<group>"; };
 		78DAEB752AED168F004350D7 /* FootprintsUITests_MacLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootprintsUITests_MacLaunchTests.swift; sourceTree = "<group>"; };
@@ -292,6 +312,7 @@
 			isa = PBXGroup;
 			children = (
 				7870EC092AF2913300080EE3 /* DateFormatter+Extension.swift */,
+				78C1B49C2B4B48FE00871158 /* MKMapItem+Extension.swift */,
 				78709C842AEC04E600E53D1C /* String+Extension.swift */,
 				78709C7E2AEC034000E53D1C /* Date+Extension.swift */,
 				782D635F2AEBE19100C1C48A /* EnvironmentalValues+Extension.swift */,
@@ -299,6 +320,10 @@
 				785FDB2A2B02DE6D00B1BF0E /* DynamicSafeAreaInsetModifier.swift */,
 				7812C6CA2B038107000BF5A4 /* TestView.swift */,
 				784DE4FF2B3B679A00E1229B /* CustomDatePickerStyle.swift */,
+				783C222B2B5ACA6100D915FA /* MKCoordinateRegion+Extension.swift */,
+				783C22312B5ACAF300D915FA /* CLLocationCoordinate2D+Extension.swift */,
+				783C222D2B5ACA8400D915FA /* MKCoordinateSpan+Extension.swift */,
+				783C222F2B5ACAA200D915FA /* Double+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -332,11 +357,16 @@
 				781448ED2AEC3D7200090E89 /* AddTripView.swift */,
 				78E7C8A42AF042CB00450A0E /* TripDetailView.swift */,
 				7804E4432AF3E60F00C5E0CC /* StepDetailView.swift */,
+				78B4127C2B517DB900B97605 /* StepDetailTest.swift */,
 				788732862B4820090052E3C3 /* StepInspector.swift */,
+				783C22232B5A855500D915FA /* LocationSearch.swift */,
+				783C22252B5AAE1F00D915FA /* LocationSearchSuggestionRow.swift */,
+				783C22272B5AB04200D915FA /* SearchResultSheet.swift */,
 				788732842B481E730052E3C3 /* PhotoGrid.swift */,
 				788732822B474DE90052E3C3 /* StepDetailViewTextEditor.swift */,
 				78709C752AEC014100E53D1C /* Trip.swift */,
 				7804E4452AF3E75400C5E0CC /* Step.swift */,
+				783C22292B5AB8A700D915FA /* Placemark.swift */,
 			);
 			path = Trips;
 			sourceTree = "<group>";
@@ -549,22 +579,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				784DE4FA2B3B5ACD00E1229B /* DynamicSafeAreaInset.swift in Sources */,
+				78C1B49D2B4B48FE00871158 /* MKMapItem+Extension.swift in Sources */,
+				78B4127D2B517DB900B97605 /* StepDetailTest.swift in Sources */,
 				78709C852AEC04E600E53D1C /* String+Extension.swift in Sources */,
 				7804E4442AF3E60F00C5E0CC /* StepDetailView.swift in Sources */,
 				788732872B4820090052E3C3 /* StepInspector.swift in Sources */,
+				783C222A2B5AB8A700D915FA /* Placemark.swift in Sources */,
 				784DE4FC2B3B610300E1229B /* StepScroll.swift in Sources */,
 				782D63762AEBE4C200C1C48A /* AppDetailColumn.swift in Sources */,
 				785FDB292B02D09600B1BF0E /* LazyStack.swift in Sources */,
 				78E7C8A52AF042CB00450A0E /* TripDetailView.swift in Sources */,
 				784DE5272B40B09300E1229B /* NonGreedyScrollView.swift in Sources */,
 				78E7C8A92AF045B100450A0E /* SampleDataGenerator.swift in Sources */,
+				783C22282B5AB04200D915FA /* SearchResultSheet.swift in Sources */,
 				782D63812AEBE51400C1C48A /* StatisticsView.swift in Sources */,
+				783C22262B5AAE1F00D915FA /* LocationSearchSuggestionRow.swift in Sources */,
 				782D63822AEBE51400C1C48A /* PlacemarkView.swift in Sources */,
 				7804E4462AF3E75400C5E0CC /* Step.swift in Sources */,
 				782D63372AEBDF0500C1C48A /* ContentView.swift in Sources */,
 				781448EE2AEC3D7200090E89 /* AddTripView.swift in Sources */,
 				78709C7C2AEC02E700E53D1C /* Trip-SampleData.swift in Sources */,
 				78709C7F2AEC034000E53D1C /* Date+Extension.swift in Sources */,
+				783C222C2B5ACA6100D915FA /* MKCoordinateRegion+Extension.swift in Sources */,
+				783C22322B5ACAF300D915FA /* CLLocationCoordinate2D+Extension.swift in Sources */,
 				782D63602AEBE19100C1C48A /* EnvironmentalValues+Extension.swift in Sources */,
 				78F12A5B2B48613B00058ECA /* MapSearchService.swift in Sources */,
 				784DE4FE2B3B61C000E1229B /* StepOverviewCard.swift in Sources */,
@@ -574,11 +611,14 @@
 				782D637F2AEBE51400C1C48A /* TripView.swift in Sources */,
 				78709C762AEC014100E53D1C /* Trip.swift in Sources */,
 				782D63752AEBE4C200C1C48A /* AppSidebarList.swift in Sources */,
+				783C22242B5A855500D915FA /* LocationSearch.swift in Sources */,
 				784DE5252B3F716E00E1229B /* SimpleHStack.swift in Sources */,
 				785FDB2B2B02DE6D00B1BF0E /* DynamicSafeAreaInsetModifier.swift in Sources */,
 				788732852B481E730052E3C3 /* PhotoGrid.swift in Sources */,
 				782D63832AEBE51400C1C48A /* StepView.swift in Sources */,
 				782D63782AEBE4C200C1C48A /* AppTabView.swift in Sources */,
+				783C22302B5ACAA200D915FA /* Double+Extension.swift in Sources */,
+				783C222E2B5ACA8400D915FA /* MKCoordinateSpan+Extension.swift in Sources */,
 				78E507992B3AE7B80093D59C /* DynamicSafeAreaInsetOld.swift in Sources */,
 				78E7C8AB2AF0469300450A0E /* ModelPreview.swift in Sources */,
 				785FDB242B02734E00B1BF0E /* Step-SampleData.swift in Sources */,

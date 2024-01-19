@@ -11,42 +11,24 @@ import SwiftUI
 
 struct PlacemarkView: View {
     @Query var steps: [Step]
+    let region = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 51.5, longitude: 0.0),
+        span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+    )
 //    let numbers: [Int] = [1, 2, 3, 4, 5]
 
     var body: some View {
-        NavigationStack {
-            Map()
-                .dynamicSafeAreaInset(edge: Edge.leading) {
-//                .safeAreaInset(edge: .leading) {
-                    VStack {
-                        ScrollView {
-                            LazyVStack {
-                                ForEach(steps) { step in
-
-                                    
-                                    NavigationLink(value: step) {
-
-                                        StepCard(step: step, image: Image(.beach), aspectRatio: 1.5)
-                                    }
-                                    .buttonStyle(.plain)
-                                }
-                                .clipShape(RoundedRectangle(cornerRadius: 25.0, style: .circular))
-                                .containerRelativeFrame([.vertical], count: 1, spacing: 0.0)
-                            }
-                        }
-                    }
-                }
-            
-        }
-        .navigationTitle("Placemark View")
-        .navigationDestination(for: Int.self) { int in
-            Text(int, format: .number)
-        }
+        
+        
+        Text("Hello")
+        
         
     }
 }
 
 #Preview {
-    PlacemarkView()
-        .modelContainer(SampleContainer.sample())
+//    NavigationStack {
+        PlacemarkView()
+            .modelContainer(SampleContainer.sample())
+//    }
 }

@@ -28,9 +28,8 @@ struct ActivityScroll: View {
                                 NavigationLink(value: step) {
                                     StepCard(step: step, image: Image(.beach), aspectRatio: cardAspectRatio)
                                 }
-                                
+
                                 .buttonStyle(.plain)
-                                .opacity(1.0)
 
                             }
                         } header: {

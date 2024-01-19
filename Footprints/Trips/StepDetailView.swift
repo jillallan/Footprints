@@ -17,6 +17,7 @@ struct StepDetailView: View {
     @State var isInspectorPresented: Bool = false
     @State var text: String = ""
     @State private var size: CGSize = .zero
+    @State var searchQuery: String = ""
     
     private var editorTitle: String {
         isNewStep ? "Add Step" : "Placemark Name"

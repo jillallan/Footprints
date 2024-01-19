@@ -34,6 +34,7 @@ struct TripDetailView: View {
             
             
         }
+
 #if os(iOS)
         .toolbarBackground(.hidden, for: .navigationBar)
         .toolbar(.hidden, for: .tabBar)

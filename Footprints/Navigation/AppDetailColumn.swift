@@ -22,10 +22,15 @@ struct AppDetailColumn: View {
                 )
             }
         }
-#if os(macOS)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background()
-#endif
+        .macOS { group in
+            group
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background()
+        }
+//#if os(macOS)
+//        .frame(maxWidth: .infinity, maxHeight: .infinity)
+//        .background()
+//#endif
         
     }
 }
