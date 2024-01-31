@@ -38,6 +38,16 @@ extension View {
         
     }
     
+    func onChange<Value>(
+        of value: Value,
+        debounceTime delayInterval: TimeInterval,
+        perform action: @escaping (_ newValue: Value) -> Void
+    ) -> some View where Value: Equatable {
+        modifier(DebouncedChangeViewModifier(trigger: value, action: action) {
+            try await Task.sleep(nanoseconds: UInt64(delayInterval * 1_000_000_000))
+        })
+    }
+    
     @ViewBuilder func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
          if condition {
              transform(self)
@@ -179,4 +189,26 @@ struct getAspectRatioModifier: ViewModifier {
     }
 }
 
+// https://github.com/Tunous/DebouncedOnChange/blob/main/Sources/DebouncedOnChange/DebouncedChangeViewModifier.swift
 
+struct DebouncedChangeViewModifier<Value>: ViewModifier where Value: Equatable {
+    let trigger: Value
+    let action: (Value) -> Void
+    let sleep: @Sendable () async throws -> Void
+
+    @State private var debouncedTask: Task<Void, Never>?
+
+    func body(content: Content) -> some View {
+        content.onChange(of: trigger) {
+            debouncedTask?.cancel()
+            debouncedTask = Task {
+                do {
+                    try await sleep()
+                    action(trigger)
+                } catch {
+                    return
+                }
+            }
+        }
+    }
+}

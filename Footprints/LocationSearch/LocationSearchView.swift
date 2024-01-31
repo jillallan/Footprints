@@ -58,7 +58,15 @@ struct LocationSearchView: View {
                     .navigationDestination(item: $searchResult) { mapItem in
                         LocationSearchResult(result: mapItem)
                     }
-                    .onChange(of: searchQuery) {
+//                    .onChange(of: searchQuery) {
+//                        Task {
+//                            await mapSearchService.search(
+//                                for: searchQuery,
+//                                in: step.region
+//                            )
+//                        }
+//                    }
+                    .onChange(of: searchQuery, debounceTime: 0.3) { searchQuery in
                         Task {
                             await mapSearchService.search(
                                 for: searchQuery,
