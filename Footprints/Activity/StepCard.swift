@@ -20,7 +20,7 @@ struct StepCard: View {
     let step: Step
     let image: Image
     let aspectRatio: CGFloat
-    let locationService = LocationService()
+    let locationService = MapService()
     
     var body: some View {
         image

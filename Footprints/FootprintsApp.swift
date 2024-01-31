@@ -10,14 +10,14 @@ import SwiftUI
 
 @main
 struct FootprintsApp: App {
-    
-    @State var mapSearchService = MapSearchService()
-    
+
+    @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(mapSearchService)
+                .environment(appDelegate.mapSearchService)
+                .environment(appDelegate.locationHandler)
         }
         .modelContainer(for: Trip.self, inMemory: true, isUndoEnabled: true)
     }

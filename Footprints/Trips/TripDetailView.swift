@@ -10,10 +10,12 @@ import SwiftData
 import SwiftUI
 
 struct TripDetailView: View {
+    @Environment(LocationHandler.self) private var locationHandler
     @Environment(\.modelContext) private var modelContext
     @Bindable var trip: Trip
     @Binding var navigationPath: NavigationPath
     @State var aspectRatio: AspectRatio = .zero(AspectRatio: 0.0)
+    @State private var currentLocation = CLLocation()
     
     var body: some View {
         VStack {
@@ -30,6 +32,9 @@ struct TripDetailView: View {
                             Label("Add step", systemImage: "plus")
                         }
                     }
+                }
+                .onAppear {
+                    currentLocation = locationHandler.lastLocation
                 }
         }
 
@@ -74,7 +79,11 @@ struct TripDetailView: View {
     
     func addStep() {
         // FIXME: Add location from local, location or last step
-        let newStep = Step(timestamp: .now, latitude: 51.5, longitude: 0.0)
+        let newStep = Step(
+            timestamp: .now,
+            latitude: currentLocation.coordinate.latitude,
+            longitude: currentLocation.coordinate.longitude
+        )
         newStep.trip = trip
         modelContext.insert(newStep)
         navigationPath.append(newStep)
@@ -86,6 +95,7 @@ struct TripDetailView: View {
         TabView {
             NavigationStack {
                 TripDetailView(trip: .bedminsterToBeijing, navigationPath: .constant(NavigationPath()))
+                    .environment(LocationHandler.preview)
             }
         }
     }

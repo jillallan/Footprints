@@ -50,7 +50,7 @@ final class ServicesTests: XCTestCase {
 //    }
     
     func testLocationServiceFetchesPlacemarkForLocation() throws {
-        let locationService = LocationService()
+        let locationService = MapService()
         let step = Step(timestamp: Date.now, latitude: 51.50867140101967, longitude: -0.07598862930584746)
         let expectation = expectation(description: "Geocode Location")
 
@@ -73,7 +73,7 @@ final class ServicesTests: XCTestCase {
     }
     
     func testLocationServiceFetchesLocationForAddress() throws {
-        let locationService = LocationService()
+        let locationService = MapService()
 //        let step = Step(timestamp: Date.now, latitude: 51.50867140101967, longitude: -0.07598862930584746)
         guard let region = Locale.current.region?.debugDescription else { return }
 
