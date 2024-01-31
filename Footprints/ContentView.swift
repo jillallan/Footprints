@@ -19,6 +19,7 @@ struct ContentView: View {
             NavigationSplitView {
                 // FIXME: Widen column width to improve display in large dynamic sizes if navigationSplitViewColumnWidth starts supporting larger widths on iPad
                 AppSidebarList(selection: $selection)
+                    .navigationSplitViewColumnWidth(min: 100, ideal: 200, max: 300)
             } detail: {
                 AppDetailColumn(screen: selection)
             }
@@ -29,4 +30,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .modelContainer(SampleContainer.sample())
+        .environment(MapSearchService.preview)
 }

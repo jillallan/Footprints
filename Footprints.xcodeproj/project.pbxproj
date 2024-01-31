@@ -30,14 +30,15 @@
 		782D63822AEBE51400C1C48A /* PlacemarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D637D2AEBE51400C1C48A /* PlacemarkView.swift */; };
 		782D63832AEBE51400C1C48A /* StepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D637E2AEBE51400C1C48A /* StepView.swift */; };
 		782D63852AEBEFEC00C1C48A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 782D63842AEBEFEC00C1C48A /* Localizable.xcstrings */; };
-		783C22242B5A855500D915FA /* LocationSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C22232B5A855500D915FA /* LocationSearch.swift */; };
 		783C22262B5AAE1F00D915FA /* LocationSearchSuggestionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C22252B5AAE1F00D915FA /* LocationSearchSuggestionRow.swift */; };
-		783C22282B5AB04200D915FA /* SearchResultSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C22272B5AB04200D915FA /* SearchResultSheet.swift */; };
 		783C222A2B5AB8A700D915FA /* Placemark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C22292B5AB8A700D915FA /* Placemark.swift */; };
 		783C222C2B5ACA6100D915FA /* MKCoordinateRegion+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C222B2B5ACA6100D915FA /* MKCoordinateRegion+Extension.swift */; };
 		783C222E2B5ACA8400D915FA /* MKCoordinateSpan+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C222D2B5ACA8400D915FA /* MKCoordinateSpan+Extension.swift */; };
 		783C22302B5ACAA200D915FA /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C222F2B5ACAA200D915FA /* Double+Extension.swift */; };
 		783C22322B5ACAF300D915FA /* CLLocationCoordinate2D+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C22312B5ACAF300D915FA /* CLLocationCoordinate2D+Extension.swift */; };
+		783C22342B5AD3F100D915FA /* PlacemarkDescribable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C22332B5AD3F100D915FA /* PlacemarkDescribable.swift */; };
+		783C36F22B6960B300AD8EDF /* LocationSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C36F12B6960B300AD8EDF /* LocationSearchView.swift */; };
+		783C36F42B69611400AD8EDF /* LocationSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C36F32B69611400AD8EDF /* LocationSearchResult.swift */; };
 		784DE4FA2B3B5ACD00E1229B /* DynamicSafeAreaInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784DE4F92B3B5ACD00E1229B /* DynamicSafeAreaInset.swift */; };
 		784DE4FC2B3B610300E1229B /* StepScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784DE4FB2B3B610300E1229B /* StepScroll.swift */; };
 		784DE4FE2B3B61C000E1229B /* StepOverviewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784DE4FD2B3B61C000E1229B /* StepOverviewCard.swift */; };
@@ -45,6 +46,10 @@
 		784DE5252B3F716E00E1229B /* SimpleHStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784DE5242B3F716E00E1229B /* SimpleHStack.swift */; };
 		784DE5272B40B09300E1229B /* NonGreedyScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784DE5262B40B09300E1229B /* NonGreedyScrollView.swift */; };
 		784DE5292B40B23A00E1229B /* EqualWidthHStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784DE5282B40B23A00E1229B /* EqualWidthHStack.swift */; };
+		784FDA4D2B5ED710006F10C1 /* CLPlacemark+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784FDA4C2B5ED710006F10C1 /* CLPlacemark+Extension.swift */; };
+		784FDA4F2B63CFB3006F10C1 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784FDA4E2B63CFB3006F10C1 /* LocationService.swift */; };
+		785134B02B640F6800E4F090 /* LocationSearchResultsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785134AF2B640F6800E4F090 /* LocationSearchResultsList.swift */; };
+		785134B42B6669D300E4F090 /* TestMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785134B32B6669D300E4F090 /* TestMapView.swift */; };
 		785FDB1A2AFE7D2700B1BF0E /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785FDB192AFE7D2700B1BF0E /* View+Extension.swift */; };
 		785FDB1C2B0166D200B1BF0E /* AddFirstStepCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785FDB1B2B0166D200B1BF0E /* AddFirstStepCard.swift */; };
 		785FDB1E2B01689F00B1BF0E /* StepCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785FDB1D2B01689F00B1BF0E /* StepCard.swift */; };
@@ -73,9 +78,7 @@
 		7870EC0C2AF2913A00080EE3 /* DateFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7870EC092AF2913300080EE3 /* DateFormatter+Extension.swift */; };
 		788732832B474DE90052E3C3 /* StepDetailViewTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788732822B474DE90052E3C3 /* StepDetailViewTextEditor.swift */; };
 		788732852B481E730052E3C3 /* PhotoGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788732842B481E730052E3C3 /* PhotoGrid.swift */; };
-		788732872B4820090052E3C3 /* StepInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788732862B4820090052E3C3 /* StepInspector.swift */; };
 		78A41DDC2B2CB335007621BA /* ActivityScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A41DDB2B2CB335007621BA /* ActivityScroll.swift */; };
-		78B4127D2B517DB900B97605 /* StepDetailTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B4127C2B517DB900B97605 /* StepDetailTest.swift */; };
 		78C1B4992B49EA8700871158 /* ServicesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C1B4982B49EA8700871158 /* ServicesTests.swift */; };
 		78C1B49D2B4B48FE00871158 /* MKMapItem+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C1B49C2B4B48FE00871158 /* MKMapItem+Extension.swift */; };
 		78DAEB742AED168F004350D7 /* NavigationUITests_Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DAEB732AED168F004350D7 /* NavigationUITests_Mac.swift */; };
@@ -140,14 +143,15 @@
 		782D637D2AEBE51400C1C48A /* PlacemarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacemarkView.swift; sourceTree = "<group>"; };
 		782D637E2AEBE51400C1C48A /* StepView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepView.swift; sourceTree = "<group>"; };
 		782D63842AEBEFEC00C1C48A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		783C22232B5A855500D915FA /* LocationSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearch.swift; sourceTree = "<group>"; };
 		783C22252B5AAE1F00D915FA /* LocationSearchSuggestionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchSuggestionRow.swift; sourceTree = "<group>"; };
-		783C22272B5AB04200D915FA /* SearchResultSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultSheet.swift; sourceTree = "<group>"; };
 		783C22292B5AB8A700D915FA /* Placemark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Placemark.swift; sourceTree = "<group>"; };
 		783C222B2B5ACA6100D915FA /* MKCoordinateRegion+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKCoordinateRegion+Extension.swift"; sourceTree = "<group>"; };
 		783C222D2B5ACA8400D915FA /* MKCoordinateSpan+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKCoordinateSpan+Extension.swift"; sourceTree = "<group>"; };
 		783C222F2B5ACAA200D915FA /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		783C22312B5ACAF300D915FA /* CLLocationCoordinate2D+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Extension.swift"; sourceTree = "<group>"; };
+		783C22332B5AD3F100D915FA /* PlacemarkDescribable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacemarkDescribable.swift; sourceTree = "<group>"; };
+		783C36F12B6960B300AD8EDF /* LocationSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchView.swift; sourceTree = "<group>"; };
+		783C36F32B69611400AD8EDF /* LocationSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchResult.swift; sourceTree = "<group>"; };
 		784DE4F92B3B5ACD00E1229B /* DynamicSafeAreaInset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicSafeAreaInset.swift; sourceTree = "<group>"; };
 		784DE4FB2B3B610300E1229B /* StepScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepScroll.swift; sourceTree = "<group>"; };
 		784DE4FD2B3B61C000E1229B /* StepOverviewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepOverviewCard.swift; sourceTree = "<group>"; };
@@ -155,6 +159,10 @@
 		784DE5242B3F716E00E1229B /* SimpleHStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleHStack.swift; sourceTree = "<group>"; };
 		784DE5262B40B09300E1229B /* NonGreedyScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonGreedyScrollView.swift; sourceTree = "<group>"; };
 		784DE5282B40B23A00E1229B /* EqualWidthHStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualWidthHStack.swift; sourceTree = "<group>"; };
+		784FDA4C2B5ED710006F10C1 /* CLPlacemark+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLPlacemark+Extension.swift"; sourceTree = "<group>"; };
+		784FDA4E2B63CFB3006F10C1 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		785134AF2B640F6800E4F090 /* LocationSearchResultsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchResultsList.swift; sourceTree = "<group>"; };
+		785134B32B6669D300E4F090 /* TestMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestMapView.swift; sourceTree = "<group>"; };
 		785FDB192AFE7D2700B1BF0E /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		785FDB1B2B0166D200B1BF0E /* AddFirstStepCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFirstStepCard.swift; sourceTree = "<group>"; };
 		785FDB1D2B01689F00B1BF0E /* StepCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCard.swift; sourceTree = "<group>"; };
@@ -177,9 +185,7 @@
 		7870EC092AF2913300080EE3 /* DateFormatter+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extension.swift"; sourceTree = "<group>"; };
 		788732822B474DE90052E3C3 /* StepDetailViewTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepDetailViewTextEditor.swift; sourceTree = "<group>"; };
 		788732842B481E730052E3C3 /* PhotoGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGrid.swift; sourceTree = "<group>"; };
-		788732862B4820090052E3C3 /* StepInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepInspector.swift; sourceTree = "<group>"; };
 		78A41DDB2B2CB335007621BA /* ActivityScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityScroll.swift; sourceTree = "<group>"; };
-		78B4127C2B517DB900B97605 /* StepDetailTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepDetailTest.swift; sourceTree = "<group>"; };
 		78C1B4982B49EA8700871158 /* ServicesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesTests.swift; sourceTree = "<group>"; };
 		78C1B49C2B4B48FE00871158 /* MKMapItem+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapItem+Extension.swift"; sourceTree = "<group>"; };
 		78DAEB712AED168F004350D7 /* FootprintsUITests-Mac.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FootprintsUITests-Mac.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -263,8 +269,9 @@
 				782D637E2AEBE51400C1C48A /* StepView.swift */,
 				782D63792AEBE4C700C1C48A /* Navigation */,
 				785FC2E92AEBF916004F32BF /* Trips */,
-				784DE5232B3F714E00E1229B /* CustomContainers */,
 				785FDB252B02D01300B1BF0E /* Activity */,
+				783C36F52B69936E00AD8EDF /* LocationSearch */,
+				784DE5232B3F714E00E1229B /* CustomContainers */,
 				782D63612AEBE1B300C1C48A /* Extensions */,
 				782D63382AEBDF0600C1C48A /* Assets.xcassets */,
 				782D633A2AEBDF0600C1C48A /* Footprints.entitlements */,
@@ -312,6 +319,8 @@
 			isa = PBXGroup;
 			children = (
 				7870EC092AF2913300080EE3 /* DateFormatter+Extension.swift */,
+				784FDA4C2B5ED710006F10C1 /* CLPlacemark+Extension.swift */,
+				783C22332B5AD3F100D915FA /* PlacemarkDescribable.swift */,
 				78C1B49C2B4B48FE00871158 /* MKMapItem+Extension.swift */,
 				78709C842AEC04E600E53D1C /* String+Extension.swift */,
 				78709C7E2AEC034000E53D1C /* Date+Extension.swift */,
@@ -339,6 +348,17 @@
 			path = Navigation;
 			sourceTree = "<group>";
 		};
+		783C36F52B69936E00AD8EDF /* LocationSearch */ = {
+			isa = PBXGroup;
+			children = (
+				783C36F12B6960B300AD8EDF /* LocationSearchView.swift */,
+				783C36F32B69611400AD8EDF /* LocationSearchResult.swift */,
+				785134AF2B640F6800E4F090 /* LocationSearchResultsList.swift */,
+				783C22252B5AAE1F00D915FA /* LocationSearchSuggestionRow.swift */,
+			);
+			path = LocationSearch;
+			sourceTree = "<group>";
+		};
 		784DE5232B3F714E00E1229B /* CustomContainers */ = {
 			isa = PBXGroup;
 			children = (
@@ -357,11 +377,7 @@
 				781448ED2AEC3D7200090E89 /* AddTripView.swift */,
 				78E7C8A42AF042CB00450A0E /* TripDetailView.swift */,
 				7804E4432AF3E60F00C5E0CC /* StepDetailView.swift */,
-				78B4127C2B517DB900B97605 /* StepDetailTest.swift */,
-				788732862B4820090052E3C3 /* StepInspector.swift */,
-				783C22232B5A855500D915FA /* LocationSearch.swift */,
-				783C22252B5AAE1F00D915FA /* LocationSearchSuggestionRow.swift */,
-				783C22272B5AB04200D915FA /* SearchResultSheet.swift */,
+				785134B32B6669D300E4F090 /* TestMapView.swift */,
 				788732842B481E730052E3C3 /* PhotoGrid.swift */,
 				788732822B474DE90052E3C3 /* StepDetailViewTextEditor.swift */,
 				78709C752AEC014100E53D1C /* Trip.swift */,
@@ -413,6 +429,7 @@
 			isa = PBXGroup;
 			children = (
 				78F12A5A2B48613B00058ECA /* MapSearchService.swift */,
+				784FDA4E2B63CFB3006F10C1 /* LocationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -580,19 +597,19 @@
 			files = (
 				784DE4FA2B3B5ACD00E1229B /* DynamicSafeAreaInset.swift in Sources */,
 				78C1B49D2B4B48FE00871158 /* MKMapItem+Extension.swift in Sources */,
-				78B4127D2B517DB900B97605 /* StepDetailTest.swift in Sources */,
 				78709C852AEC04E600E53D1C /* String+Extension.swift in Sources */,
 				7804E4442AF3E60F00C5E0CC /* StepDetailView.swift in Sources */,
-				788732872B4820090052E3C3 /* StepInspector.swift in Sources */,
 				783C222A2B5AB8A700D915FA /* Placemark.swift in Sources */,
 				784DE4FC2B3B610300E1229B /* StepScroll.swift in Sources */,
 				782D63762AEBE4C200C1C48A /* AppDetailColumn.swift in Sources */,
 				785FDB292B02D09600B1BF0E /* LazyStack.swift in Sources */,
+				785134B02B640F6800E4F090 /* LocationSearchResultsList.swift in Sources */,
 				78E7C8A52AF042CB00450A0E /* TripDetailView.swift in Sources */,
 				784DE5272B40B09300E1229B /* NonGreedyScrollView.swift in Sources */,
 				78E7C8A92AF045B100450A0E /* SampleDataGenerator.swift in Sources */,
-				783C22282B5AB04200D915FA /* SearchResultSheet.swift in Sources */,
+				785134B42B6669D300E4F090 /* TestMapView.swift in Sources */,
 				782D63812AEBE51400C1C48A /* StatisticsView.swift in Sources */,
+				783C36F22B6960B300AD8EDF /* LocationSearchView.swift in Sources */,
 				783C22262B5AAE1F00D915FA /* LocationSearchSuggestionRow.swift in Sources */,
 				782D63822AEBE51400C1C48A /* PlacemarkView.swift in Sources */,
 				7804E4462AF3E75400C5E0CC /* Step.swift in Sources */,
@@ -601,6 +618,8 @@
 				78709C7C2AEC02E700E53D1C /* Trip-SampleData.swift in Sources */,
 				78709C7F2AEC034000E53D1C /* Date+Extension.swift in Sources */,
 				783C222C2B5ACA6100D915FA /* MKCoordinateRegion+Extension.swift in Sources */,
+				784FDA4D2B5ED710006F10C1 /* CLPlacemark+Extension.swift in Sources */,
+				783C22342B5AD3F100D915FA /* PlacemarkDescribable.swift in Sources */,
 				783C22322B5ACAF300D915FA /* CLLocationCoordinate2D+Extension.swift in Sources */,
 				782D63602AEBE19100C1C48A /* EnvironmentalValues+Extension.swift in Sources */,
 				78F12A5B2B48613B00058ECA /* MapSearchService.swift in Sources */,
@@ -611,7 +630,7 @@
 				782D637F2AEBE51400C1C48A /* TripView.swift in Sources */,
 				78709C762AEC014100E53D1C /* Trip.swift in Sources */,
 				782D63752AEBE4C200C1C48A /* AppSidebarList.swift in Sources */,
-				783C22242B5A855500D915FA /* LocationSearch.swift in Sources */,
+				784FDA4F2B63CFB3006F10C1 /* LocationService.swift in Sources */,
 				784DE5252B3F716E00E1229B /* SimpleHStack.swift in Sources */,
 				785FDB2B2B02DE6D00B1BF0E /* DynamicSafeAreaInsetModifier.swift in Sources */,
 				788732852B481E730052E3C3 /* PhotoGrid.swift in Sources */,
@@ -633,6 +652,7 @@
 				78A41DDC2B2CB335007621BA /* ActivityScroll.swift in Sources */,
 				785FDB1A2AFE7D2700B1BF0E /* View+Extension.swift in Sources */,
 				782D63772AEBE4C200C1C48A /* AppScreen.swift in Sources */,
+				783C36F42B69611400AD8EDF /* LocationSearchResult.swift in Sources */,
 				785FDB1E2B01689F00B1BF0E /* StepCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -826,6 +846,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationUsageDescription = "The location is required to automatically find where you are when making location entries in the app";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The location is required to automatically find where you are when making location entries in the app";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -864,6 +886,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationUsageDescription = "The location is required to automatically find where you are when making location entries in the app";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The location is required to automatically find where you are when making location entries in the app";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

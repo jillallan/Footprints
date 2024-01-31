@@ -11,6 +11,7 @@ import XCTest
 
 final class ServicesTests: XCTestCase {
     var locationName = ""
+    var location = CLLocation(latitude: 51.5, longitude: 0.0)
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -61,6 +62,7 @@ final class ServicesTests: XCTestCase {
                 locationName = cLPlacemark.name ?? "No name"
                 expectation.fulfill()
             case .failure(let error):
+                print(error)
                 return
             }
         }
@@ -68,6 +70,35 @@ final class ServicesTests: XCTestCase {
         waitForExpectations(timeout: 3)
         print(locationName)
         XCTAssertEqual(locationName, "Tower of London")
+    }
+    
+    func testLocationServiceFetchesLocationForAddress() throws {
+        let locationService = LocationService()
+//        let step = Step(timestamp: Date.now, latitude: 51.50867140101967, longitude: -0.07598862930584746)
+        guard let region = Locale.current.region?.debugDescription else { return }
+
+        
+        print("region is: \(String(describing: region))")
+        let expectation = expectation(description: "Geocode Location")
+        
+        
+        
+        Task {
+            let result = await locationService.fetchLocation(for: region)
+            switch result {
+            case .success(let cLLocation):
+                location = cLLocation
+                expectation.fulfill()
+            case .failure(let error):
+                print(error)
+                return
+            }
+        }
+        
+        waitForExpectations(timeout: 3)
+        print(location)
+        XCTAssertEqual(location.coordinate.latitude, 54.26, accuracy: 2) //54.26
+
     }
 
     func testPerformanceExample() throws {

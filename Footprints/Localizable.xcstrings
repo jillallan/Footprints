@@ -13,6 +13,9 @@
     "3" : {
 
     },
+    "Add" : {
+
+    },
     "Add step" : {
 
     },
@@ -37,16 +40,13 @@
     "End Date" : {
 
     },
+    "Getting placename" : {
+
+    },
     "Hello" : {
 
     },
     "Hello World" : {
-
-    },
-    "Hello, world!" : {
-
-    },
-    "Hello, World!" : {
 
     },
     "Journal" : {
@@ -58,9 +58,6 @@
           }
         }
       }
-    },
-    "Location" : {
-
     },
     "Location Search" : {
 
@@ -75,6 +72,9 @@
         }
       }
     },
+    "Nearby" : {
+
+    },
     "No Steps Added Yet" : {
 
     },
@@ -88,13 +88,19 @@
         }
       }
     },
-    "placeholder" : {
+    "Recent Locations" : {
+
+    },
+    "Recent Searches" : {
 
     },
     "Samples" : {
 
     },
     "Save" : {
+
+    },
+    "Search" : {
 
     },
     "Search for a location" : {
@@ -133,13 +139,10 @@
         }
       }
     },
-    "The Beach" : {
+    "There was an error getting a placename" : {
 
     },
     "Title" : {
-
-    },
-    "Toggle Inspector" : {
 
     },
     "Trip Summary" : {

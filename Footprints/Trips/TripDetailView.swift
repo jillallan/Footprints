@@ -31,8 +31,6 @@ struct TripDetailView: View {
                         }
                     }
                 }
-            
-            
         }
 
 #if os(iOS)
@@ -75,7 +73,8 @@ struct TripDetailView: View {
     }
     
     func addStep() {
-        let newStep = Step(timestamp: .now)
+        // FIXME: Add location from local, location or last step
+        let newStep = Step(timestamp: .now, latitude: 51.5, longitude: 0.0)
         newStep.trip = trip
         modelContext.insert(newStep)
         navigationPath.append(newStep)

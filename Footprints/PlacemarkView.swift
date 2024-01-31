@@ -10,25 +10,21 @@ import SwiftData
 import SwiftUI
 
 struct PlacemarkView: View {
-    @Query var steps: [Step]
-    let region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 51.5, longitude: 0.0),
-        span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-    )
-//    let numbers: [Int] = [1, 2, 3, 4, 5]
+    @Query var locations: [Placemark]
 
     var body: some View {
-        
-        
-        Text("Hello")
-        
-        
+        NavigationStack{
+            List {
+                ForEach(locations) { location in
+                    Text(location.name ?? "No location")
+                }
+            }
+            .navigationTitle("Locations")
+        }
     }
 }
 
 #Preview {
-//    NavigationStack {
-        PlacemarkView()
-            .modelContainer(SampleContainer.sample())
-//    }
+    PlacemarkView()
+        .modelContainer(SampleContainer.sample())
 }

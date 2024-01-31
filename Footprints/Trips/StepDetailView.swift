@@ -14,57 +14,50 @@ struct StepDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @Bindable var step: Step
     @State var isNewStep: Bool = false
-    @State var isInspectorPresented: Bool = false
-    @State var text: String = ""
     @State private var size: CGSize = .zero
-    @State var searchQuery: String = ""
+    @State private var isLocationSearchViewPresented: Bool = false
+    @State private var stepPosition: MapCameraPosition = .automatic
+    @State private var userLocationPosition: MapCameraPosition = .userLocation(fallback: .region(MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 51.5, longitude: 0.0),
+        span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))))
+    // FIXME: get region from locale
     
     private var editorTitle: String {
-        isNewStep ? "Add Step" : "Placemark Name"
-    }
-    
-
-    
-    var mapHeight: CGFloat {
-        if prefersTabNavigation {
-            if isInspectorPresented {
-                return size.height * 0.35
-            } else {
-                return size.height * 0.2
-            }
-            
-        } else {
-            return 200
-        }
+        isNewStep ? "Update Location" : step.placemark?.title ?? "Edit Step"
     }
     
     var body: some View {
-        
         VStack {
             ScrollView {
-                if prefersTabNavigation {
-                    Map(position: .constant(.automatic)) {
-                        // TODO: Add current position marker
-                    }
-                    .frame(height: mapHeight)
+                Map(position: isNewStep ? $userLocationPosition : $stepPosition) {
+                    Marker("", coordinate: step.coordinate)
                 }
+                .onAppear {
+                    stepPosition = .item(step.mapItem)
+                }
+                .frame(height: size.height * 0.3)
                 
                 VStack(alignment: .leading) {
-                    Text(step.timestamp.formatted(date: .abbreviated, time: .shortened))
-                        .font(.headline)
-                    Text("The Beach")
-                        .font(.subheadline)
-                        .padding(.bottom)
+                    Button {
+                        isLocationSearchViewPresented.toggle()
+                    } label: {
+                        Text(editorTitle)
+                            .font(.title)
+                    }
+                    .buttonStyle(.plain)
+                    
+//                    Text(step.timestamp.formatted(date: .abbreviated, time: .shortened))
+//                        .font(.subheadline)
+                    DatePicker("Date", selection: $step.timestamp, displayedComponents: [.date, .hourAndMinute])
+           
                     
                     PhotoGrid()
                 }
                 .padding()
             }
         }
-        .if(prefersTabNavigation) { view in
-            view.ignoresSafeArea(edges: .top)
-        }
-        .navigationTitle(editorTitle)
+        
+        .ignoresSafeArea(edges: .top)
         .navigationBarBackButtonHidden()
         
 #if os(iOS)
@@ -85,32 +78,27 @@ struct StepDetailView: View {
                     dismiss()
                 } label: {
                     Label(step.trip?.title ?? "Trip", systemImage: "chevron.left")
-                    
                 }
                 .labelStyle(.titleAndIcon)
             }
-            
-            ToolbarItem(placement: .primaryAction) {
-                Button {
-                    isInspectorPresented.toggle()
-                } label: {
-                    Label("Toggle Inspector", systemImage: "info.circle")
-                }
-            }
-        }
-        
-        .inspector(isPresented: $isInspectorPresented) {
-            StepInspector(step: step)
-//                .presentationDetents([.height(size.height)])
-                .presentationDetents([.mediumLarge])
         }
         
         .onAppear {
             if modelContext.insertedModelsArray.contains(where: { $0.persistentModelID == step.persistentModelID }) {
+                
+                print("is step new: \(true)")
                 isNewStep = true
-                isInspectorPresented = true
             }
         }
+        .sheet(isPresented: $isLocationSearchViewPresented) {
+            LocationSearchView(step: step)
+                .presentationDragIndicator(.visible)
+        }
+        .onChange(of: step) {
+            print("step changed")
+            isNewStep = false
+        }
+        
         .getSize($size)
     }
     
@@ -120,23 +108,36 @@ struct StepDetailView: View {
             modelContext.delete(step)
         }
     }
+//    
+//    func getLocationFromLocale() -> CLLocation {
+//        let locationService = LocationService()
+//        guard let region = Locale.current.region?.debugDescription else { return "US" }
+//        let result = await locationService.fetchLocation(for: region)
+//        
+//        switch result {
+//        case .success(let cLLocation):
+//            return cLLocation
+//            
+//        case .failure(let error):
+//            return
+//        }
+//    }
 }
 
 #Preview("Edit Step") {
     ModelPreview(SampleContainer.sample) {
         NavigationStack {
-            //            StepDetailView(step: Step.bedminsterStation, text: "Hello world")
-            StepDetailView(step: Step.bedminsterStation, text: "Bye bye, hello my name is Jill this is a long 2 line sentence")
+            StepDetailView(step: Step.bedminsterStation)
         }
     }
 }
 
 #Preview("New Step") {
     ModelPreview(SampleContainer.sample) {
-        let step = Step(timestamp: .now)
+        let step = Step(timestamp: .now, latitude: 0.0, longitude: 0.0)
         
         NavigationStack {
-            StepDetailView(step: step, isNewStep: true, isInspectorPresented: true)
+            StepDetailView(step: step, isNewStep: true)
         }
     }
 }
