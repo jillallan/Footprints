@@ -23,7 +23,7 @@ struct StepDetailView: View {
     // FIXME: get region from locale
     
     private var editorTitle: String {
-        isNewStep ? "Update Location" : step.placemark?.title ?? "Edit Step"
+        isNewStep ? "Update Location" : step.location?.title ?? "Edit Step"
     }
     
     var body: some View {

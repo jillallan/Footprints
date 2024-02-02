@@ -20,7 +20,7 @@ struct StepOverviewCard: View {
                     TextField("", text: $stepName)
                     DatePicker(step.timestamp.formatted(date: .abbreviated, time: .shortened), selection: $step.timestamp, displayedComponents: [.date, .hourAndMinute])
                         .accentColor(.indigo)
-                        .datePickerStyle(CustomDatePickerStyle())
+               
            
 
                 }

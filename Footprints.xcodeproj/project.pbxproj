@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		7804E4442AF3E60F00C5E0CC /* StepDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7804E4432AF3E60F00C5E0CC /* StepDetailView.swift */; };
 		7804E4462AF3E75400C5E0CC /* Step.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7804E4452AF3E75400C5E0CC /* Step.swift */; };
-		7812C6CB2B038107000BF5A4 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7812C6CA2B038107000BF5A4 /* TestView.swift */; };
 		781448EC2AEC3C6200090E89 /* TripTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781448EB2AEC3C6200090E89 /* TripTests.swift */; platformFilter = ios; };
 		781448EE2AEC3D7200090E89 /* AddTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781448ED2AEC3D7200090E89 /* AddTripView.swift */; };
 		782D63352AEBDF0500C1C48A /* FootprintsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D63342AEBDF0500C1C48A /* FootprintsApp.swift */; };
@@ -27,11 +26,11 @@
 		782D637F2AEBE51400C1C48A /* TripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D637A2AEBE51400C1C48A /* TripView.swift */; };
 		782D63802AEBE51400C1C48A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D637B2AEBE51400C1C48A /* SettingsView.swift */; };
 		782D63812AEBE51400C1C48A /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D637C2AEBE51400C1C48A /* StatisticsView.swift */; };
-		782D63822AEBE51400C1C48A /* PlacemarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D637D2AEBE51400C1C48A /* PlacemarkView.swift */; };
+		782D63822AEBE51400C1C48A /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D637D2AEBE51400C1C48A /* LocationView.swift */; };
 		782D63832AEBE51400C1C48A /* StepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D637E2AEBE51400C1C48A /* StepView.swift */; };
 		782D63852AEBEFEC00C1C48A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 782D63842AEBEFEC00C1C48A /* Localizable.xcstrings */; };
 		783C22262B5AAE1F00D915FA /* LocationSearchSuggestionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C22252B5AAE1F00D915FA /* LocationSearchSuggestionRow.swift */; };
-		783C222A2B5AB8A700D915FA /* Placemark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C22292B5AB8A700D915FA /* Placemark.swift */; };
+		783C222A2B5AB8A700D915FA /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C22292B5AB8A700D915FA /* Location.swift */; };
 		783C222C2B5ACA6100D915FA /* MKCoordinateRegion+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C222B2B5ACA6100D915FA /* MKCoordinateRegion+Extension.swift */; };
 		783C222E2B5ACA8400D915FA /* MKCoordinateSpan+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C222D2B5ACA8400D915FA /* MKCoordinateSpan+Extension.swift */; };
 		783C22302B5ACAA200D915FA /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C222F2B5ACAA200D915FA /* Double+Extension.swift */; };
@@ -39,17 +38,14 @@
 		783C22342B5AD3F100D915FA /* PlacemarkDescribable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C22332B5AD3F100D915FA /* PlacemarkDescribable.swift */; };
 		783C36F22B6960B300AD8EDF /* LocationSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C36F12B6960B300AD8EDF /* LocationSearchView.swift */; };
 		783C36F42B69611400AD8EDF /* LocationSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C36F32B69611400AD8EDF /* LocationSearchResult.swift */; };
-		784DE4FA2B3B5ACD00E1229B /* DynamicSafeAreaInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784DE4F92B3B5ACD00E1229B /* DynamicSafeAreaInset.swift */; };
 		784DE4FC2B3B610300E1229B /* StepScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784DE4FB2B3B610300E1229B /* StepScroll.swift */; };
 		784DE4FE2B3B61C000E1229B /* StepOverviewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784DE4FD2B3B61C000E1229B /* StepOverviewCard.swift */; };
-		784DE5002B3B679A00E1229B /* CustomDatePickerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784DE4FF2B3B679A00E1229B /* CustomDatePickerStyle.swift */; };
 		784DE5252B3F716E00E1229B /* SimpleHStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784DE5242B3F716E00E1229B /* SimpleHStack.swift */; };
 		784DE5272B40B09300E1229B /* NonGreedyScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784DE5262B40B09300E1229B /* NonGreedyScrollView.swift */; };
 		784DE5292B40B23A00E1229B /* EqualWidthHStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784DE5282B40B23A00E1229B /* EqualWidthHStack.swift */; };
 		784FDA4D2B5ED710006F10C1 /* CLPlacemark+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784FDA4C2B5ED710006F10C1 /* CLPlacemark+Extension.swift */; };
 		784FDA4F2B63CFB3006F10C1 /* MapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784FDA4E2B63CFB3006F10C1 /* MapService.swift */; };
 		785134B02B640F6800E4F090 /* LocationSearchResultsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785134AF2B640F6800E4F090 /* LocationSearchResultsList.swift */; };
-		785134B42B6669D300E4F090 /* TestMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785134B32B6669D300E4F090 /* TestMapView.swift */; };
 		785FDB1A2AFE7D2700B1BF0E /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785FDB192AFE7D2700B1BF0E /* View+Extension.swift */; };
 		785FDB1C2B0166D200B1BF0E /* AddFirstStepCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785FDB1B2B0166D200B1BF0E /* AddFirstStepCard.swift */; };
 		785FDB1E2B01689F00B1BF0E /* StepCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785FDB1D2B01689F00B1BF0E /* StepCard.swift */; };
@@ -76,16 +72,19 @@
 		7870EC0A2AF2913300080EE3 /* DateFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7870EC092AF2913300080EE3 /* DateFormatter+Extension.swift */; };
 		7870EC0B2AF2913A00080EE3 /* DateFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7870EC092AF2913300080EE3 /* DateFormatter+Extension.swift */; };
 		7870EC0C2AF2913A00080EE3 /* DateFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7870EC092AF2913300080EE3 /* DateFormatter+Extension.swift */; };
-		788732832B474DE90052E3C3 /* StepDetailViewTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788732822B474DE90052E3C3 /* StepDetailViewTextEditor.swift */; };
 		788732852B481E730052E3C3 /* PhotoGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788732842B481E730052E3C3 /* PhotoGrid.swift */; };
+		7891C1142B6D1C5D003F4F52 /* ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7891C1132B6D1C5D003F4F52 /* ExtensionTests.swift */; };
+		7891C1162B6D220A003F4F52 /* DateFormatterExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7891C1152B6D220A003F4F52 /* DateFormatterExtensionTests.swift */; };
 		78A41DDC2B2CB335007621BA /* ActivityScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A41DDB2B2CB335007621BA /* ActivityScroll.swift */; };
 		78A425DC2B6AE4F90013A611 /* LocationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A425DB2B6AE4F90013A611 /* LocationHandler.swift */; };
 		78A425DE2B6AEC4A0013A611 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A425DD2B6AEC4A0013A611 /* AppDelegate.swift */; };
+		78A425E62B6BD23B0013A611 /* GetSizeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A425E52B6BD23B0013A611 /* GetSizeModifier.swift */; };
+		78A425E82B6BD2540013A611 /* GetAspectRatioModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A425E72B6BD2540013A611 /* GetAspectRatioModifier.swift */; };
+		78A425EA2B6BD2990013A611 /* DebouncedOnChangeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A425E92B6BD2990013A611 /* DebouncedOnChangeModifier.swift */; };
 		78C1B4992B49EA8700871158 /* ServicesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C1B4982B49EA8700871158 /* ServicesTests.swift */; };
 		78C1B49D2B4B48FE00871158 /* MKMapItem+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C1B49C2B4B48FE00871158 /* MKMapItem+Extension.swift */; };
 		78DAEB742AED168F004350D7 /* NavigationUITests_Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DAEB732AED168F004350D7 /* NavigationUITests_Mac.swift */; };
 		78DAEB762AED168F004350D7 /* FootprintsUITests_MacLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DAEB752AED168F004350D7 /* FootprintsUITests_MacLaunchTests.swift */; };
-		78E507992B3AE7B80093D59C /* DynamicSafeAreaInsetOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E507982B3AE7B80093D59C /* DynamicSafeAreaInsetOld.swift */; };
 		78E7C8A52AF042CB00450A0E /* TripDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E7C8A42AF042CB00450A0E /* TripDetailView.swift */; };
 		78E7C8A72AF0440B00450A0E /* SampleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E7C8A62AF0440B00450A0E /* SampleContainer.swift */; };
 		78E7C8A92AF045B100450A0E /* SampleDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E7C8A82AF045B100450A0E /* SampleDataGenerator.swift */; };
@@ -120,7 +119,6 @@
 /* Begin PBXFileReference section */
 		7804E4432AF3E60F00C5E0CC /* StepDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepDetailView.swift; sourceTree = "<group>"; };
 		7804E4452AF3E75400C5E0CC /* Step.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step.swift; sourceTree = "<group>"; };
-		7812C6CA2B038107000BF5A4 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		781448EB2AEC3C6200090E89 /* TripTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTests.swift; sourceTree = "<group>"; };
 		781448ED2AEC3D7200090E89 /* AddTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTripView.swift; sourceTree = "<group>"; };
 		782D63312AEBDF0500C1C48A /* Footprints.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Footprints.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -142,11 +140,11 @@
 		782D637A2AEBE51400C1C48A /* TripView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripView.swift; sourceTree = "<group>"; };
 		782D637B2AEBE51400C1C48A /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		782D637C2AEBE51400C1C48A /* StatisticsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
-		782D637D2AEBE51400C1C48A /* PlacemarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacemarkView.swift; sourceTree = "<group>"; };
+		782D637D2AEBE51400C1C48A /* LocationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
 		782D637E2AEBE51400C1C48A /* StepView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepView.swift; sourceTree = "<group>"; };
 		782D63842AEBEFEC00C1C48A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		783C22252B5AAE1F00D915FA /* LocationSearchSuggestionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchSuggestionRow.swift; sourceTree = "<group>"; };
-		783C22292B5AB8A700D915FA /* Placemark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Placemark.swift; sourceTree = "<group>"; };
+		783C22292B5AB8A700D915FA /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		783C222B2B5ACA6100D915FA /* MKCoordinateRegion+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKCoordinateRegion+Extension.swift"; sourceTree = "<group>"; };
 		783C222D2B5ACA8400D915FA /* MKCoordinateSpan+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKCoordinateSpan+Extension.swift"; sourceTree = "<group>"; };
 		783C222F2B5ACAA200D915FA /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
@@ -154,17 +152,14 @@
 		783C22332B5AD3F100D915FA /* PlacemarkDescribable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacemarkDescribable.swift; sourceTree = "<group>"; };
 		783C36F12B6960B300AD8EDF /* LocationSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchView.swift; sourceTree = "<group>"; };
 		783C36F32B69611400AD8EDF /* LocationSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchResult.swift; sourceTree = "<group>"; };
-		784DE4F92B3B5ACD00E1229B /* DynamicSafeAreaInset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicSafeAreaInset.swift; sourceTree = "<group>"; };
 		784DE4FB2B3B610300E1229B /* StepScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepScroll.swift; sourceTree = "<group>"; };
 		784DE4FD2B3B61C000E1229B /* StepOverviewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepOverviewCard.swift; sourceTree = "<group>"; };
-		784DE4FF2B3B679A00E1229B /* CustomDatePickerStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePickerStyle.swift; sourceTree = "<group>"; };
 		784DE5242B3F716E00E1229B /* SimpleHStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleHStack.swift; sourceTree = "<group>"; };
 		784DE5262B40B09300E1229B /* NonGreedyScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonGreedyScrollView.swift; sourceTree = "<group>"; };
 		784DE5282B40B23A00E1229B /* EqualWidthHStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualWidthHStack.swift; sourceTree = "<group>"; };
 		784FDA4C2B5ED710006F10C1 /* CLPlacemark+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLPlacemark+Extension.swift"; sourceTree = "<group>"; };
 		784FDA4E2B63CFB3006F10C1 /* MapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapService.swift; sourceTree = "<group>"; };
 		785134AF2B640F6800E4F090 /* LocationSearchResultsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchResultsList.swift; sourceTree = "<group>"; };
-		785134B32B6669D300E4F090 /* TestMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestMapView.swift; sourceTree = "<group>"; };
 		785FDB192AFE7D2700B1BF0E /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		785FDB1B2B0166D200B1BF0E /* AddFirstStepCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFirstStepCard.swift; sourceTree = "<group>"; };
 		785FDB1D2B01689F00B1BF0E /* StepCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCard.swift; sourceTree = "<group>"; };
@@ -185,11 +180,15 @@
 		7870EC012AF28B7200080EE3 /* TripTests_Mac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTests_Mac.swift; sourceTree = "<group>"; };
 		7870EC072AF290E600080EE3 /* CalendarPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPicker.swift; sourceTree = "<group>"; };
 		7870EC092AF2913300080EE3 /* DateFormatter+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extension.swift"; sourceTree = "<group>"; };
-		788732822B474DE90052E3C3 /* StepDetailViewTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepDetailViewTextEditor.swift; sourceTree = "<group>"; };
 		788732842B481E730052E3C3 /* PhotoGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGrid.swift; sourceTree = "<group>"; };
+		7891C1132B6D1C5D003F4F52 /* ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionTests.swift; sourceTree = "<group>"; };
+		7891C1152B6D220A003F4F52 /* DateFormatterExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterExtensionTests.swift; sourceTree = "<group>"; };
 		78A41DDB2B2CB335007621BA /* ActivityScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityScroll.swift; sourceTree = "<group>"; };
 		78A425DB2B6AE4F90013A611 /* LocationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHandler.swift; sourceTree = "<group>"; };
 		78A425DD2B6AEC4A0013A611 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		78A425E52B6BD23B0013A611 /* GetSizeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSizeModifier.swift; sourceTree = "<group>"; };
+		78A425E72B6BD2540013A611 /* GetAspectRatioModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAspectRatioModifier.swift; sourceTree = "<group>"; };
+		78A425E92B6BD2990013A611 /* DebouncedOnChangeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebouncedOnChangeModifier.swift; sourceTree = "<group>"; };
 		78C1B4982B49EA8700871158 /* ServicesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesTests.swift; sourceTree = "<group>"; };
 		78C1B49C2B4B48FE00871158 /* MKMapItem+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapItem+Extension.swift"; sourceTree = "<group>"; };
 		78DAEB712AED168F004350D7 /* FootprintsUITests-Mac.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FootprintsUITests-Mac.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -197,7 +196,6 @@
 		78DAEB752AED168F004350D7 /* FootprintsUITests_MacLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootprintsUITests_MacLaunchTests.swift; sourceTree = "<group>"; };
 		78DAEB7C2AED17A0004350D7 /* TestPlan (macOS).xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "TestPlan (macOS).xctestplan"; sourceTree = "<group>"; };
 		78DAEB7D2AED17BF004350D7 /* TestPlan (iOS).xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "TestPlan (iOS).xctestplan"; sourceTree = "<group>"; };
-		78E507982B3AE7B80093D59C /* DynamicSafeAreaInsetOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicSafeAreaInsetOld.swift; sourceTree = "<group>"; };
 		78E7C8A42AF042CB00450A0E /* TripDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailView.swift; sourceTree = "<group>"; };
 		78E7C8A62AF0440B00450A0E /* SampleContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleContainer.swift; sourceTree = "<group>"; };
 		78E7C8A82AF045B100450A0E /* SampleDataGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDataGenerator.swift; sourceTree = "<group>"; };
@@ -267,15 +265,17 @@
 				782D63342AEBDF0500C1C48A /* FootprintsApp.swift */,
 				78F12A592B48612800058ECA /* Services */,
 				782D63362AEBDF0500C1C48A /* ContentView.swift */,
-				782D637D2AEBE51400C1C48A /* PlacemarkView.swift */,
+				782D637D2AEBE51400C1C48A /* LocationView.swift */,
 				782D637B2AEBE51400C1C48A /* SettingsView.swift */,
 				782D637C2AEBE51400C1C48A /* StatisticsView.swift */,
 				782D637E2AEBE51400C1C48A /* StepView.swift */,
 				782D63792AEBE4C700C1C48A /* Navigation */,
 				785FC2E92AEBF916004F32BF /* Trips */,
 				785FDB252B02D01300B1BF0E /* Activity */,
+				78A425DF2B6BD1280013A611 /* Photos */,
 				783C36F52B69936E00AD8EDF /* LocationSearch */,
 				784DE5232B3F714E00E1229B /* CustomContainers */,
+				78A425E02B6BD1720013A611 /* ViewModifiers */,
 				782D63612AEBE1B300C1C48A /* Extensions */,
 				782D63382AEBDF0600C1C48A /* Assets.xcassets */,
 				782D633A2AEBDF0600C1C48A /* Footprints.entitlements */,
@@ -297,7 +297,9 @@
 		782D63452AEBDF0600C1C48A /* FootprintsTests */ = {
 			isa = PBXGroup;
 			children = (
+				7891C1132B6D1C5D003F4F52 /* ExtensionTests.swift */,
 				78709C802AEC038B00E53D1C /* DateExtensionTests.swift */,
+				7891C1152B6D220A003F4F52 /* DateFormatterExtensionTests.swift */,
 				78709C862AEC04F700E53D1C /* StringExtensionTests.swift */,
 				78709C822AEC045000E53D1C /* TripTests.swift */,
 				78C1B4982B49EA8700871158 /* ServicesTests.swift */,
@@ -322,21 +324,18 @@
 		782D63612AEBE1B300C1C48A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				7870EC092AF2913300080EE3 /* DateFormatter+Extension.swift */,
-				784FDA4C2B5ED710006F10C1 /* CLPlacemark+Extension.swift */,
-				783C22332B5AD3F100D915FA /* PlacemarkDescribable.swift */,
-				78C1B49C2B4B48FE00871158 /* MKMapItem+Extension.swift */,
-				78709C842AEC04E600E53D1C /* String+Extension.swift */,
-				78709C7E2AEC034000E53D1C /* Date+Extension.swift */,
-				782D635F2AEBE19100C1C48A /* EnvironmentalValues+Extension.swift */,
-				785FDB192AFE7D2700B1BF0E /* View+Extension.swift */,
-				785FDB2A2B02DE6D00B1BF0E /* DynamicSafeAreaInsetModifier.swift */,
-				7812C6CA2B038107000BF5A4 /* TestView.swift */,
-				784DE4FF2B3B679A00E1229B /* CustomDatePickerStyle.swift */,
-				783C222B2B5ACA6100D915FA /* MKCoordinateRegion+Extension.swift */,
 				783C22312B5ACAF300D915FA /* CLLocationCoordinate2D+Extension.swift */,
-				783C222D2B5ACA8400D915FA /* MKCoordinateSpan+Extension.swift */,
+				784FDA4C2B5ED710006F10C1 /* CLPlacemark+Extension.swift */,
+				78709C7E2AEC034000E53D1C /* Date+Extension.swift */,
+				7870EC092AF2913300080EE3 /* DateFormatter+Extension.swift */,
 				783C222F2B5ACAA200D915FA /* Double+Extension.swift */,
+				782D635F2AEBE19100C1C48A /* EnvironmentalValues+Extension.swift */,
+				783C222B2B5ACA6100D915FA /* MKCoordinateRegion+Extension.swift */,
+				783C222D2B5ACA8400D915FA /* MKCoordinateSpan+Extension.swift */,
+				78C1B49C2B4B48FE00871158 /* MKMapItem+Extension.swift */,
+				783C22332B5AD3F100D915FA /* PlacemarkDescribable.swift */,
+				78709C842AEC04E600E53D1C /* String+Extension.swift */,
+				785FDB192AFE7D2700B1BF0E /* View+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -381,12 +380,9 @@
 				781448ED2AEC3D7200090E89 /* AddTripView.swift */,
 				78E7C8A42AF042CB00450A0E /* TripDetailView.swift */,
 				7804E4432AF3E60F00C5E0CC /* StepDetailView.swift */,
-				785134B32B6669D300E4F090 /* TestMapView.swift */,
-				788732842B481E730052E3C3 /* PhotoGrid.swift */,
-				788732822B474DE90052E3C3 /* StepDetailViewTextEditor.swift */,
 				78709C752AEC014100E53D1C /* Trip.swift */,
 				7804E4452AF3E75400C5E0CC /* Step.swift */,
-				783C22292B5AB8A700D915FA /* Placemark.swift */,
+				783C22292B5AB8A700D915FA /* Location.swift */,
 			);
 			path = Trips;
 			sourceTree = "<group>";
@@ -395,8 +391,6 @@
 			isa = PBXGroup;
 			children = (
 				78A41DDB2B2CB335007621BA /* ActivityScroll.swift */,
-				784DE4F92B3B5ACD00E1229B /* DynamicSafeAreaInset.swift */,
-				78E507982B3AE7B80093D59C /* DynamicSafeAreaInsetOld.swift */,
 				785FDB1F2B02712800B1BF0E /* TripSummaryCard.swift */,
 				785FDB212B02717600B1BF0E /* TripStatisticsCard.swift */,
 				785FDB1B2B0166D200B1BF0E /* AddFirstStepCard.swift */,
@@ -417,6 +411,25 @@
 				78E7C8A82AF045B100450A0E /* SampleDataGenerator.swift */,
 			);
 			path = "Sample Data";
+			sourceTree = "<group>";
+		};
+		78A425DF2B6BD1280013A611 /* Photos */ = {
+			isa = PBXGroup;
+			children = (
+				788732842B481E730052E3C3 /* PhotoGrid.swift */,
+			);
+			path = Photos;
+			sourceTree = "<group>";
+		};
+		78A425E02B6BD1720013A611 /* ViewModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				785FDB2A2B02DE6D00B1BF0E /* DynamicSafeAreaInsetModifier.swift */,
+				78A425E52B6BD23B0013A611 /* GetSizeModifier.swift */,
+				78A425E72B6BD2540013A611 /* GetAspectRatioModifier.swift */,
+				78A425E92B6BD2990013A611 /* DebouncedOnChangeModifier.swift */,
+			);
+			path = ViewModifiers;
 			sourceTree = "<group>";
 		};
 		78DAEB722AED168F004350D7 /* FootprintsUITests-Mac */ = {
@@ -601,11 +614,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				784DE4FA2B3B5ACD00E1229B /* DynamicSafeAreaInset.swift in Sources */,
 				78C1B49D2B4B48FE00871158 /* MKMapItem+Extension.swift in Sources */,
 				78709C852AEC04E600E53D1C /* String+Extension.swift in Sources */,
 				7804E4442AF3E60F00C5E0CC /* StepDetailView.swift in Sources */,
-				783C222A2B5AB8A700D915FA /* Placemark.swift in Sources */,
+				783C222A2B5AB8A700D915FA /* Location.swift in Sources */,
 				784DE4FC2B3B610300E1229B /* StepScroll.swift in Sources */,
 				782D63762AEBE4C200C1C48A /* AppDetailColumn.swift in Sources */,
 				785FDB292B02D09600B1BF0E /* LazyStack.swift in Sources */,
@@ -614,26 +626,27 @@
 				784DE5272B40B09300E1229B /* NonGreedyScrollView.swift in Sources */,
 				78E7C8A92AF045B100450A0E /* SampleDataGenerator.swift in Sources */,
 				78A425DE2B6AEC4A0013A611 /* AppDelegate.swift in Sources */,
-				785134B42B6669D300E4F090 /* TestMapView.swift in Sources */,
 				782D63812AEBE51400C1C48A /* StatisticsView.swift in Sources */,
 				783C36F22B6960B300AD8EDF /* LocationSearchView.swift in Sources */,
 				783C22262B5AAE1F00D915FA /* LocationSearchSuggestionRow.swift in Sources */,
-				782D63822AEBE51400C1C48A /* PlacemarkView.swift in Sources */,
+				782D63822AEBE51400C1C48A /* LocationView.swift in Sources */,
 				7804E4462AF3E75400C5E0CC /* Step.swift in Sources */,
 				782D63372AEBDF0500C1C48A /* ContentView.swift in Sources */,
 				781448EE2AEC3D7200090E89 /* AddTripView.swift in Sources */,
 				78709C7C2AEC02E700E53D1C /* Trip-SampleData.swift in Sources */,
+				78A425E82B6BD2540013A611 /* GetAspectRatioModifier.swift in Sources */,
 				78709C7F2AEC034000E53D1C /* Date+Extension.swift in Sources */,
 				783C222C2B5ACA6100D915FA /* MKCoordinateRegion+Extension.swift in Sources */,
 				784FDA4D2B5ED710006F10C1 /* CLPlacemark+Extension.swift in Sources */,
+				78A425EA2B6BD2990013A611 /* DebouncedOnChangeModifier.swift in Sources */,
 				783C22342B5AD3F100D915FA /* PlacemarkDescribable.swift in Sources */,
 				783C22322B5ACAF300D915FA /* CLLocationCoordinate2D+Extension.swift in Sources */,
 				782D63602AEBE19100C1C48A /* EnvironmentalValues+Extension.swift in Sources */,
 				78F12A5B2B48613B00058ECA /* MapSearchService.swift in Sources */,
+				78A425E62B6BD23B0013A611 /* GetSizeModifier.swift in Sources */,
 				784DE4FE2B3B61C000E1229B /* StepOverviewCard.swift in Sources */,
 				782D63802AEBE51400C1C48A /* SettingsView.swift in Sources */,
 				784DE5292B40B23A00E1229B /* EqualWidthHStack.swift in Sources */,
-				788732832B474DE90052E3C3 /* StepDetailViewTextEditor.swift in Sources */,
 				78A425DC2B6AE4F90013A611 /* LocationHandler.swift in Sources */,
 				782D637F2AEBE51400C1C48A /* TripView.swift in Sources */,
 				78709C762AEC014100E53D1C /* Trip.swift in Sources */,
@@ -646,11 +659,8 @@
 				782D63782AEBE4C200C1C48A /* AppTabView.swift in Sources */,
 				783C22302B5ACAA200D915FA /* Double+Extension.swift in Sources */,
 				783C222E2B5ACA8400D915FA /* MKCoordinateSpan+Extension.swift in Sources */,
-				78E507992B3AE7B80093D59C /* DynamicSafeAreaInsetOld.swift in Sources */,
 				78E7C8AB2AF0469300450A0E /* ModelPreview.swift in Sources */,
 				785FDB242B02734E00B1BF0E /* Step-SampleData.swift in Sources */,
-				784DE5002B3B679A00E1229B /* CustomDatePickerStyle.swift in Sources */,
-				7812C6CB2B038107000BF5A4 /* TestView.swift in Sources */,
 				785FDB222B02717600B1BF0E /* TripStatisticsCard.swift in Sources */,
 				785FDB202B02712800B1BF0E /* TripSummaryCard.swift in Sources */,
 				78E7C8A72AF0440B00450A0E /* SampleContainer.swift in Sources */,
@@ -670,12 +680,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				78709C7A2AEC025C00E53D1C /* MockDataContainer.swift in Sources */,
+				7891C1162B6D220A003F4F52 /* DateFormatterExtensionTests.swift in Sources */,
 				78709C812AEC038B00E53D1C /* DateExtensionTests.swift in Sources */,
 				78709C872AEC04F700E53D1C /* StringExtensionTests.swift in Sources */,
 				78C1B4992B49EA8700871158 /* ServicesTests.swift in Sources */,
 				78709C832AEC045000E53D1C /* TripTests.swift in Sources */,
 				78709C782AEC020100E53D1C /* BaseTestCase.swift in Sources */,
 				782D63472AEBDF0600C1C48A /* EnvironmentalValuesExtensionTests.swift in Sources */,
+				7891C1142B6D1C5D003F4F52 /* ExtensionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

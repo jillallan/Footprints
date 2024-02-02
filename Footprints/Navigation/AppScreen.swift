@@ -16,7 +16,7 @@ import SwiftUI
 enum AppScreen: String, Codable, Hashable, Identifiable, CaseIterable {
     case trips
     case steps
-    case placemarks
+    case locations
     case stats
     case settings
 
@@ -31,7 +31,7 @@ extension AppScreen {
             Label("Trips", systemImage: "airplane")
         case .steps:
             Label("Steps", systemImage: "figure.walk")
-        case .placemarks:
+        case .locations:
             Label("Locations", systemImage: "mappin.and.ellipse")
         case .stats:
             Label("Statistics", systemImage: "chart.bar.xaxis")
@@ -47,8 +47,8 @@ extension AppScreen {
             TripView()
         case .steps:
             StepView()
-        case .placemarks:
-            PlacemarkView()
+        case .locations:
+            LocationView()
         case .stats:
             StatisticsView()
         case .settings:

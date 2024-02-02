@@ -8,21 +8,62 @@
 import XCTest
 
 final class DateFormatterExtensionTests: XCTestCase {
+    var date: Date!
+    var year: Int!
+    var month: Int!
+    var day: Int!
+    var hour: Int!
+    var minute: Int!
+    var second: Int!
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        // if
+        year = Int.random(in: 1990...2030)
+        month = Int.random(in: 1...12)
+        day = Int.random(in: 1...28)
+        hour = Int.random(in: 1...24)
+        minute = Int.random(in: 0...60)
+        second = Int.random(in: 0...60)
+        
+        let dateComponents = DateComponents(
+            year: year,
+            month: month,
+            day: day,
+            hour: hour,
+            minute: minute,
+            second: second
+        )
+        
+        let calendar = Calendar(identifier: .gregorian)
+        date = calendar.date(from: dateComponents)
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    func test_dateFromString_withDefaukltFormat_ReturnsDate() throws {
+
+        //dateComponents.timeZone = TimeZone(abbreviation: "GMT") // Japan Standard Time
+        // when
+        let dateString = String(
+            format: "%04d-%02d-%02d %02d:%02d:%02d",
+            year, month, day, hour, minute, second
+        )
+        
+        if let newDate = DateFormatter().date(from: dateString),
+           let date {
+            XCTAssertEqual(newDate, date)
+        }
+    }
+    
+    func test_dateFromString_withDefaultFormat_ReturnsDate() throws {
+
+        // when
+        if let date {
+            let dateFormatter = DateFormatter()
+            date.formatted(Date.f)
+        }
     }
 
     func testPerformanceExample() throws {

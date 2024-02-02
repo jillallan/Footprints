@@ -18,7 +18,7 @@ final class Step {
     var longitude: Double
     
     var trip: Trip?
-    var placemark: Placemark?
+    var location: Location?
     
     // MARK: - Computed Properties
     var coordinate: CLLocationCoordinate2D {
@@ -32,6 +32,7 @@ final class Step {
     var mapItem: MKMapItem {
         // FIXME: save and load with encoder, for when no interenet acccess
         MKMapItem(placemark: MKPlacemark(coordinate: coordinate))
+        
     }
     
     var cameraPosition: MapCameraPosition {

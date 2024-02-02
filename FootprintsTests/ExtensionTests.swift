@@ -5,7 +5,9 @@
 //  Created by Jill Allan on 02/02/2024.
 //
 
+import CoreLocation
 import XCTest
+@testable import Footprints
 
 final class ExtensionTests: XCTestCase {
 
@@ -17,19 +19,23 @@ final class ExtensionTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    func testCentreOfCoordinates_withCoordinateArray_shouldReturnMeanOfCoordinates() throws {
+        // if
+        let coordinates = [
+            CLLocationCoordinate2D(latitude: 1.1, longitude: 2.2),
+            CLLocationCoordinate2D(latitude: 3.3, longitude: 4.4),
+            CLLocationCoordinate2D(latitude: 5.5, longitude: 6.6),
+            CLLocationCoordinate2D(latitude: 7.7, longitude: 8.8),
+        ]
+        
+        let latitudeMidPoint = (7.7 - 1.1) / 2
+        let longitudeMidPoint = (8.8 - 2.2) / 2
+        
+        // when
+        let centre = CLLocationCoordinate2D.centre(of: coordinates)
+        print(centre)
+        
+        //then
+        XCTAssertEqual(centre, CLLocationCoordinate2D(latitude: latitudeMidPoint, longitude: longitudeMidPoint))
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }

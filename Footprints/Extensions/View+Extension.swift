@@ -9,16 +9,8 @@ import Foundation
 import SwiftUI
 
 extension View {
-    func getWidth(_ width: Binding<CGFloat>) -> some View {
-        modifier(getWidthModifier(width: width))
-    }
-    
-    func getHeight(_ height: Binding<CGFloat>) -> some View {
-        modifier(getHeightModifier(height: height))
-    }
-    
     func getSize(_ size: Binding<CGSize>) -> some View {
-        modifier(getSizeModifier(size: size))
+        modifier(GetSizeModifier(size: size))
     }
     
     func getAspectRatio(_ aspectRatio: Binding<AspectRatio>) -> some View {
@@ -35,7 +27,6 @@ extension View {
         @ViewBuilder content: @escaping () -> V
     ) -> some View where V : View {
         modifier(DynamicSafeAreaInsetModifier(edge: edge, viewContent: content))
-        
     }
     
     func onChange<Value>(
@@ -43,7 +34,7 @@ extension View {
         debounceTime delayInterval: TimeInterval,
         perform action: @escaping (_ newValue: Value) -> Void
     ) -> some View where Value: Equatable {
-        modifier(DebouncedChangeViewModifier(trigger: value, action: action) {
+        modifier(DebouncedOnChangeViewModifier(trigger: value, action: action) {
             try await Task.sleep(nanoseconds: UInt64(delayInterval * 1_000_000_000))
         })
     }
@@ -94,121 +85,5 @@ extension View {
         #else
         return self
         #endif
-    }
-}
-
-struct getWidthModifier: ViewModifier {
-    @Binding var width: CGFloat
-    func body(content: Content) -> some View {
-        content
-            .background(
-                GeometryReader { geometry in
-                    let proxyWidth = geometry.size.width
-                    Color.clear
-                        .task(id: geometry.size.width) {
-                            $width.wrappedValue = max(proxyWidth, 0)
-                        }
-                }
-            )
-    }
-}
-
-struct getHeightModifier: ViewModifier {
-    @Binding var height: CGFloat
-    func body(content: Content) -> some View {
-        content
-            .background(
-                GeometryReader { geometry in
-                    let proxyHeight = geometry.size.height
-                    Color.clear
-                        .task(id: geometry.size.height) {
-                            $height.wrappedValue = max(proxyHeight, 0)
-                        }
-                }
-            )
-    }
-}
-
-struct getSizeModifier: ViewModifier {
-    @Binding var size: CGSize
-    func body(content: Content) -> some View {
-        content
-            .background(
-                GeometryReader { geometry in
-                    let proxySize = geometry.size
-                    Color.clear
-                        .task(id: geometry.size) {
-                            let width = max(proxySize.width, 0)
-                            let height = max(proxySize.height, 0)
-                            $size.wrappedValue = CGSize(width: width, height: height)
-                        }
-                }
-            )
-    }
-}
-
-enum AspectRatio {
-    case wide(aspectRatio: Double)
-    case landscape(aspectRatio: Double)
-    case square(aspectRatio: Double)
-    case portrait(aspectRatio: Double)
-    case tall(aspectRatio: Double)
-    case zero(AspectRatio: Double)
-}
-
-struct getAspectRatioModifier: ViewModifier {
-    @Binding var aspectRatio: AspectRatio
-    
-    func body(content: Content) -> some View {
-        content
-            .overlay(
-                GeometryReader { geometry in
-                    let proxySize = geometry.size
-                    Color.clear
-                        .task(id: geometry.size) {
-                            let ratio = max(proxySize.width, 0) / max(proxySize.height, 0)
-                            print("Aspect ratio: \(ratio)")
-                            switch ratio {
-                            case 2.1...:
-                                $aspectRatio.wrappedValue = AspectRatio.wide(aspectRatio: ratio)
-                            case 1.6..<2.1:
-                                $aspectRatio.wrappedValue = AspectRatio.landscape(aspectRatio: ratio)
-                            case 0.9..<1.6:
-                                $aspectRatio.wrappedValue = AspectRatio.square(aspectRatio: ratio)
-                            case 0.75..<0.9:
-                                $aspectRatio.wrappedValue = AspectRatio.portrait(aspectRatio: ratio)
-                            case ..<0.75:
-                                $aspectRatio.wrappedValue = AspectRatio.tall(aspectRatio: ratio)
-                            default:
-                                $aspectRatio.wrappedValue = AspectRatio.square(aspectRatio: ratio)
-                                
-                            }
-                        }
-                }
-            )
-    }
-}
-
-// https://github.com/Tunous/DebouncedOnChange/blob/main/Sources/DebouncedOnChange/DebouncedChangeViewModifier.swift
-
-struct DebouncedChangeViewModifier<Value>: ViewModifier where Value: Equatable {
-    let trigger: Value
-    let action: (Value) -> Void
-    let sleep: @Sendable () async throws -> Void
-
-    @State private var debouncedTask: Task<Void, Never>?
-
-    func body(content: Content) -> some View {
-        content.onChange(of: trigger) {
-            debouncedTask?.cancel()
-            debouncedTask = Task {
-                do {
-                    try await sleep()
-                    action(trigger)
-                } catch {
-                    return
-                }
-            }
-        }
     }
 }

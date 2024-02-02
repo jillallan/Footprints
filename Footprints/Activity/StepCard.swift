@@ -33,7 +33,7 @@ struct StepCard: View {
                     case .loading:
                         Text("Getting placename")
                     case .loaded:
-                        Text(step.placemark?.name ?? "No Name")
+                        Text(step.location?.name ?? "No Name")
                     case .failed:
                         Text("There was an error getting a placename")
                     }
@@ -44,23 +44,23 @@ struct StepCard: View {
                 .foregroundStyle(Color.white)
             }
             .onAppear {
-                if step.placemark != nil {
+                if step.location != nil {
                     loadingState = .loaded
                 }
             }
             .task {
-                if step.placemark == nil {
-                    await addPlacemark(for: step)
+                if step.location == nil {
+                    await addLocation(for: step)
                 }
             }
     }
     
-    func addPlacemark(for step: Step) async {
+    func addLocation(for step: Step) async {
         let result = await locationService.fetchPlacemark(for: step)
         
         switch result {
         case .success(let cLPlacemark):
-            addPlacemark(cLPlacemark: cLPlacemark, to: step)
+            addLocation(cLPlacemark: cLPlacemark, to: step)
             loadingState = .loaded
             
         case .failure(let error):
@@ -75,10 +75,10 @@ struct StepCard: View {
         }
     }
     
-    func addPlacemark(cLPlacemark: CLPlacemark, to step: Step) {
-        let placemark = Placemark(cLPlacemark: cLPlacemark)
-        step.placemark = placemark
-        modelContext.insert(placemark)
+    func addLocation(cLPlacemark: CLPlacemark, to step: Step) {
+        let location = Location(cLPlacemark: cLPlacemark)
+        step.location = location
+        modelContext.insert(location)
     }
 }
 

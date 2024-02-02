@@ -14,7 +14,7 @@ extension Double {
         
         if let min,
             let max {
-            return (min + max) / 2
+            return (max - min) / 2
         } else {
             return nil
         }

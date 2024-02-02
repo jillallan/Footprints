@@ -86,7 +86,7 @@ struct LocationSearchView: View {
             }
         }
         .onAppear {
-            if step.placemark != nil {
+            if step.location != nil {
                 position = .item(step.mapItem)
             } else {
                 position = .userLocation(fallback: .automatic)

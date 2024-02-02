@@ -26,7 +26,7 @@ struct LocationSearchSuggestionRow: View {
             Spacer()
             Button("Add") {
                 print("Add button pressed")
-                addplacemark(to: step)
+                addLocation(to: step)
                 dismissSearch()
                 dismissSearchView.toggle()
             }
@@ -34,10 +34,10 @@ struct LocationSearchSuggestionRow: View {
         }
     }
     
-    func addplacemark(to step: Step) {
-        let newPlacemark = Placemark(cLPlacemark: mapItem.placemark)
-        modelContext.insert(newPlacemark)
-        step.placemark = newPlacemark
+    func addLocation(to step: Step) {
+        let newLocation = Location(cLPlacemark: mapItem.placemark)
+        modelContext.insert(newLocation)
+        step.location = newLocation
     }
 }
 

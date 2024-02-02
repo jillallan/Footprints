@@ -10,7 +10,7 @@ import SwiftData
 import SwiftUI
 
 struct LocationSearchResultsList: View {
-    @Query var locations: [Placemark]
+    @Query var locations: [Location]
 
     var body: some View {
         List {
