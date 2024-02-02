@@ -1,5 +1,5 @@
 //
-//  Placemark.swift
+//  Location.swift
 //  Footprints
 //
 //  Created by Jill Allan on 19/01/2024.
@@ -10,7 +10,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class Placemark: PlacemarkDescribable {
+final class Location: PlacemarkDescribable {
     
     // MARK: - Properties
     var latitude: Double

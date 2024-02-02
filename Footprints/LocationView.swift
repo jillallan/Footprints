@@ -1,5 +1,5 @@
 //
-//  PlacemarkView.swift
+//  LocationView.swift
 //  Journal
 //
 //  Created by Jill Allan on 22/10/2023.
@@ -9,8 +9,8 @@ import MapKit
 import SwiftData
 import SwiftUI
 
-struct PlacemarkView: View {
-    @Query var locations: [Placemark]
+struct LocationView: View {
+    @Query var locations: [Location]
 
     var body: some View {
         NavigationStack{
@@ -25,6 +25,6 @@ struct PlacemarkView: View {
 }
 
 #Preview {
-    PlacemarkView()
+    LocationView()
         .modelContainer(SampleContainer.sample())
 }
