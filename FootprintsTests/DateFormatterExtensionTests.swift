@@ -56,15 +56,6 @@ final class DateFormatterExtensionTests: XCTestCase {
             XCTAssertEqual(newDate, date)
         }
     }
-    
-    func test_dateFromString_withDefaultFormat_ReturnsDate() throws {
-
-        // when
-        if let date {
-            let dateFormatter = DateFormatter()
-            date.formatted(Date.f)
-        }
-    }
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.

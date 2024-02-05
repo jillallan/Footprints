@@ -9,6 +9,9 @@
     }
   ],
   "defaultOptions" : {
+    "locationScenario" : {
+      "identifier" : "..\/..\/RK_gpx _2016-10-16_0829.gpx"
+    },
     "testTimeoutsEnabled" : true
   },
   "testTargets" : [

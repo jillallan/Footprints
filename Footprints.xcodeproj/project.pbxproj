@@ -160,6 +160,8 @@
 		784FDA4C2B5ED710006F10C1 /* CLPlacemark+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLPlacemark+Extension.swift"; sourceTree = "<group>"; };
 		784FDA4E2B63CFB3006F10C1 /* MapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapService.swift; sourceTree = "<group>"; };
 		785134AF2B640F6800E4F090 /* LocationSearchResultsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchResultsList.swift; sourceTree = "<group>"; };
+		7852DD9C2B7027F70019E852 /* RK_gpx _2016-10-16_0829.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "RK_gpx _2016-10-16_0829.gpx"; sourceTree = "<group>"; };
+		7852DD9D2B7181010019E852 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		785FDB192AFE7D2700B1BF0E /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		785FDB1B2B0166D200B1BF0E /* AddFirstStepCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFirstStepCard.swift; sourceTree = "<group>"; };
 		785FDB1D2B01689F00B1BF0E /* StepCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCard.swift; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 		782D63282AEBDF0500C1C48A = {
 			isa = PBXGroup;
 			children = (
+				7852DD9C2B7027F70019E852 /* RK_gpx _2016-10-16_0829.gpx */,
 				78DAEB7D2AED17BF004350D7 /* TestPlan (iOS).xctestplan */,
 				78DAEB7C2AED17A0004350D7 /* TestPlan (macOS).xctestplan */,
 				782D63332AEBDF0500C1C48A /* Footprints */,
@@ -262,6 +265,7 @@
 		782D63332AEBDF0500C1C48A /* Footprints */ = {
 			isa = PBXGroup;
 			children = (
+				7852DD9D2B7181010019E852 /* Info.plist */,
 				782D63342AEBDF0500C1C48A /* FootprintsApp.swift */,
 				78F12A592B48612800058ECA /* Services */,
 				782D63362AEBDF0500C1C48A /* ContentView.swift */,
@@ -866,6 +870,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Footprints/Info.plist;
 				INFOPLIST_KEY_NSLocationUsageDescription = "The location is required to automatically find where you are when making location entries in the app";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The location is required to automatically find where you are when making location entries in the app";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -906,6 +911,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Footprints/Info.plist;
 				INFOPLIST_KEY_NSLocationUsageDescription = "The location is required to automatically find where you are when making location entries in the app";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The location is required to automatically find where you are when making location entries in the app";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;

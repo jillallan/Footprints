@@ -11,7 +11,7 @@ import OSLog
 
 @Observable 
 @MainActor
-class LocationHandler {
+class LocationHandler: NSObject {
     private let logger = Logger(
         subsystem: Bundle.main.bundleIdentifier!,
         category: String(describing: LocationHandler.self)
@@ -20,10 +20,24 @@ class LocationHandler {
 //    static let shared = LocationHandler()  // Create a single, shared instance of the object.
     private let manager: CLLocationManager
     private var background: CLBackgroundActivitySession?
+//    var getLastLocation: ((CLLocation?) -> Void)?
     
     var lastLocation = CLLocation()
     var isStationary = false
     var count = 0
+    
+    
+    var locationUpdatesAvailable: Bool = UserDefaults.standard.bool(forKey: "locationUpdatesAvailable") {
+        didSet {
+            UserDefaults.standard.set(locationUpdatesAvailable, forKey: "locationUpdatesAvailable")
+        }
+    }
+    
+    var significantLocationChangeMonitoringAvailable: Bool = UserDefaults.standard.bool(forKey: "significantLocationChangeMonitoringAvailable") {
+        didSet {
+            UserDefaults.standard.set(significantLocationChangeMonitoringAvailable, forKey: "significantLocationChangeMonitoringAvailable")
+        }
+    }
     
     var updatesStarted: Bool = UserDefaults.standard.bool(forKey: "liveUpdatesStarted") {
         didSet {
@@ -38,9 +52,20 @@ class LocationHandler {
         }
     }
     
-    init() {
+    
+    override init() {
         // Creating a location manager instance is safe to call here in `MainActor`.
         self.manager = CLLocationManager()
+        super.init()
+        manager.delegate = self
+    }
+    
+    func checklocationUpdatesAvailable() {
+        locationUpdatesAvailable = CLLocationManager.locationServicesEnabled()
+    }
+    
+    func checkSignificantLocationChangeMonitoringAvailable() {
+        locationUpdatesAvailable = CLLocationManager.significantLocationChangeMonitoringAvailable()
     }
     
     func startLocationUpdates() {
@@ -59,6 +84,7 @@ class LocationHandler {
                         self.lastLocation = location
                         self.isStationary = update.isStationary
                         self.count += 1
+//                        getLastLocation?(location)
                         print("Location \(self.count): \(self.lastLocation)")
                     }
                 }
@@ -74,6 +100,10 @@ class LocationHandler {
         self.backgroundActivity = false
     }
     
+    func requestLocation() {
+        manager.requestLocation()
+    }
+    
 //
 //    func enableLocationServices() {
 //        // TODO: enable
@@ -82,14 +112,19 @@ class LocationHandler {
 //    func disableLocationServices() {
 //        // TODO: disable
 //    }
-//    
-//    func requestLocation() {
-//        
-//    }
+//
 //    
 //    func getLocale() -> Locale {
 //        return Locale.current
 //    }
+}
+
+extension LocationHandler: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            lastLocation = location
+        }
+    }
 }
 
 extension LocationHandler {

@@ -28,4 +28,34 @@ extension DateFormatter {
         
         return df
     }()
+    
+    static let dayOrdinal_d: DateFormatter = {
+        let df = DateFormatter()
+        let localeIdentifier = NSLocale.current.identifier
+        df.locale = Locale(identifier: localeIdentifier)
+        df.setLocalizedDateFormatFromTemplate("dd")
+        df.locale = Locale.autoupdatingCurrent
+        
+        return df
+    }()
+    
+    static let monthLong: DateFormatter = {
+        let df = DateFormatter()
+        let localeIdentifier = NSLocale.current.identifier
+        df.locale = Locale(identifier: localeIdentifier)
+        df.setLocalizedDateFormatFromTemplate("MMMM")
+        df.locale = Locale.autoupdatingCurrent
+        
+        return df
+    }()
+    
+    static let year: DateFormatter = {
+        let df = DateFormatter()
+        let localeIdentifier = NSLocale.current.identifier
+        df.locale = Locale(identifier: localeIdentifier)
+        df.setLocalizedDateFormatFromTemplate("yyyy")
+        df.locale = Locale.autoupdatingCurrent
+        
+        return df
+    }()
 }

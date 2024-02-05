@@ -41,6 +41,24 @@ final class ServicesTests: XCTestCase {
 
     }
     
+//    @MainActor func testStartLocationUpdates_shouldUpdateLastLocation() throws {
+//        let locationHandler = LocationHandler()
+////        locationHandler.startLocationUpdates()
+//        
+//        let expectation = expectation(description: "Start location updates")
+//        locationHandler.startLocationUpdates()
+//        
+//        locationHandler.getLastLocation = { loc in
+//            XCTAssertEqual(loc, CLLocation(latitude: 51.5, longitude: 0.0))
+//            expectation.fulfill()
+//        }
+//        
+//        locationHandler.startLocationUpdates()
+//        
+//        waitForExpectations(timeout: 3)
+// 
+//    }
+    
 //    actor LocationNameActor {
 //        var locationName = ""
 //        
