@@ -9,6 +9,7 @@ import MapKit
 import SwiftUI
 
 struct StepDetailView: View {
+    @Environment(LocationHandler.self) private var locationHandler
     @Environment(\.prefersTabNavigation) private var prefersTabNavigation
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
@@ -17,9 +18,7 @@ struct StepDetailView: View {
     @State private var size: CGSize = .zero
     @State private var isLocationSearchViewPresented: Bool = false
     @State private var stepPosition: MapCameraPosition = .automatic
-    @State private var userLocationPosition: MapCameraPosition = .userLocation(fallback: .region(MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 51.5, longitude: 0.0),
-        span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))))
+    @State private var userLocationPosition: MapCameraPosition = .userLocation(fallback: .automatic)
     // FIXME: get region from locale
     
     private var editorTitle: String {
@@ -84,12 +83,14 @@ struct StepDetailView: View {
         }
         
         .onAppear {
+
             if modelContext.insertedModelsArray.contains(where: { $0.persistentModelID == step.persistentModelID }) {
                 
                 print("is step new: \(true)")
                 isNewStep = true
             }
         }
+
         .sheet(isPresented: $isLocationSearchViewPresented) {
             LocationSearchView(step: step)
                 .presentationDragIndicator(.visible)
@@ -99,9 +100,9 @@ struct StepDetailView: View {
             isNewStep = false
         }
         
+        
         .getSize($size)
     }
-    
     
     func discardNewStep() {
         if isNewStep {
@@ -129,6 +130,7 @@ struct StepDetailView: View {
         NavigationStack {
             StepDetailView(step: Step.bedminsterStation)
         }
+        .environment(LocationHandler.preview)
     }
 }
 
@@ -139,5 +141,6 @@ struct StepDetailView: View {
         NavigationStack {
             StepDetailView(step: step, isNewStep: true)
         }
+        .environment(LocationHandler.preview)
     }
 }

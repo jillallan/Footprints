@@ -27,14 +27,28 @@ struct TripDetailView: View {
                 .toolbar {
                     ToolbarItem(placement: .primaryAction) {
                         Button {
-                            addStep()
+                            Task {
+                                await addStep()
+                            }
+//                            addStep()
                         } label: {
                             Label("Add step", systemImage: "plus")
                         }
                     }
                 }
                 .onAppear {
-                    currentLocation = locationHandler.lastLocation
+//                    locationHandler.requestLocation()
+//                    currentLocation = locationHandler.lastLocation
+                    locationHandler.requestLocation { location in
+                        print("location completion in on appear: \(location)")
+                    }
+                }
+                .task {
+                    let location = await updateLocation()
+
+//                    locationHandler.requestLocation { location in
+                    print("location completion in task: \(String(describing: location))")
+//                    }
                 }
         }
 
@@ -77,8 +91,10 @@ struct TripDetailView: View {
         }
     }
     
-    func addStep() {
+    func addStep() async {
         // FIXME: Add location from local, location or last step
+//        locationHandler.requestLocation()
+        
         let newStep = Step(
             timestamp: .now,
             latitude: currentLocation.coordinate.latitude,
@@ -87,6 +103,28 @@ struct TripDetailView: View {
         newStep.trip = trip
         modelContext.insert(newStep)
         navigationPath.append(newStep)
+    }
+    
+    func upateLocation() async {
+        do {
+            let location = try await locationHandler.requestLocation()
+        } catch {
+            print(error)
+        }
+        
+    }
+    
+    func updateLocation() async -> CLLocation? {
+        do {
+            // 1. Get the current location from the location manager
+            return try await locationHandler.currentLocation
+        
+            // 2. Update the camera position of the map to center around the user location
+//            self.updateMapPosition()
+        } catch {
+            print("Could not get user location: \(error.localizedDescription)")
+        }
+        return nil
     }
 }
 

@@ -9,35 +9,30 @@ import CoreLocation
 import Foundation
 import OSLog
 
-@Observable 
-@MainActor
+@Observable
 class LocationHandler: NSObject {
     private let logger = Logger(
         subsystem: Bundle.main.bundleIdentifier!,
         category: String(describing: LocationHandler.self)
     )
     
-//    static let shared = LocationHandler()  // Create a single, shared instance of the object.
-    private let manager: CLLocationManager
+    private let locationManager = CLLocationManager()
     private var background: CLBackgroundActivitySession?
-//    var getLastLocation: ((CLLocation?) -> Void)?
+//    var locationManagerCallback: ((CLLocation) -> ())?
+    private var continuation: CheckedContinuation<CLLocation, Error>?
+    
+    var currentLocation: CLLocation {
+        get async throws {
+            return try await withCheckedThrowingContinuation { continuation in
+                self.continuation = continuation
+                locationManager.requestLocation()
+            }
+        }
+    }
     
     var lastLocation = CLLocation()
-    var isStationary = false
     var count = 0
     
-    
-    var locationUpdatesAvailable: Bool = UserDefaults.standard.bool(forKey: "locationUpdatesAvailable") {
-        didSet {
-            UserDefaults.standard.set(locationUpdatesAvailable, forKey: "locationUpdatesAvailable")
-        }
-    }
-    
-    var significantLocationChangeMonitoringAvailable: Bool = UserDefaults.standard.bool(forKey: "significantLocationChangeMonitoringAvailable") {
-        didSet {
-            UserDefaults.standard.set(significantLocationChangeMonitoringAvailable, forKey: "significantLocationChangeMonitoringAvailable")
-        }
-    }
     
     var updatesStarted: Bool = UserDefaults.standard.bool(forKey: "liveUpdatesStarted") {
         didSet {
@@ -54,44 +49,12 @@ class LocationHandler: NSObject {
     
     
     override init() {
-        // Creating a location manager instance is safe to call here in `MainActor`.
-        self.manager = CLLocationManager()
         super.init()
-        manager.delegate = self
-    }
-    
-    func checklocationUpdatesAvailable() {
-        locationUpdatesAvailable = CLLocationManager.locationServicesEnabled()
-    }
-    
-    func checkSignificantLocationChangeMonitoringAvailable() {
-        locationUpdatesAvailable = CLLocationManager.significantLocationChangeMonitoringAvailable()
-    }
-    
-    func startLocationUpdates() {
-        if self.manager.authorizationStatus == .notDetermined {
-            self.manager.requestWhenInUseAuthorization()
-        }
-        self.logger.info("Starting location updates")
-        
-        Task {
-            do {
-                self.updatesStarted = true
-                let updates = CLLocationUpdate.liveUpdates()
-                for try await update in updates {
-                    if !self.updatesStarted { break } // End location updates by breaking out of the loop.
-                    if let location = update.location {
-                        self.lastLocation = location
-                        self.isStationary = update.isStationary
-                        self.count += 1
-//                        getLastLocation?(location)
-                        print("Location \(self.count): \(self.lastLocation)")
-                    }
-                }
-            } catch {
-                print("Could not start location updates")
-            }
-        }
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.distanceFilter = 200
+        locationManager.allowsBackgroundLocationUpdates = true
+        locationManager.showsBackgroundLocationIndicator = true
     }
     
     func stopLocationUpdates() {
@@ -101,19 +64,61 @@ class LocationHandler: NSObject {
     }
     
     func requestLocation() {
-        manager.requestLocation()
+        print("location requested")
+        locationManager.requestLocation()
     }
     
-//
-//    func enableLocationServices() {
-//        // TODO: enable
-//    }
-//    
-//    func disableLocationServices() {
-//        // TODO: disable
-//    }
-//
-//    
+    func requestLocation() async throws -> CLLocation {
+        // https://www.createwithswift.com/updating-the-users-location-with-core-location-and-swift-concurrency-in-swiftui/
+        return try await currentLocation
+    }
+    
+    func requestLocation(completion: @escaping (CLLocation) -> ()) {
+        // https://stackoverflow.com/questions/41542393/core-location-delegates-value-in-closures
+        locationManager.requestLocation()
+//        locationManagerCallback = completion
+    }
+
+    func enablePowerSavingLocationServices() {
+        guard CLLocationManager.significantLocationChangeMonitoringAvailable() else {
+            return // Add alert
+        }
+        
+        switch locationManager.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
+            locationManager.startMonitoringVisits()
+            locationManager.startMonitoringSignificantLocationChanges()
+        case .notDetermined:
+            locationManager.requestAlwaysAuthorization()
+        case .denied, .restricted:
+            return
+        default:
+            return
+        }
+    }
+    
+    func enableHighPowerLocationServices() {
+        guard CLLocationManager.locationServicesEnabled() else {
+            return // Add alert
+        }
+        
+        switch locationManager.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
+            locationManager.startUpdatingLocation()
+        case .notDetermined:
+            locationManager.requestAlwaysAuthorization()
+        case .denied, .restricted:
+            return
+        default:
+            return
+        }
+    }
+    
+    func disableLocationServices() {
+        // TODO: disable
+    }
+
+    
 //    func getLocale() -> Locale {
 //        return Locale.current
 //    }
@@ -123,6 +128,37 @@ extension LocationHandler: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             lastLocation = location
+//            locationManagerCallback?(location)
+            continuation?.resume(returning: location)
+            print(location)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
+        // TODO:
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        continuation?.resume(throwing: error)
+        continuation = nil
+    }
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        switch manager.authorizationStatus {
+        case .authorizedWhenInUse, .authorizedAlways:  // Location services are available.
+            enablePowerSavingLocationServices()
+            break
+            
+        case .restricted, .denied:  // Location services currently unavailable.
+            disableLocationServices()
+            break
+            
+        case .notDetermined:        // Authorization not determined yet.
+           manager.requestWhenInUseAuthorization()
+            break
+            
+        default:
+            break
         }
     }
 }
