@@ -36,7 +36,7 @@ extension AppScreen {
         case .stats:
             Label("Statistics", systemImage: "chart.bar.xaxis")
         case .settings:
-            Label("Steps", systemImage: "gear")
+            Label("Settings", systemImage: "gear")
         }
     }
     

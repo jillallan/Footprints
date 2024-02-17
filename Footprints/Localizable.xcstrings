@@ -37,9 +37,6 @@
     "Hello" : {
 
     },
-    "Hello World" : {
-
-    },
     "Journal" : {
       "localizations" : {
         "en" : {
@@ -63,7 +60,13 @@
         }
       }
     },
+    "Namee" : {
+
+    },
     "Nearby" : {
+
+    },
+    "no step" : {
 
     },
     "No Steps Added Yet" : {
@@ -91,9 +94,6 @@
     "Save" : {
 
     },
-    "Search" : {
-
-    },
     "Search for a location" : {
 
     },
@@ -106,6 +106,9 @@
           }
         }
       }
+    },
+    "Settings" : {
+
     },
     "Start Date" : {
 
@@ -130,6 +133,9 @@
         }
       }
     },
+    "Taylor Swift – 1989" : {
+
+    },
     "There was an error getting a placename" : {
 
     },
@@ -148,9 +154,6 @@
           }
         }
       }
-    },
-    "View Settings" : {
-
     }
   },
   "version" : "1.0"

@@ -5,6 +5,7 @@
 //  Created by Jill Allan on 31/01/2024.
 //
 
+#if os(iOS)
 import Foundation
 import UIKit
 import SwiftUI
@@ -12,13 +13,13 @@ import SwiftUI
 class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
     
     @State var locationHandler: LocationHandler
-    @State var mapSearchService: MapSearchService
+//    @State var mapSearchService: MapSearchService
     
     override init() {
         let locationHandler = LocationHandler()
-        let mapSearchService = MapSearchService()
+//        let mapSearchService = MapSearchService()
         _locationHandler = State(wrappedValue: locationHandler)
-        _mapSearchService = State(wrappedValue: mapSearchService)
+//        _mapSearchService = State(wrappedValue: mapSearchService)
     }
 
     
@@ -28,3 +29,4 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         return true
     }
 }
+#endif

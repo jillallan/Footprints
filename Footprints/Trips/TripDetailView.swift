@@ -44,10 +44,10 @@ struct TripDetailView: View {
                     }
                 }
                 .task {
-                    let location = await updateLocation()
+//                    let location = await updateLocation()
 
 //                    locationHandler.requestLocation { location in
-                    print("location completion in task: \(String(describing: location))")
+//                    print("location completion in task: \(String(describing: location))")
 //                    }
                 }
         }

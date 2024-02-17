@@ -30,5 +30,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .modelContainer(SampleContainer.sample())
-        .environment(MapSearchService.preview)
+//        .environment(MapSearchService.preview)
 }

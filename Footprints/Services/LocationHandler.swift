@@ -17,7 +17,9 @@ class LocationHandler: NSObject {
     )
     
     private let locationManager = CLLocationManager()
+#if os(iOS)
     private var background: CLBackgroundActivitySession?
+#endif
 //    var locationManagerCallback: ((CLLocation) -> ())?
     private var continuation: CheckedContinuation<CLLocation, Error>?
     
@@ -40,12 +42,14 @@ class LocationHandler: NSObject {
         }
     }
     
+#if os(iOS)
     var backgroundActivity: Bool = UserDefaults.standard.bool(forKey: "BGActivitySessionStarted") {
         didSet {
             backgroundActivity ? self.background = CLBackgroundActivitySession() : self.background?.invalidate()
             UserDefaults.standard.set(backgroundActivity, forKey: "BGActivitySessionStarted")
         }
     }
+#endif
     
     
     override init() {
@@ -53,14 +57,21 @@ class LocationHandler: NSObject {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.distanceFilter = 200
+#if os(iOS)
         locationManager.allowsBackgroundLocationUpdates = true
+
         locationManager.showsBackgroundLocationIndicator = true
+#endif
+        
     }
     
     func stopLocationUpdates() {
         print("Stopping location updates")
         self.updatesStarted = false
+#if os(iOS)
         self.backgroundActivity = false
+#endif
+        
     }
     
     func requestLocation() {

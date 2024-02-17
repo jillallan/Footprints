@@ -13,7 +13,7 @@ struct LocationSearchResultsList: View {
     @Query var locations: [Location]
 
     var body: some View {
-        List {
+        LazyVStack {
             Section {
                 ForEach(locations) { location in
                     Text(location.name ?? "No location details")
@@ -34,6 +34,7 @@ struct LocationSearchResultsList: View {
                 Text("Nearby")
             }
         }
+        
         .navigationTitle("Location Search")
     }
 }

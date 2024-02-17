@@ -19,7 +19,23 @@ struct StepDetailView: View {
     @State private var isLocationSearchViewPresented: Bool = false
     @State private var stepPosition: MapCameraPosition = .automatic
     @State private var userLocationPosition: MapCameraPosition = .userLocation(fallback: .automatic)
+    @State var searchQuery: String = ""
+    @State var isSearchPresented: Bool = false
+    @State var mapSearchService = MapSearchService()
+    @State var dismissSearchView: Bool = false
+
+
+    
     // FIXME: get region from locale
+    @State private var isZoomed = false
+    
+    var frame: Double {
+        isZoomed ? 0.75 : 0.30
+    }
+    
+    var toolbarBackground: Visibility {
+        isZoomed ? .visible : .hidden
+    }
     
     private var editorTitle: String {
         isNewStep ? "Update Location" : step.location?.title ?? "Edit Step"
@@ -31,25 +47,30 @@ struct StepDetailView: View {
                 Map(position: isNewStep ? $userLocationPosition : $stepPosition) {
                     Marker("", coordinate: step.coordinate)
                 }
+                
                 .onAppear {
                     stepPosition = .item(step.mapItem)
                 }
-                .frame(height: size.height * 0.3)
-                
+                .frame(height: size.height * frame)
+                .onTapGesture {
+                    withAnimation {
+                        isZoomed.toggle()
+                    }
+//                    isLocationSearchViewPresented.toggle()
+                    isSearchPresented.toggle()
+                    // TODO: When false make isHittable = false
+                }
+        
                 VStack(alignment: .leading) {
-                    Button {
+                    Button(editorTitle) {
                         isLocationSearchViewPresented.toggle()
-                    } label: {
-                        Text(editorTitle)
-                            .font(.title)
                     }
                     .buttonStyle(.plain)
+                    .font(.title)
                     
-//                    Text(step.timestamp.formatted(date: .abbreviated, time: .shortened))
-//                        .font(.subheadline)
                     DatePicker("Date", selection: $step.timestamp, displayedComponents: [.date, .hourAndMinute])
-           
-                    
+
+                    LocationSearchView2(step: step)
                     PhotoGrid()
                 }
                 .padding()
@@ -61,9 +82,10 @@ struct StepDetailView: View {
         
 #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(.hidden, for: .navigationBar)
+        .toolbarBackground(toolbarBackground, for: .navigationBar)
         .toolbar(.hidden, for: .tabBar)
 #endif
+        
         .toolbar {
             if isNewStep {
                 ToolbarItem(placement: .primaryAction) {
@@ -90,10 +112,23 @@ struct StepDetailView: View {
                 isNewStep = true
             }
         }
+        
+//        .inspector(isPresented: $isLocationSearchViewPresented) {
+//            LocationSearchView(step: step)
+//        }
+        
+
+
 
         .sheet(isPresented: $isLocationSearchViewPresented) {
+            withAnimation {
+                isZoomed.toggle()
+            }
+            
+        } content: {
             LocationSearchView(step: step)
                 .presentationDragIndicator(.visible)
+                .presentationDetents([.medium, .large])
         }
         .onChange(of: step) {
             print("step changed")

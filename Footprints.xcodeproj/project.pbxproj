@@ -89,6 +89,13 @@
 		78E7C8A72AF0440B00450A0E /* SampleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E7C8A62AF0440B00450A0E /* SampleContainer.swift */; };
 		78E7C8A92AF045B100450A0E /* SampleDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E7C8A82AF045B100450A0E /* SampleDataGenerator.swift */; };
 		78E7C8AB2AF0469300450A0E /* ModelPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E7C8AA2AF0469300450A0E /* ModelPreview.swift */; };
+		78E9EC822B7D0A3700D5F2A2 /* CustomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E9EC812B7D0A3700D5F2A2 /* CustomSheet.swift */; };
+		78E9EC882B7D58D800D5F2A2 /* CustomSheetViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E9EC872B7D58D800D5F2A2 /* CustomSheetViewModifier.swift */; };
+		78E9EC8A2B7D666500D5F2A2 /* SearchExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E9EC892B7D666500D5F2A2 /* SearchExample.swift */; };
+		78E9EC8E2B7F839500D5F2A2 /* SearchUIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E9EC8D2B7F839500D5F2A2 /* SearchUIKit.swift */; };
+		78E9EC902B7F849900D5F2A2 /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E9EC8F2B7F849900D5F2A2 /* SearchResults.swift */; };
+		78E9EC922B7F867000D5F2A2 /* NavigationUIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E9EC912B7F867000D5F2A2 /* NavigationUIKit.swift */; };
+		78E9EC942B7F9EC600D5F2A2 /* SearchTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E9EC932B7F9EC600D5F2A2 /* SearchTest.swift */; };
 		78F12A5B2B48613B00058ECA /* MapSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F12A5A2B48613B00058ECA /* MapSearchService.swift */; };
 /* End PBXBuildFile section */
 
@@ -202,6 +209,13 @@
 		78E7C8A62AF0440B00450A0E /* SampleContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleContainer.swift; sourceTree = "<group>"; };
 		78E7C8A82AF045B100450A0E /* SampleDataGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDataGenerator.swift; sourceTree = "<group>"; };
 		78E7C8AA2AF0469300450A0E /* ModelPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPreview.swift; sourceTree = "<group>"; };
+		78E9EC812B7D0A3700D5F2A2 /* CustomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSheet.swift; sourceTree = "<group>"; };
+		78E9EC872B7D58D800D5F2A2 /* CustomSheetViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSheetViewModifier.swift; sourceTree = "<group>"; };
+		78E9EC892B7D666500D5F2A2 /* SearchExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchExample.swift; sourceTree = "<group>"; };
+		78E9EC8D2B7F839500D5F2A2 /* SearchUIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUIKit.swift; sourceTree = "<group>"; };
+		78E9EC8F2B7F849900D5F2A2 /* SearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
+		78E9EC912B7F867000D5F2A2 /* NavigationUIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationUIKit.swift; sourceTree = "<group>"; };
+		78E9EC932B7F9EC600D5F2A2 /* SearchTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTest.swift; sourceTree = "<group>"; };
 		78F12A5A2B48613B00058ECA /* MapSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -359,6 +373,7 @@
 			isa = PBXGroup;
 			children = (
 				783C36F12B6960B300AD8EDF /* LocationSearchView.swift */,
+				78E9EC932B7F9EC600D5F2A2 /* SearchTest.swift */,
 				783C36F32B69611400AD8EDF /* LocationSearchResult.swift */,
 				785134AF2B640F6800E4F090 /* LocationSearchResultsList.swift */,
 				783C22252B5AAE1F00D915FA /* LocationSearchSuggestionRow.swift */,
@@ -384,6 +399,12 @@
 				781448ED2AEC3D7200090E89 /* AddTripView.swift */,
 				78E7C8A42AF042CB00450A0E /* TripDetailView.swift */,
 				7804E4432AF3E60F00C5E0CC /* StepDetailView.swift */,
+				78E9EC892B7D666500D5F2A2 /* SearchExample.swift */,
+				78E9EC812B7D0A3700D5F2A2 /* CustomSheet.swift */,
+				78E9EC8D2B7F839500D5F2A2 /* SearchUIKit.swift */,
+				78E9EC912B7F867000D5F2A2 /* NavigationUIKit.swift */,
+				78E9EC8F2B7F849900D5F2A2 /* SearchResults.swift */,
+				78E9EC872B7D58D800D5F2A2 /* CustomSheetViewModifier.swift */,
 				78709C752AEC014100E53D1C /* Trip.swift */,
 				7804E4452AF3E75400C5E0CC /* Step.swift */,
 				783C22292B5AB8A700D915FA /* Location.swift */,
@@ -628,6 +649,7 @@
 				785134B02B640F6800E4F090 /* LocationSearchResultsList.swift in Sources */,
 				78E7C8A52AF042CB00450A0E /* TripDetailView.swift in Sources */,
 				784DE5272B40B09300E1229B /* NonGreedyScrollView.swift in Sources */,
+				78E9EC8E2B7F839500D5F2A2 /* SearchUIKit.swift in Sources */,
 				78E7C8A92AF045B100450A0E /* SampleDataGenerator.swift in Sources */,
 				78A425DE2B6AEC4A0013A611 /* AppDelegate.swift in Sources */,
 				782D63812AEBE51400C1C48A /* StatisticsView.swift in Sources */,
@@ -637,6 +659,7 @@
 				7804E4462AF3E75400C5E0CC /* Step.swift in Sources */,
 				782D63372AEBDF0500C1C48A /* ContentView.swift in Sources */,
 				781448EE2AEC3D7200090E89 /* AddTripView.swift in Sources */,
+				78E9EC902B7F849900D5F2A2 /* SearchResults.swift in Sources */,
 				78709C7C2AEC02E700E53D1C /* Trip-SampleData.swift in Sources */,
 				78A425E82B6BD2540013A611 /* GetAspectRatioModifier.swift in Sources */,
 				78709C7F2AEC034000E53D1C /* Date+Extension.swift in Sources */,
@@ -646,6 +669,7 @@
 				783C22342B5AD3F100D915FA /* PlacemarkDescribable.swift in Sources */,
 				783C22322B5ACAF300D915FA /* CLLocationCoordinate2D+Extension.swift in Sources */,
 				782D63602AEBE19100C1C48A /* EnvironmentalValues+Extension.swift in Sources */,
+				78E9EC882B7D58D800D5F2A2 /* CustomSheetViewModifier.swift in Sources */,
 				78F12A5B2B48613B00058ECA /* MapSearchService.swift in Sources */,
 				78A425E62B6BD23B0013A611 /* GetSizeModifier.swift in Sources */,
 				784DE4FE2B3B61C000E1229B /* StepOverviewCard.swift in Sources */,
@@ -657,6 +681,7 @@
 				782D63752AEBE4C200C1C48A /* AppSidebarList.swift in Sources */,
 				784FDA4F2B63CFB3006F10C1 /* MapService.swift in Sources */,
 				784DE5252B3F716E00E1229B /* SimpleHStack.swift in Sources */,
+				78E9EC822B7D0A3700D5F2A2 /* CustomSheet.swift in Sources */,
 				785FDB2B2B02DE6D00B1BF0E /* DynamicSafeAreaInsetModifier.swift in Sources */,
 				788732852B481E730052E3C3 /* PhotoGrid.swift in Sources */,
 				782D63832AEBE51400C1C48A /* StepView.swift in Sources */,
@@ -666,15 +691,18 @@
 				78E7C8AB2AF0469300450A0E /* ModelPreview.swift in Sources */,
 				785FDB242B02734E00B1BF0E /* Step-SampleData.swift in Sources */,
 				785FDB222B02717600B1BF0E /* TripStatisticsCard.swift in Sources */,
+				78E9EC8A2B7D666500D5F2A2 /* SearchExample.swift in Sources */,
 				785FDB202B02712800B1BF0E /* TripSummaryCard.swift in Sources */,
 				78E7C8A72AF0440B00450A0E /* SampleContainer.swift in Sources */,
 				785FDB1C2B0166D200B1BF0E /* AddFirstStepCard.swift in Sources */,
 				782D63352AEBDF0500C1C48A /* FootprintsApp.swift in Sources */,
 				7870EC0A2AF2913300080EE3 /* DateFormatter+Extension.swift in Sources */,
 				78A41DDC2B2CB335007621BA /* ActivityScroll.swift in Sources */,
+				78E9EC942B7F9EC600D5F2A2 /* SearchTest.swift in Sources */,
 				785FDB1A2AFE7D2700B1BF0E /* View+Extension.swift in Sources */,
 				782D63772AEBE4C200C1C48A /* AppScreen.swift in Sources */,
 				783C36F42B69611400AD8EDF /* LocationSearchResult.swift in Sources */,
+				78E9EC922B7F867000D5F2A2 /* NavigationUIKit.swift in Sources */,
 				785FDB1E2B01689F00B1BF0E /* StepCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

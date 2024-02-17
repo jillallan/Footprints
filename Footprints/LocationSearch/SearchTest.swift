@@ -1,14 +1,14 @@
 //
-//  SearchView.swift
+//  SearchTest.swift
 //  Footprints
 //
-//  Created by Jill Allan on 30/01/2024.
+//  Created by Jill Allan on 16/02/2024.
 //
 
 import SwiftUI
 import MapKit
 
-struct LocationSearchView: View {
+struct LocationSearchView2: View {
 //    @Environment(MapSearchService.self) private var mapSearchService
     @State var mapSearchService = MapSearchService()
     @Environment(\.dismiss) private var dismiss
@@ -21,20 +21,12 @@ struct LocationSearchView: View {
     @Bindable var step: Step
     
     var body: some View {
-        VStack {
-            NavigationStack(path: $navPath) {
+//        VStack {
+//            NavigationStack(path: $navPath) {
                 LocationSearchResultsList()
-
-#if os(iOS)
-                    .navigationBarTitleDisplayMode(.inline)
                     .searchable(
                         text: $searchQuery,
                         placement: .navigationBarDrawer(displayMode: .always),
-                        prompt: "Search for a location"
-                    )
-#endif
-                    .searchable(
-                        text: $searchQuery,
                         prompt: "Search for a location"
                     )
                     .searchSuggestions {
@@ -46,20 +38,6 @@ struct LocationSearchView: View {
                             .buttonStyle(.plain)
                         }
                     }
-                    .navigationDestination(for: MKMapItem.self) { mapItem in
-                        LocationSearchResult(result: mapItem)
-                    }
-                    .navigationDestination(item: $searchResult) { mapItem in
-                        LocationSearchResult(result: mapItem)
-                    }
-                    .onChange(of: searchQuery) {
-                        Task {
-                            await mapSearchService.search(
-                                for: searchQuery,
-                                in: step.region
-                            )
-                        }
-                    }
                     .onChange(of: searchQuery, debounceTime: 0.3) { searchQuery in
                         Task {
                             await mapSearchService.search(
@@ -68,35 +46,15 @@ struct LocationSearchView: View {
                             )
                         }
                     }
-                    .onChange(of: isSearching) {
-                        print("search dismissed")
-                        dismiss()
-                    }
-                    .onChange(of: dismissSearchView) {
-                        dismiss()
-                    }
-                
-
-            }
-        }
-        .onAppear {
-            if step.location != nil {
-                position = .item(step.mapItem)
-            } else {
-                position = .userLocation(fallback: .automatic)
-            }
-            
-        }
-        .onChange(of: mapSearchService.searchResults) {
-            position = .automatic
-            
-        }
+//            }
+//        }
     }
 }
 
 #Preview {
     ModelPreview(SampleContainer.sample) {
-        LocationSearchView(mapSearchService: MapSearchService.preview, step: Step.stJohnsLane)
+        LocationSearchView2(mapSearchService: MapSearchService.preview, step: Step.stJohnsLane)
 //            .environment(MapSearchService.preview)
     }
 }
+

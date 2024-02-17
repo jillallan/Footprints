@@ -5,13 +5,9 @@
 //  Created by Jill Allan on 22/10/2023.
 //
 
+import MapKit
+import SwiftData
 import SwiftUI
-
-//struct SettingsView: View {
-//    var body: some View {
-//        Text(2, format: .number)
-//    }
-//}
 
 extension PresentationDetent {
     static let bar = Self.custom(BarDetent.self)
@@ -28,23 +24,20 @@ private struct BarDetent: CustomPresentationDetent {
 
 
 struct SettingsView: View {
-    @State private var showSettings = false
-    @State private var selectedDetent = PresentationDetent.bar
-
+    @Query var steps: [Step]
 
     var body: some View {
-        Button("View Settings") {
-            showSettings = true
-        }
-        .sheet(isPresented: $showSettings) {
-            Text("Hello World")
-                .interactiveDismissDisabled()
-                // set to scroll or resize based on condition, i.e. in list view, when small resize but when large scroll
-//                .presentationContentInteraction(.resizes)
-//                .presentationCompactAdaptation(.)
-                .presentationDetents(
-                    [.bar, .small, .medium, .large, .mediumLarge],
-                    selection: $selectedDetent)
+        NavigationStack {
+            if let step = steps.first {
+                VStack {
+                    ScrollView {
+                        Map()
+                        LocationSearchView2(step: step)
+                    }
+                }
+            } else {
+                Text("no step")
+            }
         }
     }
 }
