@@ -8,12 +8,12 @@
 import MapKit
 import SwiftUI
 
-struct LocationSearchSuggestionRow: View {
-    @Environment(\.modelContext) private var modelContext
+struct LocationSearchResultRow: View {
     @Environment(\.dismissSearch) private var dismissSearch
-    @Binding var dismissSearchView: Bool
-    @Bindable var step: Step
+    
     let mapItem: MKMapItem
+    @Binding var dismissSearchView: Bool
+    @Binding var resultClosure: (MKMapItem) -> ()
     
     var body: some View {
         HStack {
@@ -25,24 +25,26 @@ struct LocationSearchSuggestionRow: View {
             }
             Spacer()
             Button("Add") {
-                print("Add button pressed")
-                addLocation(to: step)
+                resultClosure(mapItem)
                 dismissSearch()
                 dismissSearchView.toggle()
             }
             .buttonStyle(.bordered)
         }
     }
-    
-    func addLocation(to step: Step) {
-        let newLocation = Location(cLPlacemark: mapItem.placemark)
-        modelContext.insert(newLocation)
-        step.location = newLocation
-    }
 }
 
-#Preview {
-    ModelPreview(SampleContainer.sample) {
-        LocationSearchSuggestionRow(dismissSearchView: .constant(false), step: Step.stJohnsLane, mapItem: Step.stJohnsLane.mapItem)
-    }
-}
+//struct LocationSearchResultRow_Preview: PreviewProvider {
+//    static var previews: some View {
+//        let coordinate = CLLocationCoordinate2D(latitude: 51.500685, longitude: -0.124570)
+//        let placemark = MKPlacemark(coordinate: coordinate)
+//        let mapItem = MKMapItem(placemark: placemark)
+//        
+//        List {
+////            Loca
+//            LocationSearchResultRow(
+//                mapItem: mapItem, 
+//                dismissSearchView: .constant(false)) { _ in }
+//        }
+//    }
+//}

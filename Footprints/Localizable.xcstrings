@@ -22,7 +22,13 @@
     "Add your first step." : {
 
     },
+    "Beaches" : {
+
+    },
     "Cancel" : {
+
+    },
+    "Coordinate: " : {
 
     },
     "Date" : {
@@ -31,10 +37,7 @@
     "End Date" : {
 
     },
-    "Getting placename" : {
-
-    },
-    "Hello" : {
+    "Fetching step name" : {
 
     },
     "Journal" : {
@@ -60,13 +63,13 @@
         }
       }
     },
+    "london" : {
+
+    },
     "Namee" : {
 
     },
     "Nearby" : {
-
-    },
-    "no step" : {
 
     },
     "No Steps Added Yet" : {
@@ -81,6 +84,9 @@
           }
         }
       }
+    },
+    "Playgrounds" : {
+
     },
     "Recent Locations" : {
 
@@ -136,10 +142,10 @@
     "Taylor Swift – 1989" : {
 
     },
-    "There was an error getting a placename" : {
+    "Title" : {
 
     },
-    "Title" : {
+    "Trip" : {
 
     },
     "Trip Summary" : {
@@ -154,6 +160,9 @@
           }
         }
       }
+    },
+    "Use as step location" : {
+
     }
   },
   "version" : "1.0"

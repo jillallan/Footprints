@@ -9,22 +9,26 @@ import SwiftUI
 import MapKit
 
 struct LocationSearchView: View {
-//    @Environment(MapSearchService.self) private var mapSearchService
-    @State var mapSearchService = MapSearchService()
+
+    // MARK: - Search query properties
+    @State var searchQuery: String = ""
+    
     @Environment(\.dismiss) private var dismiss
     @Environment(\.isSearching) private var isSearching
-    @State private var position: MapCameraPosition = .automatic
     @State var dismissSearchView: Bool = false
-    @State var navPath = NavigationPath()
-    @State var searchQuery: String = ""
+    
+    let coordinate: CLLocationCoordinate2D
+    // TODO: Change region to update based on last search.  e.g. if a search for italy then coffee the local area would be italy
+    let region: MKCoordinateRegion
+    @Binding var searchResults: [MKMapItem]
     @State var searchResult: MKMapItem?
-    @Bindable var step: Step
+    @State var resultClosure: (MKMapItem) -> ()
+    let localSearchCompleter = LocalSearchCompleter()
     
     var body: some View {
         VStack {
-            NavigationStack(path: $navPath) {
-                LocationSearchResultsList()
-
+            NavigationStack {
+                LocationSuggestions()
 #if os(iOS)
                     .navigationBarTitleDisplayMode(.inline)
                     .searchable(
@@ -38,13 +42,12 @@ struct LocationSearchView: View {
                         prompt: "Search for a location"
                     )
                     .searchSuggestions {
-                        ForEach(mapSearchService.searchResults, id: \.self) { mapItem in
-                            NavigationLink(value: mapItem) {
-//                                Text(mapItem.name ?? "No name")
-                                LocationSearchSuggestionRow(dismissSearchView: $dismissSearchView, step: step, mapItem: mapItem)
-                            }
-                            .buttonStyle(.plain)
-                        }
+                        LocalSearchCompleterResults(
+                            results: localSearchCompleter.completions,
+                            region: region,
+                            searchResults: $searchResults
+//                            resultClosure: $resultClosure
+                        )
                     }
                     .navigationDestination(for: MKMapItem.self) { mapItem in
                         LocationSearchResult(result: mapItem)
@@ -52,20 +55,10 @@ struct LocationSearchView: View {
                     .navigationDestination(item: $searchResult) { mapItem in
                         LocationSearchResult(result: mapItem)
                     }
-                    .onChange(of: searchQuery) {
+                    .onChange(of: searchQuery, debounceTime: 0.5) { searchQuery in
                         Task {
-                            await mapSearchService.search(
-                                for: searchQuery,
-                                in: step.region
-                            )
-                        }
-                    }
-                    .onChange(of: searchQuery, debounceTime: 0.3) { searchQuery in
-                        Task {
-                            await mapSearchService.search(
-                                for: searchQuery,
-                                in: step.region
-                            )
+//                            search(for: searchQuery)
+                            search2(for: searchQuery)
                         }
                     }
                     .onChange(of: isSearching) {
@@ -75,28 +68,45 @@ struct LocationSearchView: View {
                     .onChange(of: dismissSearchView) {
                         dismiss()
                     }
-                
-
             }
         }
-        .onAppear {
-            if step.location != nil {
-                position = .item(step.mapItem)
-            } else {
-                position = .userLocation(fallback: .automatic)
-            }
-            
+    }
+    func search(for query: String) {
+        let searchRequest = MKLocalSearch.Request()
+        searchRequest.region = region
+        searchRequest.naturalLanguageQuery = query
+        
+        Task {
+            let search = MKLocalSearch(request: searchRequest)
+            let searchResponse = try? await search.start()
+            searchResults = searchResponse?.mapItems ?? []
+            print(searchResults)
         }
-        .onChange(of: mapSearchService.searchResults) {
-            position = .automatic
-            
-        }
+    }
+    
+    func search2(for query: String) {
+        localSearchCompleter.search(for: query, in: region)
     }
 }
 
-#Preview {
-    ModelPreview(SampleContainer.sample) {
-        LocationSearchView(mapSearchService: MapSearchService.preview, step: Step.stJohnsLane)
-//            .environment(MapSearchService.preview)
+struct LocationSearchView_Preview: PreviewProvider {
+    static var previews: some View {
+        let coordinate = CLLocationCoordinate2D(latitude: 51.500685, longitude: -0.124570)
+        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 0.1, longitudinalMeters: 0.1)
+        let results: [MKMapItem] = []
+        
+        NavigationStack {
+            VStack {
+                
+            }
+
+            .sheet(isPresented: .constant(true)) {
+                LocationSearchView(coordinate: coordinate, region: region, searchResults: .constant(results)) { _ in }
+                    .presentationDragIndicator(.visible)
+                    .presentationDetents([.small, .medium, .large], selection: .constant(.medium))
+                    .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+                    .interactiveDismissDisabled()
+            }
+        }
     }
 }

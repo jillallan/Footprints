@@ -7,6 +7,7 @@
 
 import CoreLocation
 import Foundation
+import MapKit
 import SwiftData
 
 @Model
@@ -112,6 +113,30 @@ final class Location: PlacemarkDescribable {
             inlandWater: cLPlacemark.inlandWater,
             ocean: cLPlacemark.ocean,
             areaOfInterest: cLPlacemark.areaOfInterest,
+            createdDate: Date.now
+        )
+    }
+    
+    convenience init(coordinate: CLLocationCoordinate2D) {
+        let placemark = MKPlacemark(coordinate: coordinate)
+        print(placemark.description)
+        print(placemark.debugDescription)
+        self.init(
+            latitude: placemark.location?.coordinate.latitude ?? 0.0,
+            longitude: placemark.location?.coordinate.longitude ?? 0.0,
+            name: placemark.name,
+            subThoroughfare: placemark.subThoroughfare,
+            thoroughfare: placemark.thoroughfare,
+            subAdministrativeArea: placemark.subAdministrativeArea,
+            administrativeArea: placemark.administrativeArea,
+            subLocality: placemark.subLocality,
+            locality: placemark.locality,
+            postalCode: placemark.postalCode,
+            country: placemark.country,
+            isoCountryCode: placemark.isoCountryCode,
+            inlandWater: placemark.inlandWater,
+            ocean: placemark.ocean,
+            areaOfInterest: placemark.areaOfInterest,
             createdDate: Date.now
         )
     }

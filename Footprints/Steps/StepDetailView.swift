@@ -9,8 +9,6 @@ import MapKit
 import SwiftUI
 
 struct StepDetailView: View {
-    @Environment(LocationHandler.self) private var locationHandler
-    @Environment(\.prefersTabNavigation) private var prefersTabNavigation
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
     @Bindable var step: Step
@@ -19,22 +17,17 @@ struct StepDetailView: View {
     @State private var isLocationSearchViewPresented: Bool = false
     @State private var stepPosition: MapCameraPosition = .automatic
     @State private var userLocationPosition: MapCameraPosition = .userLocation(fallback: .automatic)
-    @State var searchQuery: String = ""
-    @State var isSearchPresented: Bool = false
-    @State var mapSearchService = MapSearchService()
+    
     @State var dismissSearchView: Bool = false
-
-
+    @State var result: MKMapItem?
+    @State var searchResults: [MKMapItem] = []
+    
     
     // FIXME: get region from locale
     @State private var isZoomed = false
     
     var frame: Double {
         isZoomed ? 0.75 : 0.30
-    }
-    
-    var toolbarBackground: Visibility {
-        isZoomed ? .visible : .hidden
     }
     
     private var editorTitle: String {
@@ -44,45 +37,21 @@ struct StepDetailView: View {
     var body: some View {
         VStack {
             ScrollView {
-                Map(position: isNewStep ? $userLocationPosition : $stepPosition) {
-                    Marker("", coordinate: step.coordinate)
-                }
-                
-                .onAppear {
-                    stepPosition = .item(step.mapItem)
-                }
+                StepDetailMap(isNewStep: isNewStep, step: step, searchResults: $searchResults)
                 .frame(height: size.height * frame)
                 .onTapGesture {
-                    withAnimation {
-                        isZoomed.toggle()
-                    }
-//                    isLocationSearchViewPresented.toggle()
-                    isSearchPresented.toggle()
-                    // TODO: When false make isHittable = false
+                    withAnimation { isZoomed.toggle() }
+                    isLocationSearchViewPresented.toggle()
                 }
-        
-                VStack(alignment: .leading) {
-                    Button(editorTitle) {
-                        isLocationSearchViewPresented.toggle()
-                    }
-                    .buttonStyle(.plain)
-                    .font(.title)
-                    
-                    DatePicker("Date", selection: $step.timestamp, displayedComponents: [.date, .hourAndMinute])
-
-                    LocationSearchView2(step: step)
-                    PhotoGrid()
-                }
-                .padding()
+                StepDetailSummary(step: step, editorTitle: editorTitle, isLocationSearchViewPresented: $isLocationSearchViewPresented)
             }
         }
-        
         .ignoresSafeArea(edges: .top)
         .navigationBarBackButtonHidden()
         
 #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(toolbarBackground, for: .navigationBar)
+        .toolbarBackground(.hidden, for: .navigationBar)
         .toolbar(.hidden, for: .tabBar)
 #endif
         
@@ -92,7 +61,6 @@ struct StepDetailView: View {
                     Button("Save") { dismiss() }
                 }
             }
-            
             ToolbarItem(placement: .navigation) {
                 Button {
                     discardNewStep()
@@ -103,40 +71,46 @@ struct StepDetailView: View {
                 .labelStyle(.titleAndIcon)
             }
         }
-        
+        .sheet(isPresented: $isLocationSearchViewPresented) {
+            withAnimation {
+                isZoomed.toggle()
+            }
+            print("result: \(String(describing: result))")
+            addLocation(to: step)
+        } content: {
+            LocationSearchView(
+                coordinate: step.coordinate,
+                region: MKCoordinateRegion(
+                    center: step.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.0001, longitudeDelta: 0.0001)),
+                searchResults: $searchResults
+            ) { mapItem in
+                result = mapItem
+            }
+            .presentationDragIndicator(.visible)
+            .presentationDetents([.small, .medium, .large], selection: .constant(.medium))
+            .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+            .interactiveDismissDisabled()
+        }
         .onAppear {
-
             if modelContext.insertedModelsArray.contains(where: { $0.persistentModelID == step.persistentModelID }) {
                 
                 print("is step new: \(true)")
                 isNewStep = true
             }
         }
-        
-//        .inspector(isPresented: $isLocationSearchViewPresented) {
-//            LocationSearchView(step: step)
-//        }
-        
-
-
-
-        .sheet(isPresented: $isLocationSearchViewPresented) {
-            withAnimation {
-                isZoomed.toggle()
-            }
-            
-        } content: {
-            LocationSearchView(step: step)
-                .presentationDragIndicator(.visible)
-                .presentationDetents([.medium, .large])
-        }
         .onChange(of: step) {
             print("step changed")
             isNewStep = false
         }
-        
-        
         .getSize($size)
+    }
+    
+    func addLocation(to step: Step) {
+        if let placemark = result?.placemark {
+            let newLocation = Location(cLPlacemark: placemark)
+            modelContext.insert(newLocation)
+            step.location = newLocation
+        }
     }
     
     func discardNewStep() {
@@ -144,20 +118,6 @@ struct StepDetailView: View {
             modelContext.delete(step)
         }
     }
-//    
-//    func getLocationFromLocale() -> CLLocation {
-//        let locationService = LocationService()
-//        guard let region = Locale.current.region?.debugDescription else { return "US" }
-//        let result = await locationService.fetchLocation(for: region)
-//        
-//        switch result {
-//        case .success(let cLLocation):
-//            return cLLocation
-//            
-//        case .failure(let error):
-//            return
-//        }
-//    }
 }
 
 #Preview("Edit Step") {

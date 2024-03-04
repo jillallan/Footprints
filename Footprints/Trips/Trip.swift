@@ -14,6 +14,7 @@ final class Trip {
     var title: String
     var startDate: Date
     var endDate: Date
+    var isAutoTrackingOn: Bool
     
     var steps: [Step]?
     
@@ -27,9 +28,10 @@ final class Trip {
     }
     
     // MARK: - Initialization
-    init(title: String = "New Trip", startDate: Date = .now, endDate: Date = .now) {
+    init(title: String = "New Trip", startDate: Date = .now, endDate: Date = .now, isAutoTrackingOn: Bool = false) {
         self.title = title
         self.startDate = startDate
         self.endDate = endDate
+        self.isAutoTrackingOn = isAutoTrackingOn
     }
 }

@@ -24,24 +24,17 @@ private struct BarDetent: CustomPresentationDetent {
 
 
 struct SettingsView: View {
-    @Query var steps: [Step]
-
+    @State var text: String = ""
+    @State var isSearchPresented: Bool = false
+    let coordinate = CLLocationCoordinate2D(latitude: 51.500685, longitude: -0.124570)
+    
     var body: some View {
-        NavigationStack {
-            if let step = steps.first {
-                VStack {
-                    ScrollView {
-                        Map()
-                        LocationSearchView2(step: step)
-                    }
-                }
-            } else {
-                Text("no step")
-            }
-        }
+        SearchMap()
     }
 }
 
 #Preview {
     SettingsView()
+
+    
 }

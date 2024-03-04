@@ -9,14 +9,14 @@ import MapKit
 import SwiftData
 import SwiftUI
 
-struct LocationSearchResultsList: View {
+struct LocationSuggestions: View {
     @Query var locations: [Location]
 
     var body: some View {
-        LazyVStack {
+        List {
             Section {
                 ForEach(locations) { location in
-                    Text(location.name ?? "No location details")
+                    RecentLocationRow(location: location)
                 }
             } header: {
                 Text("Recent Locations")
@@ -39,6 +39,7 @@ struct LocationSearchResultsList: View {
     }
 }
 
-//#Preview {
-//    LocationSearchResultsList()
-//}
+#Preview {
+    LocationSuggestions()
+        .modelContainer(SampleContainer.sample())
+}

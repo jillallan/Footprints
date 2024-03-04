@@ -9,14 +9,16 @@ import SwiftData
 import SwiftUI
 
 struct TripView: View {
+    // MARK: - Data Properties
     @Environment(\.modelContext) private var modelContext
     @Query var trips: [Trip]
-    @State var navPath = NavigationPath()
     
+    // MARK: - Navigation Properties
+    @State var navPath = NavigationPath()
     @State private var isAddTripViewPresented: Bool = false
     
+    // MARK: - View
     var body: some View {
-        let _ = Self._printChanges()
         NavigationStack(path: $navPath) {
             List {
                 ForEach(trips) { trip in
@@ -25,38 +27,41 @@ struct TripView: View {
                     }
                 }
             }
+            
+            // MARK: - Navigation
             .navigationTitle(AppScreen.trips.rawValue.capitalized)
+            .navigationDestination(for: Trip.self) { trip in
+                TripDetailView(trip: trip, navigationPath: $navPath)
+            }
+            
+            .sheet(isPresented: $isAddTripViewPresented) {
+                AddTripView(navigationPath: $navPath)
+            }
+            
+            // MARK: - Toolbar
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    Button {
+                    Button("Add trip", systemImage: "plus") {
                         isAddTripViewPresented.toggle()
-                    } label: {
-                        Label("Add trip", systemImage: "plus")
                     }
                 }
+            }
+            
+            // MARK: - Debug
+            .toolbar {
                 #if DEBUG
                 ToolbarItem {
                     Button("Samples") {
                         Task {
                             await createData()
                         }
-                        
                     }
                 }
                 #endif
             }
-            .navigationDestination(for: Trip.self) { trip in
-                TripDetailView(trip: trip, navigationPath: $navPath)
-//                TripDetailViewSimple(path: $navPath, trip: trip)
-            }
-            
-            .sheet(isPresented: $isAddTripViewPresented) {
-                AddTripView(navigationPath: $navPath)
-            }
         }
-        .environment(\.navigationPath, navPath)
     }
-        
+   
 #if DEBUG
     func createData() async {
         await SampleDataGenerator.generateSampleData(modelContext: modelContext)
@@ -64,6 +69,7 @@ struct TripView: View {
 #endif
 }
 
+// MARK: - Preview
 #Preview {
     NavigationStack {
         TripView()

@@ -11,8 +11,12 @@ import SwiftUI
 
 struct TripDetailView: View {
     @Environment(LocationHandler.self) private var locationHandler
+    
+    // MARK: - Data Properties
     @Environment(\.modelContext) private var modelContext
     @Bindable var trip: Trip
+    
+    // MARK: - Navigation Properties
     @Binding var navigationPath: NavigationPath
     @State var aspectRatio: AspectRatio = .zero(AspectRatio: 0.0)
     @State private var currentLocation = CLLocation()
@@ -30,25 +34,18 @@ struct TripDetailView: View {
                             Task {
                                 await addStep()
                             }
-//                            addStep()
                         } label: {
                             Label("Add step", systemImage: "plus")
                         }
                     }
                 }
                 .onAppear {
-//                    locationHandler.requestLocation()
-//                    currentLocation = locationHandler.lastLocation
                     locationHandler.requestLocation { location in
                         print("location completion in on appear: \(location)")
                     }
                 }
                 .task {
-//                    let location = await updateLocation()
 
-//                    locationHandler.requestLocation { location in
-//                    print("location completion in task: \(String(describing: location))")
-//                    }
                 }
         }
 

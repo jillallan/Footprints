@@ -9,15 +9,17 @@ import SwiftUI
 
 struct AddTripView: View {
     @Environment(\.sizeCategory) private var sizeCategory
+    // MARK: - Data Properties
     @Environment(\.modelContext) private var modelContext
-    @Environment(\.dismiss) private var dismiss
-    
-    @Binding var navigationPath: NavigationPath
-  
     @State private var title = ""
     @State private var startDate = Date.now
     @State private var endDate = Date.now
     
+    // MARK: - Navigation Properties
+    @Environment(\.dismiss) private var dismiss
+    @Binding var navigationPath: NavigationPath
+  
+    // MARK: - Computed Properties
     var saveDisabled: Bool {
         if title == "" {
             true
@@ -26,6 +28,7 @@ struct AddTripView: View {
         }
     }
     
+    // MARK: - View
     var body: some View {
         NavigationStack {
             Form {
@@ -45,19 +48,21 @@ struct AddTripView: View {
                 } else {
                     Section {
                         DatePicker("Start Date", selection: $startDate, displayedComponents: [.date])
-                            
                         DatePicker("End Date", selection: $endDate, displayedComponents: [.date])
-                            
+                        Toggle("Enable automatic trip tracking", isOn: <#T##Binding<Bool>#>)
                     }
                 }
-                
+
                 // TODO: Add picture
             }
             .formStyle(.grouped)
+            .macOS { $0.frame(minWidth: 440, maxWidth: .infinity, minHeight: 220, maxHeight: .infinity) }
+            
+            // MARK: - Navigation
             .navigationTitle("Add Trip")
-#if os(iOS)
-            .navigationBarTitleDisplayMode(.inline)
-#endif
+            .iOS { $0.navigationBarTitleDisplayMode(.inline) }
+            
+            // MARK: - Toolbar
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
@@ -72,10 +77,9 @@ struct AddTripView: View {
                     }
                 }
             }
-#if !os(iOS)
-            .frame(minWidth: 440, maxWidth: .infinity, minHeight: 220, maxHeight: .infinity)
-#endif
+
         }
+        // MARK: - View updates
         .onChange(of: startDate) {
             if endDate < startDate {
                 endDate = startDate
@@ -88,6 +92,7 @@ struct AddTripView: View {
         }
     }
     
+    // MARK: - Methods
     func addTrip() {
         let newTrip = Trip(title: title, startDate: startDate, endDate: endDate)
         modelContext.insert(newTrip)
@@ -95,6 +100,7 @@ struct AddTripView: View {
     }
 }
 
+// MARK: - Previews
 #Preview {
     AddTripView(navigationPath: .constant(NavigationPath()))
 }

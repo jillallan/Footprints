@@ -9,40 +9,18 @@ import CoreLocation
 import Foundation
 import OSLog
 
-@Observable class MapService: NSObject {
+enum NetworkError: Error {
+    case geocodeError, placemarkError, locationError
+}
+
+struct MapService {
     private let logger = Logger(
         subsystem: Bundle.main.bundleIdentifier!,
         category: String(describing: MapService.self)
     )
     
-    var currentLocation: CLLocation?
-    
-    enum NetworkError: Error {
-        case geocodeError, placemarkError, locationError
-    }
-    
-    override init() {
-        super.init()
-        locationManager.delegate = self
-//        locationManager.allowsBackgroundLocationUpdates = true
-//        locationManager.showsBackgroundLocationIndicator = true
-    }
-    
     let geocoder = CLGeocoder()
-    let locationManager = CLLocationManager()
-    
-    func enableLocationServices() {
-        // TODO: enable
-        locationManager.startUpdatingLocation()
-    }
-    
-    func disableLocationServices() {
-        // TODO: disable
-    }
-    
-//    func check() -> Bool {
-//        if CLLocationManager.
-//    }
+
    
     func fetchLocation(for address: String) async -> Result<CLLocation, NetworkError> {
 
@@ -72,33 +50,15 @@ import OSLog
         }
     }
     
-    func requestLocation() {
-        locationManager.requestLocation()
-    }
     
-    func getLocale() -> Locale {
-        return Locale.current
-    }
-}
-
-extension MapService: CLLocationManagerDelegate {
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        switch manager.authorizationStatus {
-        case .authorized, .authorizedAlways:
-            enableLocationServices()
-            break
-        case .denied, .restricted:
-            disableLocationServices()
-            break
-        case .notDetermined:
-            manager.requestWhenInUseAuthorization()
-            break
-        default:
-            break
+    func fetchPlacemark(for coordinate: CLLocationCoordinate2D) async throws -> CLPlacemark {
+        let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        let placemarks = try await geocoder.reverseGeocodeLocation(location)
+        if let placemark = placemarks.first {
+            return placemark
+        } else {
+            throw NetworkError.placemarkError
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        currentLocation = locations.first
-    }
 }
