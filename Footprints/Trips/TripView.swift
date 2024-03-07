@@ -11,6 +11,7 @@ import SwiftUI
 struct TripView: View {
     // MARK: - Data Properties
     @Environment(\.modelContext) private var modelContext
+    @Environment(LocationHandler.self) private var locationHandler
     @Query var trips: [Trip]
     
     // MARK: - Navigation Properties
@@ -20,6 +21,7 @@ struct TripView: View {
     // MARK: - View
     var body: some View {
         NavigationStack(path: $navPath) {
+           
             List {
                 ForEach(trips) { trip in
                     NavigationLink(value: trip) {

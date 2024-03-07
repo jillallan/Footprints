@@ -14,10 +14,15 @@ struct AddTripView: View {
     @State private var title = ""
     @State private var startDate = Date.now
     @State private var endDate = Date.now
+    @State private var isAutoTrackingEnabled: Bool = false
+    @State private var isAutoTrackingToggleDisabled: Bool = false
+
     
     // MARK: - Navigation Properties
     @Environment(\.dismiss) private var dismiss
     @Binding var navigationPath: NavigationPath
+    
+    @Environment(LocationHandler.self) private var locationHandler
   
     // MARK: - Computed Properties
     var saveDisabled: Bool {
@@ -45,11 +50,26 @@ struct AddTripView: View {
                         DatePicker("", selection: $endDate, displayedComponents: .date)
                     }
                     
+                    Section("Enable automatic trip tracking") {
+                        Toggle("", isOn: $isAutoTrackingEnabled)
+//                    } footer: {
+//                        if locationHandler.locationUpdatesAuthorized == 1 {
+//                            Text("Auto tracking is disabled as location services have been turned off for this app.  Go to iPhone settings to enable")
+//                            // TODO: Add better instructions.  e.g. click here for instructions
+//                        }
+                    }
+                    
                 } else {
                     Section {
                         DatePicker("Start Date", selection: $startDate, displayedComponents: [.date])
                         DatePicker("End Date", selection: $endDate, displayedComponents: [.date])
-                        Toggle("Enable automatic trip tracking", isOn: <#T##Binding<Bool>#>)
+                        Toggle("Enable automatic trip tracking", isOn: $isAutoTrackingEnabled)
+                            .disabled(isAutoTrackingToggleDisabled)
+                    } footer: {
+                        if locationHandler.locationUpdatesAuthorized == 1 {
+                            Text("Auto tracking is disabled as location services have been turned off for this app.  Go to iPhone settings to enable")
+                            // TODO: Add better instructions.  e.g. click here for instructions
+                        }
                     }
                 }
 
@@ -77,7 +97,6 @@ struct AddTripView: View {
                     }
                 }
             }
-
         }
         // MARK: - View updates
         .onChange(of: startDate) {
@@ -90,13 +109,41 @@ struct AddTripView: View {
                 startDate = endDate
             }
         }
+        
+        .onChange(of: isAutoTrackingEnabled) {
+            locationHandler.enableLocationServices()
+        }
+        .onChange(of: locationHandler.locationUpdatesAuthorized) {
+            authorisationDidChange()
+        }
     }
     
     // MARK: - Methods
     func addTrip() {
-        let newTrip = Trip(title: title, startDate: startDate, endDate: endDate)
+        let newTrip = Trip(title: title, startDate: startDate, endDate: endDate, isAutoTrackingOn: isAutoTrackingEnabled)
+        
+        print("location service required: \(DataHandler.checkLocationServicesRequired(context: modelContext))")
+        
         modelContext.insert(newTrip)
+        
+        if DataHandler.checkLocationServicesRequired(context: modelContext) {
+            locationHandler.startLocationServices()
+        }
+        
+        
         navigationPath.append(newTrip)
+    }
+    
+    func authorisationDidChange() {
+        switch locationHandler.locationUpdatesAuthorized {
+        case 0, 2:
+            isAutoTrackingToggleDisabled = false
+        case 1:
+            isAutoTrackingToggleDisabled = true
+            isAutoTrackingEnabled = false
+        default:
+            return
+        }
     }
 }
 

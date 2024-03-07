@@ -22,6 +22,9 @@
     "Add your first step." : {
 
     },
+    "Auto tracking is disabled as location services have been turned off for this app.  Go to iPhone settings to enable" : {
+
+    },
     "Beaches" : {
 
     },
@@ -32,6 +35,9 @@
 
     },
     "Date" : {
+
+    },
+    "Enable automatic trip tracking" : {
 
     },
     "End Date" : {

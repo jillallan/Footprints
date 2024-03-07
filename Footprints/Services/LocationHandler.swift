@@ -8,29 +8,27 @@
 import CoreLocation
 import Foundation
 import OSLog
+import SwiftData
 
 @Observable
 class LocationHandler: NSObject {
+    
+    enum AuthorisationStatus: Int {
+        case notDetermined, denied, authorised
+    }
+    
     private let logger = Logger(
         subsystem: Bundle.main.bundleIdentifier!,
         category: String(describing: LocationHandler.self)
     )
     
+    let context: ModelContext
     private let locationManager = CLLocationManager()
-//    var locationManagerCallback: ((CLLocation) -> ())?
-    private var continuation: CheckedContinuation<CLLocation, Error>?
-    
-    var currentLocation: CLLocation {
-        get async throws {
-            return try await withCheckedThrowingContinuation { continuation in
-                self.continuation = continuation
-                locationManager.requestLocation()
-            }
-        }
-    }
-    
     var lastLocation = CLLocation()
     var count = 0
+    var authorizationStatus: AuthorisationStatus = .notDetermined
+    //    var locationManagerCallback: ((CLLocation) -> ())?
+    
     
     
     var updatesStarted: Bool = UserDefaults.standard.bool(forKey: "liveUpdatesStarted") {
@@ -39,9 +37,17 @@ class LocationHandler: NSObject {
         }
     }
     
+    var locationUpdatesAuthorized: Int = UserDefaults.standard.integer(forKey: "locationUpdatesAuthorized") {
+        didSet {
+            UserDefaults.standard.set(locationUpdatesAuthorized, forKey: "locationUpdatesAuthorized")
+        }
+    }
     
-    override init() {
+    
+    init(context: ModelContext) {
+        self.context = context
         super.init()
+        print("location handler initiated, status :\(locationUpdatesAuthorized)")
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.distanceFilter = 200
@@ -52,14 +58,11 @@ class LocationHandler: NSObject {
         
     }
     
+    
+    
     func requestLocation() {
         print("location requested")
         locationManager.requestLocation()
-    }
-    
-    func requestLocation() async throws -> CLLocation {
-        // https://www.createwithswift.com/updating-the-users-location-with-core-location-and-swift-concurrency-in-swiftui/
-        return try await currentLocation
     }
     
     func requestLocation(completion: @escaping (CLLocation) -> ()) {
@@ -68,10 +71,12 @@ class LocationHandler: NSObject {
 //        locationManagerCallback = completion
     }
 
-    func enablePowerSavingLocationServices() {
+    func startLocationServices() {
         guard CLLocationManager.significantLocationChangeMonitoringAvailable() else {
             return // Add alert
         }
+        
+        updatesStarted = true
         
         switch locationManager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
@@ -86,14 +91,14 @@ class LocationHandler: NSObject {
         }
     }
     
-    func enableHighPowerLocationServices() {
-        guard CLLocationManager.locationServicesEnabled() else {
+    func enableLocationServices() {
+        guard CLLocationManager.significantLocationChangeMonitoringAvailable() else {
             return // Add alert
         }
         
         switch locationManager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
-            locationManager.startUpdatingLocation()
+            updatesStarted = true
         case .notDetermined:
             locationManager.requestAlwaysAuthorization()
         case .denied, .restricted:
@@ -112,6 +117,20 @@ class LocationHandler: NSObject {
         self.updatesStarted = false
     }
 
+//    private var continuation: CheckedContinuation<CLLocation, Error>?
+//    var currentLocation: CLLocation {
+//        get async throws {
+//            return try await withCheckedThrowingContinuation { continuation in
+//                self.continuation = continuation
+//                locationManager.requestLocation()
+//            }
+//        }
+//    }
+    
+//    func requestLocation() async throws -> CLLocation {
+//        // https://www.createwithswift.com/updating-the-users-location-with-core-location-and-swift-concurrency-in-swiftui/
+//        return try await currentLocation
+//    }
     
 //    func getLocale() -> Locale {
 //        return Locale.current
@@ -119,46 +138,83 @@ class LocationHandler: NSObject {
 }
 
 extension LocationHandler: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
-            lastLocation = location
-//            locationManagerCallback?(location)
-            continuation?.resume(returning: location)
-            print(location)
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
-        // TODO:
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        continuation?.resume(throwing: error)
-        continuation = nil
-    }
-    
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        print("locationManagerDidChangeAuthorization")
         switch manager.authorizationStatus {
-        case .authorizedWhenInUse, .authorizedAlways:  // Location services are available.
-            enablePowerSavingLocationServices()
+        case .authorizedWhenInUse:  // Location services are available.
+            print("in use")
+            locationUpdatesAuthorized = AuthorisationStatus.authorised.rawValue
+//            startLocationServices()
+            manager.startUpdatingLocation()
             break
             
-        case .restricted, .denied:  // Location services currently unavailable.
+        case .authorizedAlways:  // Location services are available.
+            print("always")
+            locationUpdatesAuthorized = AuthorisationStatus.authorised.rawValue
+//            startLocationServices()
+            manager.startUpdatingLocation()
+            break
+            
+        case .restricted:  // Location services currently unavailable.
+            print("restricted delegate")
+            locationUpdatesAuthorized = AuthorisationStatus.denied.rawValue
+            disableLocationServices()
+            break
+            
+        case .denied:  // Location services currently unavailable.
+            print("denied delegate")
+            locationUpdatesAuthorized = AuthorisationStatus.denied.rawValue
             disableLocationServices()
             break
             
         case .notDetermined:        // Authorization not determined yet.
-           manager.requestWhenInUseAuthorization()
+            print("Not determined delegate")
+            locationUpdatesAuthorized = AuthorisationStatus.notDetermined.rawValue
+//            if authorizationRequested {
+//                manager.requestAlwaysAuthorization()
+//            }
             break
             
         default:
             break
         }
     }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+//        continuation?.resume(throwing: error)
+//        continuation = nil
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            lastLocation = location
+            
+//            locationManagerCallback?(location)
+//            continuation?.resume(returning: location)
+            
+            print(location)
+            
+            if let trip = DataHandler.fetchCurrentTrip(context: context) {
+                let step = Step(
+                    timestamp: location.timestamp,
+                    latitude: location.coordinate.latitude,
+                    longitude: location.coordinate.longitude
+                )
+                
+                step.trip = trip
+                context.insert(step)
+            }
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
+        // TODO:
+    }
 }
 
+@MainActor
 extension LocationHandler {
     static var preview: LocationHandler = {
-        LocationHandler()
+        LocationHandler(context: SampleContainer.sample().mainContext)
     }()
 }

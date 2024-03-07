@@ -27,6 +27,14 @@ final class Trip {
         steps?.sorted() ?? []
     }
     
+    var tripIsLive: Bool {
+        if (Date.now >= startDate && Date.now <= endDate) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     // MARK: - Initialization
     init(title: String = "New Trip", startDate: Date = .now, endDate: Date = .now, isAutoTrackingOn: Bool = false) {
         self.title = title

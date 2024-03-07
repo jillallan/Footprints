@@ -12,16 +12,16 @@ import SwiftUI
 @main
 struct FootprintsApp: App {
 
-    @State var locationHandler = LocationHandler()
-//    @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
+//    @State var locationHandler = LocationHandler()
+    @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-//                .environment(appDelegate.mapSearchService)
-                .environment(locationHandler)
+                .environment(appDelegate.locationHandler)
         }
-        .modelContainer(for: Trip.self, inMemory: true, isUndoEnabled: true)
+//        .modelContainer(for: Trip.self, inMemory: true, isUndoEnabled: true)
+        .modelContainer(appDelegate.container)
     }
 }
 

@@ -102,27 +102,27 @@ struct TripDetailView: View {
         navigationPath.append(newStep)
     }
     
-    func upateLocation() async {
-        do {
-            let location = try await locationHandler.requestLocation()
-        } catch {
-            print(error)
-        }
-        
-    }
+//    func upateLocation() async {
+//        do {
+//            let location = try await locationHandler.requestLocation()
+//        } catch {
+//            print(error)
+//        }
+//        
+//    }
     
-    func updateLocation() async -> CLLocation? {
-        do {
-            // 1. Get the current location from the location manager
-            return try await locationHandler.currentLocation
-        
-            // 2. Update the camera position of the map to center around the user location
-//            self.updateMapPosition()
-        } catch {
-            print("Could not get user location: \(error.localizedDescription)")
-        }
-        return nil
-    }
+//    func updateLocation() async -> CLLocation? {
+//        do {
+//            // 1. Get the current location from the location manager
+//            return try await locationHandler.currentLocation
+//        
+//            // 2. Update the camera position of the map to center around the user location
+////            self.updateMapPosition()
+//        } catch {
+//            print("Could not get user location: \(error.localizedDescription)")
+//        }
+//        return nil
+//    }
 }
 
 #Preview {
