@@ -14,10 +14,7 @@ enum NetworkError: Error {
 }
 
 struct MapService {
-    private let logger = Logger(
-        subsystem: Bundle.main.bundleIdentifier!,
-        category: String(describing: MapService.self)
-    )
+    private let logger = Logger(category: String(describing: MapService.self))
     
     let geocoder = CLGeocoder()
 
@@ -43,9 +40,11 @@ struct MapService {
             if let placemark = placemarks.first {
                 return .success(placemark)
             } else {
+                logger.error("\(NetworkError.placemarkError.localizedDescription)")
                 return .failure(.placemarkError)
             }
         } catch {
+            logger.error("\(NetworkError.geocodeError.localizedDescription)")
             return .failure(.geocodeError)
         }
     }

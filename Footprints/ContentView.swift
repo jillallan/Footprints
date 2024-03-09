@@ -30,5 +30,6 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .modelContainer(SampleContainer.sample())
+        .environment(LocationHandler.preview)
 //        .environment(MapSearchService.preview)
 }

@@ -11,7 +11,8 @@ import SwiftData
 import SwiftUI
 
 @Model
-final class Step {
+final class Step: CustomDebugStringConvertible {
+    
     // MARK: - Properties
     var timestamp: Date
     var latitude: Double
@@ -37,6 +38,10 @@ final class Step {
     
     var cameraPosition: MapCameraPosition {
         MapCameraPosition.item(mapItem)
+    }
+    
+    var debugDescription: String {
+        "Step: \(timestamp), Lat: \(latitude), Lon: \(longitude), Location: \(String(describing: location?.name))"
     }
     
     // MARK: - Initialization

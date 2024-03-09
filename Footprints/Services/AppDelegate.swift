@@ -8,11 +8,14 @@
 #if os(iOS)
 import BackgroundTasks
 import Foundation
-import UIKit
+import OSLog
 import SwiftData
 import SwiftUI
+import UIKit
 
 class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
+    
+    private let logger = Logger(category: String(describing: AppDelegate.self))
     
     @State var locationHandler: LocationHandler
     let container: ModelContainer
@@ -21,7 +24,12 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         
         
         let schema = Schema([Trip.self])
-        let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+#if DEBUG
+//        let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+//#else
+        let configuration = ModelConfiguration()
+#endif
+
         do {
             container = try ModelContainer(for: schema, configurations: [configuration])
             
@@ -38,6 +46,15 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.footprints.location", using: nil) { (task) in
             self.handleUpdateLocationSettings(task: task as! BGAppRefreshTask)
         }
+        
+        let dataHandler = DataHandler()
+        if dataHandler.isATripActive(context: container.mainContext) {
+            locationHandler.startLocationServices()
+        }
+        
+        if let trip = dataHandler.fetchActiveTrip(context: container.mainContext) {
+            logger.debug("\(#function) : \(#line) : \(trip.debugDescription)")
+        }
 
         return true
     }
@@ -49,7 +66,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         do {
             try BGTaskScheduler.shared.submit(request)
         } catch {
-            print("Could not schedule app refresh: \(error)")
+            logger.error("Could not schedule app refresh: \(error.localizedDescription)")
         }
     }
     
@@ -72,7 +89,6 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         }
         
         queue.addOperation(operation)
-        
         
     }
 }

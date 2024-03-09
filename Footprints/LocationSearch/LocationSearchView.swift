@@ -18,7 +18,7 @@ struct LocationSearchView: View {
     @State var dismissSearchView: Bool = false
     
     let coordinate: CLLocationCoordinate2D
-    // TODO: Change region to update based on last search.  e.g. if a search for italy then coffee the local area would be italy
+    // Change region to update based on last search.  e.g. if a search for italy then coffee the local area would be italy
     let region: MKCoordinateRegion
     @Binding var searchResults: [MKMapItem]
     @State var searchResult: MKMapItem?

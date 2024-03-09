@@ -41,7 +41,6 @@ struct TripDetailView: View {
                 }
                 .onAppear {
                     locationHandler.requestLocation { location in
-                        print("location completion in on appear: \(location)")
                     }
                 }
                 .task {

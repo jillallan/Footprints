@@ -28,6 +28,9 @@ struct TripView: View {
                         Text(trip.title)
                     }
                 }
+                .onDelete { indexSet in
+                    deleteTrips(indexSet)
+                }
             }
             
             // MARK: - Navigation
@@ -63,6 +66,13 @@ struct TripView: View {
             }
         }
     }
+    
+    func deleteTrips(_ indexSet: IndexSet) {
+        for index in indexSet {
+            let trip = trips[index]
+            modelContext.delete(trip)
+        }
+    }
    
 #if DEBUG
     func createData() async {
@@ -76,6 +86,7 @@ struct TripView: View {
     NavigationStack {
         TripView()
             .modelContainer(SampleContainer.sample())
+            .environment(LocationHandler.preview)
     }
 }
 
@@ -87,6 +98,7 @@ struct TripView: View {
         NavigationStack {
             TripView()
                 .modelContainer(SampleContainer.sample())
+                .environment(LocationHandler.preview)
         }
     }
 }

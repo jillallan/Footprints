@@ -11,7 +11,6 @@ struct AppTabView: View {
     @Binding var selection: AppScreen?
     
     var body: some View {
-        // TODO: Add button shapes if buttonShapesEnabled
         TabView(selection: $selection) {
             ForEach(AppScreen.allCases) { screen in
                 screen.destination

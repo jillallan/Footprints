@@ -6,62 +6,59 @@
 //
 
 import Foundation
+import OSLog
 import SwiftData
 
 struct DataHandler {
-//    let container: ModelContainer
-//    
-//    init() {
-//        let schema = Schema([Trip.self])
-//        let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
-//        
-//        do {
-//            container = try ModelContainer(for: schema, configurations: [configuration])
-//        } catch {
-//            fatalError("Error creating model container: \(error.localizedDescription)")
-//        }
-//    }
     
-    static func checkLocationServicesRequired(context: ModelContext) -> Bool {
+    private let logger = Logger(category: String(describing: DataHandler.self))
+    
+    func getActiveTripDescriptor() -> FetchDescriptor<Trip> {
         let now = Date.now
-        print("now: \(now)")
-        let fetchDescriptor = FetchDescriptor<Trip>(
-            predicate: #Predicate { $0.startDate <= now && $0.endDate >= now && $0.isAutoTrackingOn == true }
-        )
         
-        let fetchDescriptor2 = FetchDescriptor<Trip>()
+        let tripPredicate = #Predicate<Trip> { trip in
+            trip.startDate <= now && trip.endDate >= now && trip.isAutoTrackingOn
+        }
         
+        return FetchDescriptor<Trip>(predicate: tripPredicate)
+
+    }
+    
+    func isATripActive(context: ModelContext) -> Bool {
+        
+        let fetchDescriptor = getActiveTripDescriptor()
+
         do {
             let liveTripsCount = try context.fetchCount(fetchDescriptor)
             if liveTripsCount == 0 {
+                logger.debug("\(#function) : \(#line) : \(String(describing: liveTripsCount))")
                 return false
             } else {
                 return true
             }
         } catch {
-            // TODO: Add alert to user
+            // Alert user that fetch failed - propogate to caller as the impact is not here
+            // e.g. starting location services
             return false
         }
     }
     
-    static func fetchCurrentTrip(context: ModelContext) -> Trip? {
-        let now = Date.now
-        let fetchDescriptor = FetchDescriptor<Trip>(
-            predicate: #Predicate { $0.startDate <= now && $0.endDate >= now && $0.isAutoTrackingOn == true }
-        )
+    func fetchActiveTrip(context: ModelContext) -> Trip? {
         
-        let fetchDescriptor2 = FetchDescriptor<Trip>()
+        let fetchDescriptor = getActiveTripDescriptor()
         
         do {
             let trips = try context.fetch(fetchDescriptor)
             if let trip = trips.first {
+                logger.debug("\(#function) : \(#line) : \(trip.debugDescription)")
                 return trip
             } else {
                 return nil
             }
             
         } catch {
-            // TODO: Add alert to user
+            // Alert user that fetch failed - propogate to caller as the impact is not here
+            // e.g. starting location services
             return nil
         }
     }

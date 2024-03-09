@@ -23,13 +23,13 @@ struct LocationSuggestions: View {
             }
             
             Section {
-                // TODO: Log list of searches
+
             } header: {
                 Text("Recent Searches")
             }
             
             Section {
-                // TODO: Lookup nearby landmarks
+
             } header: {
                 Text("Nearby")
             }

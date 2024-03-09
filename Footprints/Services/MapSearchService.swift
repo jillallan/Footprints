@@ -12,10 +12,7 @@ import OSLog
 import SwiftUI
 
 @Observable class MapSearchService {
-    private let logger = Logger(
-        subsystem: Bundle.main.bundleIdentifier!,
-        category: String(describing: MapSearchService.self)
-    )
+    private let logger = Logger(category: String(describing: MapSearchService.self))
     
     var searchResults: [MKMapItem] = []
     
@@ -30,7 +27,7 @@ import SwiftUI
         
         do {
             let searchResponse = try await search.start()
-            print(searchResponse.mapItems)
+            logger.debug("\(#function) : \(#line) : Unable to perform search result: \(searchResponse.mapItems)")
             self.searchResults = searchResponse.mapItems
             
         } catch {

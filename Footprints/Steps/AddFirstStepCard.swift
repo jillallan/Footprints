@@ -15,7 +15,7 @@ struct AddFirstStepCard: View {
             Text("Add your first step.")
         } actions: {
             Button("Add Step") {
-                // TODO: Add step
+
             }
         }
         .background(.regularMaterial)

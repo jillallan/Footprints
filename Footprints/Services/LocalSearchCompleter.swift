@@ -7,6 +7,7 @@
 
 import Foundation
 import MapKit
+import OSLog
 import SwiftUI
 
 struct SearchCompletions: Identifiable {
@@ -16,6 +17,9 @@ struct SearchCompletions: Identifiable {
 }
 
 @Observable class LocalSearchCompleter: NSObject {
+    
+    private let logger = Logger(category: String(describing: LocalSearchCompleter.self))
+    
     var completions = [SearchCompletions]()
     let completer = MKLocalSearchCompleter()
 
@@ -34,15 +38,15 @@ struct SearchCompletions: Identifiable {
 extension LocalSearchCompleter: MKLocalSearchCompleterDelegate {
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
       
-        print(completer.results.first?.description ?? "no description")
-        print(completer.results.first?.titleHighlightRanges ?? "no title ranges")
-        print(completer.results.first?.subtitleHighlightRanges ?? "no subtitle ranges")
-        print(completer.results.first?.title ?? "no title")
-        print(completer.results.first?.subtitle ?? "no subtitle")
+        logger.debug("\(#function) : \(#line) : String(describing: completer.results.first?.description)")
+        logger.debug("\(#function) : \(#line) : String(describing: completer.results.first?.titleHighlightRanges)")
+        logger.debug("\(#function) : \(#line) : String(describing: completer.results.first?.subtitleHighlightRanges)")
+        logger.debug("\(#function) : \(#line) : String(describing: completer.results.first?.title)")
+        logger.debug("\(#function) : \(#line) : String(describing: completer.results.first?.subtitle)")
         completions = completer.results.map {.init(title: $0.title, subTitle: $0.subtitle) }
     }
     
     func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
-        // TODO: comment
+
     }
 }

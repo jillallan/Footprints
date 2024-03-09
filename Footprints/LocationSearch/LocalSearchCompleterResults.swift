@@ -72,23 +72,6 @@ struct LocalSearchCompleterResults: View {
         }
     }
     
-//    func search(for place: String) {
-//        let searchRequest = MKLocalSearch.Request()
-//        searchRequest.region = region
-//        searchRequest.naturalLanguageQuery = place
-//        
-//        Task {
-//            let search = MKLocalSearch(request: searchRequest)
-//            let searchResponse = try? await search.start()
-//            if let result = searchResponse?.mapItems.first {
-//                searchResult = result
-//                searchResults.append(result)
-//            } else {
-//                // TODO: Add error handling
-//            }
-//        }
-//    }
-    
     func search(for place: String) async -> Result<MKMapItem, LocalSearchError> {
         let searchRequest = MKLocalSearch.Request()
         searchRequest.region = region

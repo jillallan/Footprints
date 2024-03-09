@@ -84,6 +84,7 @@
 		78C1B49D2B4B48FE00871158 /* MKMapItem+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C1B49C2B4B48FE00871158 /* MKMapItem+Extension.swift */; };
 		78DAEB742AED168F004350D7 /* NavigationUITests_Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DAEB732AED168F004350D7 /* NavigationUITests_Mac.swift */; };
 		78DAEB762AED168F004350D7 /* FootprintsUITests_MacLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DAEB752AED168F004350D7 /* FootprintsUITests_MacLaunchTests.swift */; };
+		78DD08A22B9B27390023101F /* OSLog+Extenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DD08A12B9B27390023101F /* OSLog+Extenstion.swift */; };
 		78DDE2FE2B88ACDC00DDA7D3 /* Location-SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DDE2FD2B88ACDC00DDA7D3 /* Location-SampleData.swift */; };
 		78DDE3002B88B3E700DDA7D3 /* RecentLocationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DDE2FF2B88B3E700DDA7D3 /* RecentLocationRow.swift */; };
 		78DDE3042B88D64600DDA7D3 /* SearchMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DDE3032B88D64600DDA7D3 /* SearchMap.swift */; };
@@ -219,6 +220,7 @@
 		78DAEB752AED168F004350D7 /* FootprintsUITests_MacLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootprintsUITests_MacLaunchTests.swift; sourceTree = "<group>"; };
 		78DAEB7C2AED17A0004350D7 /* TestPlan (macOS).xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "TestPlan (macOS).xctestplan"; sourceTree = "<group>"; };
 		78DAEB7D2AED17BF004350D7 /* TestPlan (iOS).xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "TestPlan (iOS).xctestplan"; sourceTree = "<group>"; };
+		78DD08A12B9B27390023101F /* OSLog+Extenstion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OSLog+Extenstion.swift"; sourceTree = "<group>"; };
 		78DDE2FD2B88ACDC00DDA7D3 /* Location-SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location-SampleData.swift"; sourceTree = "<group>"; };
 		78DDE2FF2B88B3E700DDA7D3 /* RecentLocationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentLocationRow.swift; sourceTree = "<group>"; };
 		78DDE3032B88D64600DDA7D3 /* SearchMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMap.swift; sourceTree = "<group>"; };
@@ -372,6 +374,7 @@
 		782D63612AEBE1B300C1C48A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				78DD08A12B9B27390023101F /* OSLog+Extenstion.swift */,
 				783C22312B5ACAF300D915FA /* CLLocationCoordinate2D+Extension.swift */,
 				784FDA4C2B5ED710006F10C1 /* CLPlacemark+Extension.swift */,
 				78709C7E2AEC034000E53D1C /* Date+Extension.swift */,
@@ -402,7 +405,6 @@
 		783C36F52B69936E00AD8EDF /* LocationSearch */ = {
 			isa = PBXGroup;
 			children = (
-				783C22292B5AB8A700D915FA /* Location.swift */,
 				78DDE3052B88D70A00DDA7D3 /* MapSearchTest */,
 				783C36F12B6960B300AD8EDF /* LocationSearchView.swift */,
 				78DDE30A2B88E47700DDA7D3 /* LocationSearchResults.swift */,
@@ -508,6 +510,7 @@
 		78DDE3162B921DAA00DDA7D3 /* Locations */ = {
 			isa = PBXGroup;
 			children = (
+				783C22292B5AB8A700D915FA /* Location.swift */,
 				782D637D2AEBE51400C1C48A /* LocationView.swift */,
 				78DDE31C2B960A8900DDA7D3 /* LocationName.swift */,
 				78DDE31E2B9613A300DDA7D3 /* LocationLoading.swift */,
@@ -738,6 +741,7 @@
 				78E7C8A52AF042CB00450A0E /* TripDetailView.swift in Sources */,
 				784DE5272B40B09300E1229B /* NonGreedyScrollView.swift in Sources */,
 				78E9EC8E2B7F839500D5F2A2 /* SearchUIKit.swift in Sources */,
+				78DD08A22B9B27390023101F /* OSLog+Extenstion.swift in Sources */,
 				78E7C8A92AF045B100450A0E /* SampleDataGenerator.swift in Sources */,
 				78A425DE2B6AEC4A0013A611 /* AppDelegate.swift in Sources */,
 				782D63812AEBE51400C1C48A /* StatisticsView.swift in Sources */,

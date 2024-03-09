@@ -19,7 +19,8 @@ class CheckForActiveTripOperation: Operation {
     
     @MainActor
     override func main() {
-        if DataHandler.checkLocationServicesRequired(context: context) {
+        let dataHandler = DataHandler()
+        if dataHandler.isATripActive(context: context) {
             locationHandler.startLocationServices()
         }
     }

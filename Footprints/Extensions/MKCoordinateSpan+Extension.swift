@@ -23,10 +23,8 @@ extension MKCoordinateSpan {
         if let latitude,
            let longitude {
             
-            // If the latitude or longitude is 0 create a small lat or long
-            // TODO: Check this is needed
-            
             return MKCoordinateSpan(latitudeDelta: latitude + padding, longitudeDelta: longitude + padding)
+            // If the latitude or longitude is 0 create a small lat or long
 //            return MKCoordinateSpan(
 //                latitudeDelta: latitude == 0.0 ? 0.002 : latitude * 1.5,
 //                longitudeDelta: longitude == 0.0 ? 0.002 : longitude * 1.5

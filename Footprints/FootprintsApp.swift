@@ -20,7 +20,6 @@ struct FootprintsApp: App {
             ContentView()
                 .environment(appDelegate.locationHandler)
         }
-//        .modelContainer(for: Trip.self, inMemory: true, isUndoEnabled: true)
         .modelContainer(appDelegate.container)
     }
 }

@@ -15,12 +15,10 @@ class LocationHandler: NSObject {
     
     enum AuthorisationStatus: Int {
         case notDetermined, denied, authorised
+
     }
     
-    private let logger = Logger(
-        subsystem: Bundle.main.bundleIdentifier!,
-        category: String(describing: LocationHandler.self)
-    )
+    private let logger = Logger(category: String(describing: LocationHandler.self))
     
     let context: ModelContext
     private let locationManager = CLLocationManager()
@@ -47,10 +45,10 @@ class LocationHandler: NSObject {
     init(context: ModelContext) {
         self.context = context
         super.init()
-        print("location handler initiated, status :\(locationUpdatesAuthorized)")
+        logger.debug("\(#function) : \(#line) : location handler initiated, status :\(self.locationUpdatesAuthorized)")
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        locationManager.distanceFilter = 200
+//        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+//        locationManager.distanceFilter = 200
 #if os(iOS)
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.showsBackgroundLocationIndicator = true
@@ -61,7 +59,7 @@ class LocationHandler: NSObject {
     
     
     func requestLocation() {
-        print("location requested")
+        logger.debug("\(#function) : \(#line) : location requested")
         locationManager.requestLocation()
     }
     
@@ -109,12 +107,11 @@ class LocationHandler: NSObject {
     }
     
     func disableLocationServices() {
-        // TODO: disable
+   
     }
     
     func stopLocationUpdates() {
-        print("Stopping location updates")
-        self.updatesStarted = false
+
     }
 
 //    private var continuation: CheckedContinuation<CLLocation, Error>?
@@ -139,40 +136,19 @@ class LocationHandler: NSObject {
 
 extension LocationHandler: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        print("locationManagerDidChangeAuthorization")
+//        logger.debug("\(#function) : \(#line) : locationManagerDidChangeAuthorization: \(manager.authorizationStatus)")
         switch manager.authorizationStatus {
-        case .authorizedWhenInUse:  // Location services are available.
-            print("in use")
+        case .authorizedWhenInUse, .authorizedAlways:  // Location services are available.
             locationUpdatesAuthorized = AuthorisationStatus.authorised.rawValue
-//            startLocationServices()
-            manager.startUpdatingLocation()
             break
             
-        case .authorizedAlways:  // Location services are available.
-            print("always")
-            locationUpdatesAuthorized = AuthorisationStatus.authorised.rawValue
-//            startLocationServices()
-            manager.startUpdatingLocation()
-            break
-            
-        case .restricted:  // Location services currently unavailable.
-            print("restricted delegate")
-            locationUpdatesAuthorized = AuthorisationStatus.denied.rawValue
-            disableLocationServices()
-            break
-            
-        case .denied:  // Location services currently unavailable.
-            print("denied delegate")
+        case .denied, .restricted:  // Location services currently unavailable.
             locationUpdatesAuthorized = AuthorisationStatus.denied.rawValue
             disableLocationServices()
             break
             
         case .notDetermined:        // Authorization not determined yet.
-            print("Not determined delegate")
             locationUpdatesAuthorized = AuthorisationStatus.notDetermined.rawValue
-//            if authorizationRequested {
-//                manager.requestAlwaysAuthorization()
-//            }
             break
             
         default:
@@ -185,6 +161,7 @@ extension LocationHandler: CLLocationManagerDelegate {
 //        continuation = nil
     }
     
+    @MainActor
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             lastLocation = location
@@ -192,9 +169,12 @@ extension LocationHandler: CLLocationManagerDelegate {
 //            locationManagerCallback?(location)
 //            continuation?.resume(returning: location)
             
-            print(location)
+            logger.debug("\(#function) : \(#line) : \(String(describing: location))")
             
-            if let trip = DataHandler.fetchCurrentTrip(context: context) {
+            let dataHandler = DataHandler()
+            if let trip = dataHandler.fetchActiveTrip(context: context) {
+                logger.debug("\(#function) : \(#line) : \(trip.debugDescription)")
+                
                 let step = Step(
                     timestamp: location.timestamp,
                     latitude: location.coordinate.latitude,
@@ -203,12 +183,13 @@ extension LocationHandler: CLLocationManagerDelegate {
                 
                 step.trip = trip
                 context.insert(step)
+                logger.debug("\(#function) : \(#line) : trip step: \(String(describing: trip.steps?.first.debugDescription))")
             }
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
-        // TODO:
+
     }
 }
 

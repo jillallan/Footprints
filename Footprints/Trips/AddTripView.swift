@@ -55,7 +55,6 @@ struct AddTripView: View {
 //                    } footer: {
 //                        if locationHandler.locationUpdatesAuthorized == 1 {
 //                            Text("Auto tracking is disabled as location services have been turned off for this app.  Go to iPhone settings to enable")
-//                            // TODO: Add better instructions.  e.g. click here for instructions
 //                        }
                     }
                     
@@ -68,12 +67,11 @@ struct AddTripView: View {
                     } footer: {
                         if locationHandler.locationUpdatesAuthorized == 1 {
                             Text("Auto tracking is disabled as location services have been turned off for this app.  Go to iPhone settings to enable")
-                            // TODO: Add better instructions.  e.g. click here for instructions
                         }
                     }
                 }
 
-                // TODO: Add picture
+                // Add picture
             }
             .formStyle(.grouped)
             .macOS { $0.frame(minWidth: 440, maxWidth: .infinity, minHeight: 220, maxHeight: .infinity) }
@@ -122,11 +120,10 @@ struct AddTripView: View {
     func addTrip() {
         let newTrip = Trip(title: title, startDate: startDate, endDate: endDate, isAutoTrackingOn: isAutoTrackingEnabled)
         
-        print("location service required: \(DataHandler.checkLocationServicesRequired(context: modelContext))")
-        
         modelContext.insert(newTrip)
         
-        if DataHandler.checkLocationServicesRequired(context: modelContext) {
+        let dataHandler = DataHandler()
+        if dataHandler.isATripActive(context: modelContext) {
             locationHandler.startLocationServices()
         }
         
@@ -150,4 +147,5 @@ struct AddTripView: View {
 // MARK: - Previews
 #Preview {
     AddTripView(navigationPath: .constant(NavigationPath()))
+        .environment(LocationHandler.preview)
 }

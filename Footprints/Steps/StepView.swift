@@ -21,14 +21,23 @@ struct StepView: View {
                         StepViewRow(step: step)
                     }
                 }
+                .onDelete { indexSet in
+                    deleteSteps(indexSet)
+                }
             }
             .navigationTitle("Steps")
             .navigationDestination(for: Step.self) { step in
                 StepDetailView(step: step)
             }
             
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    EditButton()
+                }
+            }
             // MARK: - Debug
             .toolbar {
+                
                 #if DEBUG
                 ToolbarItem {
                     Button("Samples") {
@@ -41,6 +50,14 @@ struct StepView: View {
             }
         }
     }
+    
+    func deleteSteps(_ indexSet: IndexSet) {
+        for index in indexSet {
+            let step = steps[index]
+            modelContext.delete(step)
+        }
+    }
+    
 #if DEBUG
     func createData() async {
         await SampleDataGenerator.generateSampleData(modelContext: modelContext)

@@ -46,6 +46,7 @@ struct LocationName: View {
     }
     
     func addLocation(for step: Step) async {
+        // App crashes when too many steps loaded - add error handling to find out if this is due to location lookup aor swiftdata - possibly batch save if swift data
         let mapService = MapService()
         let result = await mapService.fetchPlacemark(for: step)
         

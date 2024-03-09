@@ -9,7 +9,7 @@ import SwiftData
 import SwiftUI
 
 @Model
-final class Trip {
+final class Trip: CustomDebugStringConvertible {
     // MARK: - Properties
     var title: String
     var startDate: Date
@@ -20,7 +20,7 @@ final class Trip {
     
     // MARK: - Computed Properties
     var debugDescription: String {
-        "Trip named: \(title)"
+        "Trip: \(title), start date: \(startDate), end date: \(endDate), tracking: \(isAutoTrackingOn), step count: \(String(describing: steps?.count))"
     }
     
     var tripSteps: [Step] {
