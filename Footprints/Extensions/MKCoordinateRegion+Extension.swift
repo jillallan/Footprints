@@ -24,4 +24,8 @@ extension MKCoordinateRegion {
             )
         }
     }
+    
+    static var example: MKCoordinateRegion {
+        MKCoordinateRegion(center: CLLocationCoordinate2D.example, span: MKCoordinateSpan.example)
+    }
 }

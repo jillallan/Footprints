@@ -35,4 +35,8 @@ extension CLLocationCoordinate2D {
             return nil
         }
     }
+    
+    static var example: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: 51.5, longitude: 0.0)
+    }
 }

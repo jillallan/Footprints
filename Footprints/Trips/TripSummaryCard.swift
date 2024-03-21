@@ -16,6 +16,8 @@ struct TripSummaryCard: View {
             Text("Trip Summary")
                 .font(.largeTitle)
             Spacer()
+            Text(trip.startDate.formatted(date: .abbreviated, time: .omitted))
+            Text(trip.endDate.formatted(date: .numeric, time: .shortened))
             Text(stepCount, format: .number)
         }
         .frame(maxWidth: .infinity, maxHeight:  .infinity)

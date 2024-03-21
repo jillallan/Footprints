@@ -33,4 +33,8 @@ extension MKCoordinateSpan {
             return nil
         }
     }
+    
+    static var example: MKCoordinateSpan {
+        MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+    }
 }

@@ -46,5 +46,13 @@ final class TripTests: BaseTestCase {
         // then
         XCTAssertNotEqual(newDebugDescription, randomWord)
     }
+    
+    func test_TripDates_WhenStartAndEndInSameMonth_ReturnsShortenedDates() {
+        // if
+        let trip = Trip.mountains
+        modelContext.insert(trip)
+        
+        XCTAssertEqual(trip.tripDates, "3 - 30 Sep 2019")
+    }
 
 }

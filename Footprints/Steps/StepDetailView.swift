@@ -6,41 +6,58 @@
 //
 
 import MapKit
+import OSLog
 import SwiftUI
 
 struct StepDetailView: View {
+    // MARK: - Logging
+    private let logger = Logger(category: String(describing: LocationHandler.self))
+    
+    // MARK: - Data Properties
     @Environment(\.modelContext) private var modelContext
-    @Environment(\.dismiss) private var dismiss
     @Bindable var step: Step
     @State var isNewStep: Bool = false
+    
+    // MARK: - View Properties
     @State private var size: CGSize = .zero
-    @State private var isLocationSearchViewPresented: Bool = false
+    @State private var isZoomed = false
+    @State private var sheetSize = PresentationDetent.medium
+    @State private var mapHeight: Double = 0.3
+    // MARK: - Map Properties
     @State private var stepPosition: MapCameraPosition = .automatic
     @State private var userLocationPosition: MapCameraPosition = .userLocation(fallback: .automatic)
-    
-    @State var dismissSearchView: Bool = false
+    // MARK: - Search Properties
     @State var result: MKMapItem?
     @State var searchResults: [MKMapItem] = []
     
+    // MARK: - Navigation Properties
+    @Environment(\.dismiss) private var dismiss
+    @State private var isLocationSearchViewPresented: Bool = false
+    @State var dismissSearchView: Bool = false
+    
     
     // FIXME: get region from locale
-    @State private var isZoomed = false
     
-    var frame: Double {
-        isZoomed ? 0.75 : 0.30
-    }
+    // MARK: - Computed Properties
     
     private var editorTitle: String {
         isNewStep ? "Update Location" : step.location?.title ?? "Edit Step"
     }
     
     var body: some View {
+        let _ = logger.debug("is zoomed: \(isZoomed)")
         VStack {
             ScrollView {
-                StepDetailMap(isNewStep: isNewStep, step: step, searchResults: $searchResults)
-                .frame(height: size.height * frame)
+                StepDetailMap(
+                    isNewStep: isNewStep, step: step, searchResults: $searchResults
+                )
+                .frame(height: size.height * mapHeight)
                 .onTapGesture {
-                    withAnimation { isZoomed.toggle() }
+                    withAnimation {
+//                        isZoomed.toggle()
+                        mapHeight = 0.75
+                    }
+                    
                     isLocationSearchViewPresented.toggle()
                 }
                 StepDetailSummary(step: step, editorTitle: editorTitle, isLocationSearchViewPresented: $isLocationSearchViewPresented)
@@ -71,9 +88,11 @@ struct StepDetailView: View {
                 .labelStyle(.titleAndIcon)
             }
         }
+       
         .sheet(isPresented: $isLocationSearchViewPresented) {
             withAnimation {
-                isZoomed.toggle()
+                mapHeight = 0.3
+
             }
             print("result: \(String(describing: result))")
             addLocation(to: step)
@@ -81,13 +100,17 @@ struct StepDetailView: View {
             LocationSearchView(
                 coordinate: step.coordinate,
                 region: MKCoordinateRegion(
-                    center: step.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.0001, longitudeDelta: 0.0001)),
-                searchResults: $searchResults
+                    center: step.coordinate,
+                    span: MKCoordinateSpan.example
+                ),
+                searchResults: $searchResults,
+                searchResult: $result
+
             ) { mapItem in
                 result = mapItem
             }
             .presentationDragIndicator(.visible)
-            .presentationDetents([.small, .medium, .large], selection: .constant(.medium))
+            .presentationDetents([.small, .medium, .large], selection: $sheetSize)
             .presentationBackgroundInteraction(.enabled(upThrough: .medium))
             .interactiveDismissDisabled()
         }
@@ -101,6 +124,20 @@ struct StepDetailView: View {
         .onChange(of: step) {
             print("step changed")
             isNewStep = false
+        }
+        .onChange(of: sheetSize) {
+            withAnimation {
+                switch sheetSize {
+                case .large:
+                    mapHeight = 0.3
+                case .medium:
+                    mapHeight = 0.75
+                case .small:
+                    mapHeight = 1.0
+                default:
+                    mapHeight = 0.3
+                }
+            }
         }
         .getSize($size)
     }

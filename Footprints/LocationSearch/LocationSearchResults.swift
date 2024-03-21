@@ -2,28 +2,31 @@
 //  LocationSearchResults.swift
 //  Footprints
 //
-//  Created by Jill Allan on 23/02/2024.
+//  Created by Jill Allan on 16/03/2024.
 //
 
 import MapKit
 import SwiftUI
 
 struct LocationSearchResults: View {
-    @Binding var dismissSearchView: Bool
-    let searchResults: [MKMapItem]
-    let region: MKCoordinateRegion
-    @Binding var resultClosure: (MKMapItem) -> ()
+    @Environment(\.dismiss) private var dismiss
+    @Binding var searchResults: [MKMapItem]
+    @State var resultClosure: (MKMapItem) -> ()
+
     
     var body: some View {
-        ForEach(searchResults, id: \.self) { mapItem in
-            NavigationLink(value: mapItem) {
-                LocationSearchResultRow(mapItem: mapItem, dismissSearchView: $dismissSearchView, resultClosure: $resultClosure)
+        List {
+            ForEach(searchResults) { result in
+                LocationSearchResultRow(mapItem: result) { mapItem in
+                    resultClosure(mapItem)
+                    searchResults = []
+                    dismiss()
+                }
             }
-            .buttonStyle(.plain)
         }
     }
 }
 
 //#Preview {
-//    LocationSearchResults()
+//    LocationSearchResult(searchResults: .constant([]))
 //}

@@ -25,9 +25,6 @@
     "Auto tracking is disabled as location services have been turned off for this app.  Go to iPhone settings to enable" : {
 
     },
-    "Beaches" : {
-
-    },
     "Cancel" : {
 
     },
@@ -44,6 +41,9 @@
 
     },
     "Fetching step name" : {
+
+    },
+    "hello" : {
 
     },
     "Journal" : {
@@ -69,12 +69,6 @@
         }
       }
     },
-    "london" : {
-
-    },
-    "Namee" : {
-
-    },
     "Nearby" : {
 
     },
@@ -90,9 +84,6 @@
           }
         }
       }
-    },
-    "Playgrounds" : {
-
     },
     "Recent Locations" : {
 
@@ -166,9 +157,6 @@
           }
         }
       }
-    },
-    "Use as step location" : {
-
     }
   },
   "version" : "1.0"

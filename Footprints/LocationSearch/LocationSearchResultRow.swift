@@ -9,11 +9,9 @@ import MapKit
 import SwiftUI
 
 struct LocationSearchResultRow: View {
-    @Environment(\.dismissSearch) private var dismissSearch
-    
     let mapItem: MKMapItem
-    @Binding var dismissSearchView: Bool
-    @Binding var resultClosure: (MKMapItem) -> ()
+    @State var resultClosure: (MKMapItem) -> ()
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         HStack {
@@ -26,8 +24,6 @@ struct LocationSearchResultRow: View {
             Spacer()
             Button("Add") {
                 resultClosure(mapItem)
-                dismissSearch()
-                dismissSearchView.toggle()
             }
             .buttonStyle(.bordered)
         }

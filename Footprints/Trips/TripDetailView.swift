@@ -23,7 +23,11 @@ struct TripDetailView: View {
     
     var body: some View {
         VStack {
-            Map()
+            Map() {
+                ForEach(trip.tripSteps) { step in
+                    Marker(step.timestamp.formatted(date: .numeric, time: .shortened), coordinate: step.coordinate)
+                }
+            }
                 .dynamicSafeAreaInset(edge: scrollEdge) {
                     ActivityScroll(trip: trip, steps: trip.tripSteps, aspectRatio: $aspectRatio)
                 }
@@ -40,11 +44,12 @@ struct TripDetailView: View {
                     }
                 }
                 .onAppear {
-                    locationHandler.requestLocation { location in
+                    locationHandler.getCurrentLocation { location in
                     }
+                    
                 }
                 .task {
-
+                    try? await locationHandler.getCurrentLocation()
                 }
         }
 

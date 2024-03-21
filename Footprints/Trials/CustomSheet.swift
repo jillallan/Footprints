@@ -11,7 +11,6 @@ import PhotosUI
 import SwiftUI
 
 struct CustomSheet<Content>: UIViewRepresentable where Content: View {
-//    @Environment(MapSearchService.self) private var mapSearchService
     @Binding var isPresented: Bool
     let onDismiss: (() -> Void)?
     let detents: [UISheetPresentationController.Detent]

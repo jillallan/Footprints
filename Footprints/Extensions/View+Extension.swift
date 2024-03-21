@@ -9,6 +9,9 @@ import Foundation
 import SwiftUI
 
 extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
     func getSize(_ size: Binding<CGSize>) -> some View {
         modifier(GetSizeModifier(size: size))
     }

@@ -24,12 +24,9 @@ private struct BarDetent: CustomPresentationDetent {
 
 
 struct SettingsView: View {
-    @State var text: String = ""
-    @State var isSearchPresented: Bool = false
-    let coordinate = CLLocationCoordinate2D(latitude: 51.500685, longitude: -0.124570)
     
     var body: some View {
-        SearchMap()
+        Text("Settings")
     }
 }
 
