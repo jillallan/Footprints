@@ -44,7 +44,7 @@ extension AppScreen {
     var destination: some View {
         switch self {
         case .trips:
-            TripView()
+            TripView2()
         case .steps:
             StepView()
         case .locations:

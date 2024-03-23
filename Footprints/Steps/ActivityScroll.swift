@@ -6,31 +6,34 @@
 //
 
 import MapKit
+import OSLog
 import SwiftData
 import SwiftUI
 
 struct ActivityScroll: View {
+    // MARK: - Debugging
+    private let logger = Logger(category: String(describing: ActivityScroll.self))
+    
+    // MARK: - Data Properties
     @Bindable var trip: Trip
     let steps: [Step]
+    
+    // MARK: - View Properties
     @Binding var aspectRatio: AspectRatio
     @State private var size: CGSize = .zero
-    @State var scrollPositionID: PersistentIdentifier?
+    @Binding var scrollPositionID: PersistentIdentifier?
     
     var body: some View {
         VStack {
             ScrollView(scrollAxis) {
-
                 LazyStack(axes: scrollAxis) {
                     ForEach([trip]) { trip in
                         Section {
                             ForEach(steps) { step in
-
                                 NavigationLink(value: step) {
                                     StepCard(step: step, image: Image(.beach), aspectRatio: cardAspectRatio)
                                 }
-
                                 .buttonStyle(.plain)
-
                             }
                         } header: {
                             TripSummaryCard(trip: trip, stepCount: trip.tripSteps.count)
@@ -38,57 +41,43 @@ struct ActivityScroll: View {
                             TripStatisticsCard()
                         }
                     }
-                    
-       
                     .clipShape(RoundedRectangle(cornerRadius: 25.0, style: .circular))
                     .containerRelativeFrame([scrollAxis], count: scrollItemCount, spacing: 0.0)
-                    
-                   
                 }
-                
             }
-            
             .scrollPosition(id: $scrollPositionID)
             .scrollTargetBehavior(.paging)
         }
         .navigationDestination(for: Step.self) { step in
             StepDetailView(step: step)
         }
-        .getSize($size)
         .if(scrollAxis == .vertical) { view in
-            view
-                .frame(width: verticalScrollWidth)
+            view.frame(width: verticalScrollWidth)
         }
         .if(scrollAxis == .horizontal) { view in
-            view
-                .frame(height: horizontalScrollHeight)
+            view.frame(height: horizontalScrollHeight)
+        }
+        .getSize($size)
+    }
+    
+    var scrollAxis: Axis.Set {
+        switch aspectRatio {
+        case .landscape(_), .wide(_): Axis.Set.vertical
+        case .square(_), .portrait(_), .tall(_), .zero(_): Axis.Set.horizontal
         }
     }
     
     var cardAspectRatio: Double {
         switch aspectRatio {
-        case .wide(_):
-            return 1.0
-        case .landscape(_), .square(_), .portrait(_), .tall(_), .zero(_):
-            return 1.5
-        }
-    }
-    
-    var scrollAxis: Axis.Set {
-        switch aspectRatio {
-        case .wide(_), .landscape(_):
-            return .vertical
-        case .square(_), .portrait(_), .tall(_), .zero(_):
-            return .horizontal
+        case .wide(_): 1.0
+        case .landscape(_), .square(_), .portrait(_), .tall(_), .zero(_): 1.5
         }
     }
     
     var scrollItemCount: Int {
         switch aspectRatio {
-        case .wide(_), .tall(_):
-            return 1
-        case .landscape(_), .square(_), .portrait(_), .zero(_):
-            return 2
+        case .wide(_), .tall(_): 1
+        case .landscape(_), .square(_), .portrait(_), .zero(_): 2
         }
     }
     
@@ -103,23 +92,33 @@ struct ActivityScroll: View {
     }
 }
 
+
 #Preview("tall") {
-    ModelPreview(SampleContainer.sample) {
-        ActivityScroll(trip: .bedminsterToBeijing, steps: Trip.bedminsterToBeijing.tripSteps, aspectRatio: .constant(AspectRatio.tall(aspectRatio: 2.0)))
+    ModelPreview {
+        SampleContainer.sample()
+    } content: {
+        ActivityScroll(
+            trip: .bedminsterToBeijing,
+            steps: Trip.bedminsterToBeijing.tripSteps,
+            aspectRatio: .constant(AspectRatio.tall(aspectRatio: 0.5)),
+            scrollPositionID: .constant(Step.bedminsterStation.persistentModelID)
+        )
     }
 }
 
-#Preview("landscape") {
-    
-    ModelPreview(SampleContainer.sample) {
-       
+#Preview("landscape", traits: .landscapeLeft) {
+    ModelPreview {
+        SampleContainer.sample()
+    } content: {
         Map()
             .dynamicSafeAreaInset(edge: Edge.leading) {
                 ActivityScroll(
-                    trip: Trip.bedminsterToBeijing,
-                    steps: [Step.stJohnsLane, Step.bedminsterStation],
-                    aspectRatio: .constant(AspectRatio.landscape(aspectRatio: 1.5))
+                    trip: .bedminsterToBeijing,
+                    steps: Trip.bedminsterToBeijing.tripSteps,
+                    aspectRatio: .constant(AspectRatio.tall(aspectRatio: 1.9)),
+                    scrollPositionID: .constant(Step.bedminsterStation.persistentModelID)
                 )
             }
+        
     }
 }

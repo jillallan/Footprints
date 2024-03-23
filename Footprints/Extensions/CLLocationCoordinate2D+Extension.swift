@@ -7,6 +7,7 @@
 
 import CoreLocation
 import Foundation
+import OSLog
 
 
 // Added equatable conformance so we can fetch steps based on their coordinates
@@ -17,6 +18,7 @@ extension CLLocationCoordinate2D: Equatable {
 }
 
 extension CLLocationCoordinate2D {
+    static let logger = Logger(category: String(describing: CLLocationCoordinate2D.self))
     
     static func random() -> CLLocationCoordinate2D {
         let latitude = Double.random(in: -90...90)
@@ -25,8 +27,12 @@ extension CLLocationCoordinate2D {
     }
     
     static func centre(of coordinates: [CLLocationCoordinate2D]) -> CLLocationCoordinate2D? {
+        logger.debug("\(coordinates)")
+        
         let latitude = Double.midRange(of: coordinates.map(\.latitude))
         let longitude = Double.midRange(of: coordinates.map(\.longitude))
+        
+        logger.debug("lat: \(String(describing: latitude)) & lon: \(String(describing: longitude))")
         
         if let latitude,
            let longitude {

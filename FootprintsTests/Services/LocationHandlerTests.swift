@@ -11,113 +11,43 @@ import XCTest
 @testable import Footprints
 
 final class LocationHandlerTests: XCTestCase {
-    
-    var locationManager: MockLocationManager!
-    var randomLocation: CLLocation!
-    private var cancellables: Set<AnyCancellable>!
-    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        locationManager = MockLocationManager(
+        
+    }
+
+    override func tearDownWithError() throws {
+        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    }
+    
+    @MainActor
+    func test_locationHandler_getCurrentLocation_returnsALocation() async throws {
+        // if
+        var locationManager = MockLocationManager(
             allowsBackgroundLocationUpdates: true,
             showsBackgroundLocationIndicator: true,
             authorizationStatus: CLAuthorizationStatus.authorizedAlways
         )
         
         let randomCoordinate = CLLocationCoordinate2D.random()
-        randomLocation = CLLocation(
+        let randomLocation = CLLocation(
             latitude: randomCoordinate.latitude,
             longitude: randomCoordinate.longitude
         )
         
-        cancellables = []
-    }
+        locationManager.handleRequestLocationCompletion = { randomLocation }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    @MainActor 
-    func test_LocationHandler_() throws {
-        
-        let requestLocationExpectation = expectation(description: "request Location")
-        locationManager.handleRequestLocation = {
-            requestLocationExpectation.fulfill()
-            return self.randomLocation
-        }
-        
         let container = MockDataContainer(inMemory: true)
-        let handler = LocationHandler(context: container.container.mainContext, locationManager: locationManager)
+        let locationHandler = LocationHandler(context: container.container.mainContext, locationManager: locationManager)
+
+        // when
         
-        let completionExpectation = expectation(description: "completion")
         
-        handler.getCurrentLocation { location in
-            XCTAssertEqual(location, self.randomLocation)
-            completionExpectation.fulfill()
-        }
-        
-        wait(for: [requestLocationExpectation, completionExpectation], timeout: 1)
-    }
-    
-    @MainActor
-    func test_LocationHandler_Async() async throws {
-        
-        let requestLocationExpectation = expectation(description: "request Location")
-        locationManager.handleRequestLocation = {
-            requestLocationExpectation.fulfill()
-            return self.randomLocation
-        }
-        
-        let container = MockDataContainer(inMemory: true)
-        let handler = LocationHandler(context: container.container.mainContext, locationManager: locationManager)
-        
-        let location = try await handler.getCurrentLocation()
-        await fulfillment(of: [requestLocationExpectation])
-        
-        XCTAssertEqual(location, self.randomLocation)
-        
+        let location = try await locationHandler.currentLocation()
+        print(location.debugDescription)
+//        
+        XCTAssertEqual(location, randomLocation)
     }
 
-    @MainActor
-    func test_LocationHandler_combine() throws {
-        
-        let requestLocationExpectation = expectation(description: "request Location")
-        locationManager.handleRequestLocation = {
-            requestLocationExpectation.fulfill()
-            return self.randomLocation
-        }
-        
-        let container = MockDataContainer(inMemory: true)
-        let handler = LocationHandler(context: container.container.mainContext, locationManager: locationManager)
-        
-        var locations = [CLLocation]()
-        var error: Error?
-        
-        handler.getCurrentLocation()
-        
-        
-        handler
-            .locationPublisher()
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let encounteredError):
-                    error = encounteredError
-                }
-
-                requestLocationExpectation.fulfill()
-            }, receiveValue: { value in
-                 locations = value
-            })
-            .store(in: &cancellables)
-        
-        wait(for: [requestLocationExpectation], timeout: 1)
-        
-        XCTAssertNil(error)
-        XCTAssertEqual(locations.first, randomLocation)
-
-    }
     
     func testPerformanceExample() throws {
         // This is an example of a performance test case.

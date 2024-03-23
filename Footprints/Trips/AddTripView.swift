@@ -11,22 +11,19 @@ struct AddTripView: View {
     @Environment(\.sizeCategory) private var sizeCategory
     // MARK: - Data Properties
     @Environment(\.modelContext) private var modelContext
-    @State private var title = ""
-    @State private var startDate = Date.now
-    @State private var endDate = Date.now
-    @State private var isAutoTrackingEnabled: Bool = false
+    @Bindable var trip: Trip
     @State private var isAutoTrackingToggleDisabled: Bool = false
-
+    
     
     // MARK: - Navigation Properties
     @Environment(\.dismiss) private var dismiss
-    @Binding var navigationPath: NavigationPath
+    
     
     @Environment(LocationHandler.self) private var locationHandler
-  
+    
     // MARK: - Computed Properties
     var saveDisabled: Bool {
-        if title == "" {
+        if trip.title == "" {
             true
         } else {
             false
@@ -35,80 +32,78 @@ struct AddTripView: View {
     
     // MARK: - View
     var body: some View {
-        NavigationStack {
-            Form {
-                Section {
-                    TextField("Title", text: $title, prompt: Text("Title"), axis: .vertical)
+        Form {
+            Section {
+                TextField("Title", text: $trip.title, prompt: Text("Title"), axis: .vertical)
+            }
+            
+            if sizeCategory.isAccessibilityCategory {
+                Section("Start Date") {
+                    DatePicker("", selection: $trip.startDate, displayedComponents: .date)
                 }
                 
-                if sizeCategory.isAccessibilityCategory {
-                    Section("Start Date") {
-                        DatePicker("", selection: $startDate, displayedComponents: .date)
-                    }
-                    
-                    Section("End Date") {
-                        DatePicker("", selection: $endDate, displayedComponents: .date)
-                    }
-                    
-                    Section("Enable automatic trip tracking") {
-                        Toggle("", isOn: $isAutoTrackingEnabled)
-//                    } footer: {
-//                        if locationHandler.locationUpdatesAuthorized == 1 {
-//                            Text("Auto tracking is disabled as location services have been turned off for this app.  Go to iPhone settings to enable")
-//                        }
-                    }
-                    
-                } else {
-                    Section {
-                        DatePicker("Start Date", selection: $startDate, displayedComponents: [.date])
-                        DatePicker("End Date", selection: $endDate, displayedComponents: [.date])
-                        Toggle("Enable automatic trip tracking", isOn: $isAutoTrackingEnabled)
-                            .disabled(isAutoTrackingToggleDisabled)
-                    } footer: {
-                        if locationHandler.locationUpdatesAuthorized == 1 {
-                            Text("Auto tracking is disabled as location services have been turned off for this app.  Go to iPhone settings to enable")
-                        }
+                Section("End Date") {
+                    DatePicker("", selection: $trip.endDate, displayedComponents: .date)
+                }
+                
+                Section("Enable automatic trip tracking") {
+                    Toggle("", isOn: $trip.isAutoTrackingOn)
+                    //                    } footer: {
+                    //                        if locationHandler.locationUpdatesAuthorized == 1 {
+                    //                            Text("Auto tracking is disabled as location services have been turned off for this app.  Go to iPhone settings to enable")
+                    //                        }
+                }
+                
+            } else {
+                Section {
+                    DatePicker("Start Date", selection: $trip.startDate, displayedComponents: [.date])
+                    DatePicker("End Date", selection: $trip.endDate, displayedComponents: [.date])
+                    Toggle("Enable automatic trip tracking", isOn: $trip.isAutoTrackingOn)
+                        .disabled(isAutoTrackingToggleDisabled)
+                } footer: {
+                    if locationHandler.locationUpdatesAuthorized == 1 {
+                        Text("Auto tracking is disabled as location services have been turned off for this app.  Go to iPhone settings to enable")
                     }
                 }
-
-                // Add picture
             }
-            .formStyle(.grouped)
-            .macOS { $0.frame(minWidth: 440, maxWidth: .infinity, minHeight: 220, maxHeight: .infinity) }
             
-            // MARK: - Navigation
-            .navigationTitle("Add Trip")
-            .iOS { $0.navigationBarTitleDisplayMode(.inline) }
-            
-            // MARK: - Toolbar
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
-                        addTrip()
-                        dismiss()
-                    }
-                    .disabled(saveDisabled)
+            // Add picture
+        }
+        .formStyle(.grouped)
+        .macOS { $0.frame(minWidth: 440, maxWidth: .infinity, minHeight: 220, maxHeight: .infinity) }
+        
+        // MARK: - Navigation
+        .navigationTitle("Add Trip")
+        .iOS { $0.navigationBarTitleDisplayMode(.inline) }
+        
+        // MARK: - Toolbar
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Save") {
+                    dismiss()
                 }
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel", role: .cancel) {
-                        dismiss()
-                    }
+                .disabled(saveDisabled)
+            }
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel", role: .cancel) {
+                    discardNewTrip()
+                    dismiss()
                 }
             }
         }
         // MARK: - View updates
-        .onChange(of: startDate) {
-            if endDate < startDate {
-                endDate = startDate
+        .onChange(of: trip.startDate) {
+            if trip.endDate < trip.startDate {
+                trip.endDate = trip.startDate
             }
         }
-        .onChange(of: endDate) {
-            if startDate > endDate {
-                startDate = endDate
+        .onChange(of: trip.endDate) {
+            if trip.startDate > trip.endDate {
+                trip.startDate = trip.endDate
             }
         }
         
-        .onChange(of: isAutoTrackingEnabled) {
+        .onChange(of: trip.isAutoTrackingOn) {
             locationHandler.enableLocationServices()
         }
         .onChange(of: locationHandler.locationUpdatesAuthorized) {
@@ -117,18 +112,20 @@ struct AddTripView: View {
     }
     
     // MARK: - Methods
-    func addTrip() {
-        let newTrip = Trip(title: title, startDate: startDate, endDate: endDate, isAutoTrackingOn: isAutoTrackingEnabled)
-        
-        modelContext.insert(newTrip)
-        
-        let dataHandler = DataHandler()
-        if dataHandler.isATripActive(context: modelContext) {
-            locationHandler.startLocationServices()
-        }
-        
-        
-        navigationPath.append(newTrip)
+//    func addTrip() {
+//        let newTrip = Trip(title: title, startDate: startDate, endDate: endDate, isAutoTrackingOn: isAutoTrackingEnabled)
+//        
+//        modelContext.insert(newTrip)
+//        
+//        let dataHandler = DataHandler()
+//        if dataHandler.isATripActive(context: modelContext) {
+//            locationHandler.startLocationServices()
+//        }
+//        navigationPath.append(newTrip)
+//    }
+    
+    func discardNewTrip() {
+        modelContext.delete(trip)
     }
     
     func authorisationDidChange() {
@@ -137,7 +134,8 @@ struct AddTripView: View {
             isAutoTrackingToggleDisabled = false
         case 1:
             isAutoTrackingToggleDisabled = true
-            isAutoTrackingEnabled = false
+//            $trip.isAutoTrackingEnabled = false
+            trip.isAutoTrackingOn = false
         default:
             return
         }
@@ -146,6 +144,10 @@ struct AddTripView: View {
 
 // MARK: - Previews
 #Preview {
-    AddTripView(navigationPath: .constant(NavigationPath()))
-        .environment(LocationHandler.preview)
+    ModelPreview {
+        SampleContainer.sample()
+    } content: {
+        AddTripView(trip: .bedminsterToBeijing)
+            .environment(LocationHandler.preview)
+    }
 }

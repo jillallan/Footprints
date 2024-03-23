@@ -5,11 +5,14 @@
 //  Created by Jill Allan on 27/10/2023.
 //
 
+import MapKit
+import OSLog
 import SwiftData
 import SwiftUI
 
 @Model
 final class Trip: CustomDebugStringConvertible {
+    
     // MARK: - Properties
     var title: String
     var startDate: Date
@@ -25,6 +28,22 @@ final class Trip: CustomDebugStringConvertible {
     
     var tripSteps: [Step] {
         steps?.sorted() ?? []
+    }
+    
+    var tripCentreCoordinate: CLLocationCoordinate2D {
+        CLLocationCoordinate2D.centre(of: tripSteps.map(\.coordinate)) ?? CLLocationCoordinate2D.example
+    }
+    
+    var tripCoordinateSpan: MKCoordinateSpan {
+        MKCoordinateSpan.span(of: tripSteps.map(\.coordinate), padding: 0.1) ?? MKCoordinateSpan.example
+    }
+    
+    var tripRegion: MKCoordinateRegion {
+//        logger.debug("\(self.tripSteps.map(\.coordinate))")
+        let region = MKCoordinateRegion.calculateRegion(from: tripSteps.map(\.coordinate), padding: 0.001)
+//        logger.debug("\(String(describing: region))")
+        
+        return region
     }
     
     var tripIsLive: Bool {

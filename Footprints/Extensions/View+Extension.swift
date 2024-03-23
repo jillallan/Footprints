@@ -21,7 +21,7 @@ extension View {
     }
     
     func setAspectRatio(_ aspectRatio: AspectRatio) -> some View {
-        let _ = print("Aspect ratio set: \(aspectRatio)")
+//        let _ = print("Aspect ratio set: \(aspectRatio)")
         return environment(\.aspectRatio, aspectRatio)
     }
     
@@ -41,6 +41,7 @@ extension View {
             try await Task.sleep(nanoseconds: UInt64(delayInterval * 1_000_000_000))
         })
     }
+
     
     @ViewBuilder func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
          if condition {

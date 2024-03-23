@@ -6,15 +6,23 @@
 //
 
 import Foundation
+import OSLog
 
 extension Double {
+    static let logger = Logger(category: String(describing: Double.self))
+    
     static func midRange(of doubles: [Double]) -> Double? {
+        logger.debug("\(String(describing: doubles))")
+        
         let min = doubles.min()
         let max = doubles.max()
         
+        logger.debug("min: \(String(describing: min)) & max: \(String(describing: max))")
+        
         if let min,
             let max {
-            return (max - min) / 2
+            logger.debug("\(String(describing: (max - min) / 2))")
+            return min + (max - min) / 2
         } else {
             return nil
         }

@@ -19,6 +19,7 @@ struct SampleContainer {
 //                container.mainContext.insert(Trip.bedminsterToBeijing)
 //                container.mainContext.insert(Trip.mountains)
             }
+            
             return container
         } catch {
             fatalError("Error loading SampleContainer")

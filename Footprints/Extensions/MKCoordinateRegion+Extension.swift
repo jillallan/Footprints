@@ -7,12 +7,20 @@
 
 import Foundation
 import MapKit
+import OSLog
 
 extension MKCoordinateRegion {
+    static let logger = Logger(category: String(describing: MKCoordinateRegion.self))
+    
     static func calculateRegion(from coordinates: [CLLocationCoordinate2D], padding: Double) -> MKCoordinateRegion {
+
+        logger.debug("\(coordinates)")
         
         let center = CLLocationCoordinate2D.centre(of: coordinates)
         let span = MKCoordinateSpan.span(of: coordinates, padding: padding)
+    
+        logger.debug("\(center.debugDescription)")
+        logger.debug("\(span.debugDescription)")
         
         if let center,
            let span {

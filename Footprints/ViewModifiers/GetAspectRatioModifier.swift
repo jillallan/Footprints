@@ -29,7 +29,7 @@ struct getAspectRatioModifier: ViewModifier {
                     Color.clear
                         .task(id: geometry.size) {
                             let ratio = max(proxySize.width, 0) / max(proxySize.height, 0)
-                            print("Aspect ratio: \(ratio)")
+//                            print("Aspect ratio: \(ratio)")
                             switch ratio {
                             case 2.1...:
                                 $aspectRatio.wrappedValue = AspectRatio.wide(aspectRatio: ratio)

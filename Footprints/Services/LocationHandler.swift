@@ -11,6 +11,10 @@ import Foundation
 import OSLog
 import SwiftData
 
+enum MyLocationError: Error {
+    case noLocationError
+}
+
 // MARK: - Protocol for testing
 protocol Locatable {
     var locatableDelegate: LocatableDelegate? { get set }
@@ -51,9 +55,17 @@ class LocationHandler: NSObject {
 
     var locationManager: Locatable
     let context: ModelContext
-    var locationManagerCallback: ((CLLocation) -> ())?
-//    let locationSubject = PassthroughSubject<[CLLocation], Never>()
+    var locationContinuation: CheckedContinuation<CLLocation, Error>?
     private var authorizationStatus: AuthorisationStatus = .notDetermined
+    
+    var lastLocation: CLLocation {
+        get async throws {
+            return try await withCheckedThrowingContinuation { continuation in
+                self.locationContinuation = continuation
+                locationManager.requestLocation()
+            }
+        }
+    }
     
     // MARK: - User defaults
     var locationUpdatesAuthorized: Int = UserDefaults.standard.integer(forKey: "locationUpdatesAuthorized") {
@@ -73,7 +85,7 @@ class LocationHandler: NSObject {
         self.locationManager.allowsBackgroundLocationUpdates = true
         self.locationManager.showsBackgroundLocationIndicator = true
 #endif
-        
+
     }
     
     // MARK: - Methods
@@ -116,26 +128,11 @@ class LocationHandler: NSObject {
         locationManager.stopMonitoringVisits()
     }
     
-    func getLatitude(_ location: CLLocation) -> Double {
-        location.coordinate.latitude
-    }
-    
-    // MARK: - Callback method
-    func getCurrentLocation(completion: @escaping (CLLocation) -> ()) {
-        self.locationManagerCallback = { location in
-            completion(location)
-        }
-        locationManager.requestLocation()
-    }
-
     // MARK: - Async method
-  
 
-    // Does not need to be observed???
-    var locationContinuation: CheckedContinuation<CLLocation?, Error>?
-    
-    func getCurrentLocation() async throws -> CLLocation? {
-        try await withCheckedThrowingContinuation { continuation in
+    func currentLocation() async throws -> CLLocation {
+        locationManager.requestLocation()
+        return try await withCheckedThrowingContinuation { continuation in
             locationContinuation = continuation
             locationManager.requestLocation()
         }
@@ -145,26 +142,12 @@ class LocationHandler: NSObject {
         locationManager.requestLocation()
     }
     
-//    var lastLocation: CLLocation {
-//        get async throws {
-//            return try await withCheckedThrowingContinuation { continuation in
-//                self.continuation = continuation
-//                locationManager.requestLocation()
-//            }
-//        }
-//    }
-    
 //    func getLocale() -> Locale {
 //        return Locale.current
 //    }
 }
 
 extension LocationHandler: LocatableDelegate {
-    
-//    func locationPublisher() -> AnyPublisher<[CLLocation], Never> {
-//        return locationSubject.eraseToAnyPublisher()
-//    }
-
     func locatableDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
         case .authorizedWhenInUse, .authorizedAlways:  // Location services are available.
@@ -195,18 +178,17 @@ extension LocationHandler: LocatableDelegate {
     func locatable(_ manager: Locatable, didUpdateLocations locations: [CLLocation]) {
 
         guard let location = locations.first else { return }
-        logger.debug("\(#function) : \(#line) : \(String(describing: location))")
-        
-        self.locationManagerCallback?(location)
-        self.locationManagerCallback = nil
-        
-        locationContinuation?.resume(returning: locations.first)
-        locationContinuation = nil
+        logger.debug("\(String(describing: location))")
+ 
+        if let location = locations.first {
+            locationContinuation?.resume(returning: location)
+        } else {
+            locationContinuation?.resume(throwing: MyLocationError.noLocationError)
+        }
 
         
         let dataHandler = DataHandler()
         if let trip = dataHandler.fetchActiveTrip(context: context) {
-            logger.debug("\(#function) : \(#line) : \(trip.debugDescription)")
             
             let step = Step(
                 timestamp: location.timestamp,
@@ -216,7 +198,6 @@ extension LocationHandler: LocatableDelegate {
             
             step.trip = trip
             context.insert(step)
-            logger.debug("\(#function) : \(#line) : trip step: \(String(describing: trip.steps?.first.debugDescription))")
         }
     }
     

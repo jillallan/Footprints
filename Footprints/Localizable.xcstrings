@@ -69,6 +69,9 @@
         }
       }
     },
+    "Name your trip" : {
+
+    },
     "Nearby" : {
 
     },
@@ -113,6 +116,9 @@
     "Settings" : {
 
     },
+    "Sidebar" : {
+
+    },
     "Start Date" : {
 
     },
@@ -146,6 +152,9 @@
 
     },
     "Trip Summary" : {
+
+    },
+    "trip title" : {
 
     },
     "Trips" : {

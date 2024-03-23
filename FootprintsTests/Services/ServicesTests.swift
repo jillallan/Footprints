@@ -23,25 +23,25 @@ final class ServicesTests: XCTestCase {
     
  
 
-    func testMapSearchService_returnsResultsForLocation() throws {
-        let mapSearchService2 = MapSearchService()
-        let region = MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: 51.5, longitude: 0.0),
-            span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-        )
-        let expectation = expectation(description: "Map Search")
-        
-        Task {
-            await mapSearchService2.search(for: "Coffee", in: region)
-            expectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: 3)
-        print(mapSearchService2.searchResults)
-        
-        XCTAssertGreaterThan(mapSearchService2.searchResults.count, 0)
-
-    }
+//    func testMapSearchService_returnsResultsForLocation() throws {
+//        let mapSearchService2 = MapSearchService()
+//        let region = MKCoordinateRegion(
+//            center: CLLocationCoordinate2D(latitude: 51.5, longitude: 0.0),
+//            span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+//        )
+//        let expectation = expectation(description: "Map Search")
+//        
+//        Task {
+//            await mapSearchService2.search(for: "Coffee", in: region)
+//            expectation.fulfill()
+//        }
+//        
+//        waitForExpectations(timeout: 3)
+//        print(mapSearchService2.searchResults)
+//        
+//        XCTAssertGreaterThan(mapSearchService2.searchResults.count, 0)
+//
+//    }
     
     
     

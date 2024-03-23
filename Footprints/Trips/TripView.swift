@@ -39,15 +39,16 @@ struct TripView: View {
                 TripDetailView(trip: trip, navigationPath: $navPath)
             }
             
-            .sheet(isPresented: $isAddTripViewPresented) {
-                AddTripView(navigationPath: $navPath)
-            }
+//            .sheet(isPresented: $isAddTripViewPresented) {
+//                AddTripView(navigationPath: $navPath)
+//            }
             
             // MARK: - Toolbar
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button("Add trip", systemImage: "plus") {
-                        isAddTripViewPresented.toggle()
+//                        isAddTripViewPresented.toggle()
+                        addTrip()
                     }
                 }
             }
@@ -67,6 +68,12 @@ struct TripView: View {
         }
     }
     
+    func addTrip() {
+        let newTrip = Trip()
+        modelContext.insert(newTrip)
+//        navPath.append(newTrip)
+    }
+    
     func deleteTrips(_ indexSet: IndexSet) {
         for index in indexSet {
             let trip = trips[index]
@@ -77,6 +84,7 @@ struct TripView: View {
 #if DEBUG
     func createData() async {
         await SampleDataGenerator.generateSampleData(modelContext: modelContext)
+//        locationHandler.enableLocationServices()
     }
 #endif
 }

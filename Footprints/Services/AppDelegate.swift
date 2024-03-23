@@ -25,8 +25,8 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         
         let schema = Schema([Trip.self])
 #if DEBUG
-//        let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
-//#else
+        let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+#else
         let configuration = ModelConfiguration()
 #endif
 

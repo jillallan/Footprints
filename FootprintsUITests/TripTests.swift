@@ -13,6 +13,7 @@ final class TripTests: XCTestCase {
     override func setUpWithError() throws {
         app = XCUIApplication()
         app.launch()
+        continueAfterFailure = false
     }
     
 
@@ -36,7 +37,35 @@ final class TripTests: XCTestCase {
         let endDate = Date.randomBetween(start: "2023-01-01", end: "2024-01-01", format: "yyyy-MM-dd")
        
         addTrip(title: title, startDate: startDate, endDate: endDate)
-
+        
+        XCTAssert(app.staticTexts[title].exists)
+    }
+    
+    func testAddTripView_whenCancelButtonPressed_ReturnsToTripView() throws {
+       
+        testTripView_whenAddTripButtonTapped_BringsUpAddTripSheet()
+        
+        let cancelButton = app.buttons["Cancel"]
+        XCTAssert(cancelButton.isHittable)
+        cancelButton.tap()
+        
+        XCTAssert(app.staticTexts["Trips"].exists)
+    }
+    
+    func testTripDetailView_whenOpened_showsStepsOnMap() throws {
+        
+    }
+    
+    func testTripDetailView_whenAddStepButtonPressed_newStepDetailViewPresented() throws {
+        try testAddTripView_whenSaveButtonPressed_SavesTripAndOpensTripDetailView()
+        
+        let addStepButton = app.buttons["Add step"]
+        addStepButton.waitForExistence(timeout: 1)
+        XCTAssert(addStepButton.isHittable)
+        
+        addStepButton.tap()
+        
+//        XCTAssert(app.staticTexts["New Step"])
     }
     
     
@@ -47,7 +76,8 @@ final class TripTests: XCTestCase {
 
         // get title text view, check it exists, tap to give it focus
         // and enter title
-        let titleTextField = app.textViews["Title"]
+//        let titleTextField = app.textViews["trip title"]
+        let titleTextField = app/*@START_MENU_TOKEN@*/.textFields["Name your trip"]/*[[".cells.textFields[\"Name your trip\"]",".textFields[\"Name your trip\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
         XCTAssert(titleTextField.isHittable)
         titleTextField.tap()
         titleTextField.typeText(title)
@@ -66,15 +96,19 @@ final class TripTests: XCTestCase {
 
         calendarPicker.pickDate(app: app, newDate: endDate)
         
-        let ttt = app.cells.containing(NSPredicate(format: "label CONTAINS %@", "Start Date")).descendants(matching: .button).element.value
-        let bbb = app.cells.containing(NSPredicate(format: "label CONTAINS %@", "End Date")).descendants(matching: .button).element.value 
+//        let ttt = app.cells.containing(NSPredicate(format: "label CONTAINS %@", "Start Date")).descendants(matching: .button).element.value
+//        let bbb = app.cells.containing(NSPredicate(format: "label CONTAINS %@", "End Date")).descendants(matching: .button).element.value 
+
         
-        print("mmmm: \(String(describing: ttt)), \(String(describing: bbb))")
         if let startDatePickerValue = app.buttons["Date Picker"].firstMatch.value {
             XCTAssertEqual(startDatePickerValue as! String,  startDate.formatted(date: .abbreviated, time: .omitted), "message1")
         } else {
             XCTFail("message2")
         }
+        
+        let saveButton = app.buttons["Save"]
+        XCTAssert(saveButton.isHittable)
+        saveButton.tap()
         
     }
 }

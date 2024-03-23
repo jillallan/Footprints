@@ -74,6 +74,9 @@
 		788FA36B2B9F3F4300D8E5D8 /* LocationHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788FA36A2B9F3F4300D8E5D8 /* LocationHandlerTests.swift */; };
 		7891C1142B6D1C5D003F4F52 /* ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7891C1132B6D1C5D003F4F52 /* ExtensionTests.swift */; };
 		7891C1162B6D220A003F4F52 /* DateFormatterExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7891C1152B6D220A003F4F52 /* DateFormatterExtensionTests.swift */; };
+		789CE4562BAF12E5003F801A /* StepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789CE4552BAF12E5003F801A /* StepTests.swift */; };
+		789CE4582BAF1663003F801A /* NavigationPathKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789CE4572BAF1663003F801A /* NavigationPathKey.swift */; };
+		789CE45A2BAF1C61003F801A /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789CE4592BAF1C60003F801A /* NavigationController.swift */; };
 		78A41DDC2B2CB335007621BA /* ActivityScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A41DDB2B2CB335007621BA /* ActivityScroll.swift */; };
 		78A425DC2B6AE4F90013A611 /* LocationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A425DB2B6AE4F90013A611 /* LocationHandler.swift */; };
 		78A425DE2B6AEC4A0013A611 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A425DD2B6AEC4A0013A611 /* AppDelegate.swift */; };
@@ -108,6 +111,9 @@
 		78E9EC822B7D0A3700D5F2A2 /* CustomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E9EC812B7D0A3700D5F2A2 /* CustomSheet.swift */; };
 		78E9EC882B7D58D800D5F2A2 /* CustomSheetViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E9EC872B7D58D800D5F2A2 /* CustomSheetViewModifier.swift */; };
 		78E9EC962B8142DD00D5F2A2 /* CustomSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E9EC952B8142DD00D5F2A2 /* CustomSheetController.swift */; };
+		78FF762E2BADE5240084896D /* TripView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FF762D2BADE5240084896D /* TripView2.swift */; };
+		78FF76302BADF77E0084896D /* TripDetailView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FF762F2BADF77E0084896D /* TripDetailView2.swift */; };
+		78FF76322BAE11D90084896D /* AddTripView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FF76312BAE11D90084896D /* AddTripView2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -202,6 +208,9 @@
 		788FA36A2B9F3F4300D8E5D8 /* LocationHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHandlerTests.swift; sourceTree = "<group>"; };
 		7891C1132B6D1C5D003F4F52 /* ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionTests.swift; sourceTree = "<group>"; };
 		7891C1152B6D220A003F4F52 /* DateFormatterExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterExtensionTests.swift; sourceTree = "<group>"; };
+		789CE4552BAF12E5003F801A /* StepTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTests.swift; sourceTree = "<group>"; };
+		789CE4572BAF1663003F801A /* NavigationPathKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationPathKey.swift; sourceTree = "<group>"; };
+		789CE4592BAF1C60003F801A /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		78A41DDB2B2CB335007621BA /* ActivityScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityScroll.swift; sourceTree = "<group>"; };
 		78A425DB2B6AE4F90013A611 /* LocationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHandler.swift; sourceTree = "<group>"; };
 		78A425DD2B6AEC4A0013A611 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -239,6 +248,9 @@
 		78E9EC812B7D0A3700D5F2A2 /* CustomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSheet.swift; sourceTree = "<group>"; };
 		78E9EC872B7D58D800D5F2A2 /* CustomSheetViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSheetViewModifier.swift; sourceTree = "<group>"; };
 		78E9EC952B8142DD00D5F2A2 /* CustomSheetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSheetController.swift; sourceTree = "<group>"; };
+		78FF762D2BADE5240084896D /* TripView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripView2.swift; sourceTree = "<group>"; };
+		78FF762F2BADF77E0084896D /* TripDetailView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailView2.swift; sourceTree = "<group>"; };
+		78FF76312BAE11D90084896D /* AddTripView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTripView2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -337,6 +349,8 @@
 		782D63452AEBDF0600C1C48A /* FootprintsTests */ = {
 			isa = PBXGroup;
 			children = (
+				78709C792AEC025C00E53D1C /* MockDataContainer.swift */,
+				78C64BBC2B9FA5E800E6EC3B /* MockLocationManager.swift */,
 				78C64BBE2BA38AB600E6EC3B /* Services */,
 				7891C1132B6D1C5D003F4F52 /* ExtensionTests.swift */,
 				78709C802AEC038B00E53D1C /* DateExtensionTests.swift */,
@@ -345,8 +359,6 @@
 				78709C822AEC045000E53D1C /* TripTests.swift */,
 				782D63462AEBDF0600C1C48A /* EnvironmentalValuesExtensionTests.swift */,
 				78709C772AEC020100E53D1C /* BaseTestCase.swift */,
-				78709C792AEC025C00E53D1C /* MockDataContainer.swift */,
-				78C64BBC2B9FA5E800E6EC3B /* MockLocationManager.swift */,
 			);
 			path = FootprintsTests;
 			sourceTree = "<group>";
@@ -356,6 +368,7 @@
 			children = (
 				782D63502AEBDF0600C1C48A /* NavigationUITests.swift */,
 				781448EB2AEC3C6200090E89 /* TripTests.swift */,
+				789CE4552BAF12E5003F801A /* StepTests.swift */,
 				7870EC072AF290E600080EE3 /* CalendarPicker.swift */,
 				782D63522AEBDF0600C1C48A /* FootprintsUITestsLaunchTests.swift */,
 			);
@@ -431,8 +444,11 @@
 			children = (
 				78709C752AEC014100E53D1C /* Trip.swift */,
 				782D637A2AEBE51400C1C48A /* TripView.swift */,
+				78FF762D2BADE5240084896D /* TripView2.swift */,
 				781448ED2AEC3D7200090E89 /* AddTripView.swift */,
+				78FF76312BAE11D90084896D /* AddTripView2.swift */,
 				78E7C8A42AF042CB00450A0E /* TripDetailView.swift */,
+				78FF762F2BADF77E0084896D /* TripDetailView2.swift */,
 				785FDB1F2B02712800B1BF0E /* TripSummaryCard.swift */,
 				785FDB212B02717600B1BF0E /* TripStatisticsCard.swift */,
 			);
@@ -467,6 +483,7 @@
 				78A425E52B6BD23B0013A611 /* GetSizeModifier.swift */,
 				78A425E72B6BD2540013A611 /* GetAspectRatioModifier.swift */,
 				78A425E92B6BD2990013A611 /* DebouncedOnChangeModifier.swift */,
+				789CE4572BAF1663003F801A /* NavigationPathKey.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -548,13 +565,14 @@
 		78F12A592B48612800058ECA /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				78A425DD2B6AEC4A0013A611 /* AppDelegate.swift */,
 				78A425DB2B6AE4F90013A611 /* LocationHandler.swift */,
 				78DDE3102B88F42900DDA7D3 /* MapSearchService.swift */,
 				78C64BBA2B9F674D00E6EC3B /* CurrentLocationProvider.swift */,
 				784FDA4E2B63CFB3006F10C1 /* MapService.swift */,
 				78B1B4A92B97663A000AE40F /* DataHandler.swift */,
-				78A425DD2B6AEC4A0013A611 /* AppDelegate.swift */,
 				78DDE3262B9683EE00DDA7D3 /* CheckForActiveTripOperation.swift */,
+				789CE4592BAF1C60003F801A /* NavigationController.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -727,6 +745,7 @@
 				78B1B4AA2B97663A000AE40F /* DataHandler.swift in Sources */,
 				7850F7152BA78C2A00DEFFFF /* LocationSearchSuggestionRow.swift in Sources */,
 				7804E4442AF3E60F00C5E0CC /* StepDetailView.swift in Sources */,
+				78FF76322BAE11D90084896D /* AddTripView2.swift in Sources */,
 				783C222A2B5AB8A700D915FA /* Location.swift in Sources */,
 				782D63762AEBE4C200C1C48A /* AppDetailColumn.swift in Sources */,
 				78DDE3272B9683EE00DDA7D3 /* CheckForActiveTripOperation.swift in Sources */,
@@ -739,6 +758,7 @@
 				78A425DE2B6AEC4A0013A611 /* AppDelegate.swift in Sources */,
 				782D63812AEBE51400C1C48A /* StatisticsView.swift in Sources */,
 				78DDE3212B96145300DDA7D3 /* LocationError.swift in Sources */,
+				78FF76302BADF77E0084896D /* TripDetailView2.swift in Sources */,
 				783C36F22B6960B300AD8EDF /* LocationSearchView.swift in Sources */,
 				783C22262B5AAE1F00D915FA /* LocationSearchResultRow.swift in Sources */,
 				782D63822AEBE51400C1C48A /* LocationView.swift in Sources */,
@@ -755,6 +775,7 @@
 				783C22342B5AD3F100D915FA /* PlacemarkDescribable.swift in Sources */,
 				78E9EC962B8142DD00D5F2A2 /* CustomSheetController.swift in Sources */,
 				783C22322B5ACAF300D915FA /* CLLocationCoordinate2D+Extension.swift in Sources */,
+				789CE45A2BAF1C61003F801A /* NavigationController.swift in Sources */,
 				78DDE31D2B960A8900DDA7D3 /* LocationName.swift in Sources */,
 				782D63602AEBE19100C1C48A /* EnvironmentalValues+Extension.swift in Sources */,
 				78E9EC882B7D58D800D5F2A2 /* CustomSheetViewModifier.swift in Sources */,
@@ -770,6 +791,7 @@
 				784FDA4F2B63CFB3006F10C1 /* MapService.swift in Sources */,
 				784DE5252B3F716E00E1229B /* SimpleHStack.swift in Sources */,
 				78E9EC822B7D0A3700D5F2A2 /* CustomSheet.swift in Sources */,
+				789CE4582BAF1663003F801A /* NavigationPathKey.swift in Sources */,
 				785FDB2B2B02DE6D00B1BF0E /* DynamicSafeAreaInsetModifier.swift in Sources */,
 				788732852B481E730052E3C3 /* PhotoGrid.swift in Sources */,
 				78DDE3112B88F42900DDA7D3 /* MapSearchService.swift in Sources */,
@@ -793,6 +815,7 @@
 				785FDB1A2AFE7D2700B1BF0E /* View+Extension.swift in Sources */,
 				782D63772AEBE4C200C1C48A /* AppScreen.swift in Sources */,
 				78AADFE62BA60D3500491CC3 /* LocationSearchResults.swift in Sources */,
+				78FF762E2BADE5240084896D /* TripView2.swift in Sources */,
 				785FDB1E2B01689F00B1BF0E /* StepCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -820,6 +843,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7870EC052AF2901100080EE3 /* Date+Extension.swift in Sources */,
+				789CE4562BAF12E5003F801A /* StepTests.swift in Sources */,
 				7870EC032AF2900E00080EE3 /* String+Extension.swift in Sources */,
 				782D63532AEBDF0600C1C48A /* FootprintsUITestsLaunchTests.swift in Sources */,
 				7870EC0B2AF2913A00080EE3 /* DateFormatter+Extension.swift in Sources */,
