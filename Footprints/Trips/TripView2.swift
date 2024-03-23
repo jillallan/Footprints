@@ -14,8 +14,8 @@ struct TripView2: View {
     @Query var trips: [Trip]
     
     // MARK: - Navigation Properties
-    @State var navPath = NavigationPath()
-    @State var navigation = NavigationController()
+    @Bindable var navigation = NavigationController()
+//    @Environment(NavigationController.self) private var navigation
     @State var isAddTripViewPresented: Bool = false
     
     var body: some View {
@@ -39,11 +39,10 @@ struct TripView2: View {
                 }
             }
             .sheet(isPresented: $isAddTripViewPresented) {
-//                AddTripView2(navPath: $navPath)
                 AddTripView2()
             }
-            .environment(navigation)
         }
+        .environment(navigation)
     }
 }
 

@@ -65,7 +65,7 @@ final class TripTests: XCTestCase {
         
         addStepButton.tap()
         
-//        XCTAssert(app.staticTexts["New Step"])
+        XCTAssert(app.staticTexts["New step"].exists)
     }
     
     

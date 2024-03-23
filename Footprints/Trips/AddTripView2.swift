@@ -20,8 +20,6 @@ struct AddTripView2: View {
     
     // MARK: - Navigation Properties
     @Environment(\.dismiss) private var dismiss
-//    @Binding var navPath: NavigationPath
-//    @EnvironmentObject var navPath: NavigationPath
     @Environment(NavigationController.self) private var navigation
     
     // MARK: - View Properties
@@ -83,7 +81,6 @@ struct AddTripView2: View {
             isAutoTrackingOn: isAutoTrackingEnabled
         )
         modelContext.insert(newTrip)
-//        navPath.append(newTrip)
         navigation.navigationPath.append(newTrip)
     }
 }
