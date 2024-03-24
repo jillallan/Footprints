@@ -20,7 +20,7 @@ final class LocationHandlerTests: XCTestCase {
     }
     
     @MainActor
-    func test_locationHandler_getCurrentLocation_returnsALocation() async throws {
+    func test_locationHandler_currentLocation_returnsALocation() async throws {
         // if
         var locationManager = MockLocationManager(
             allowsBackgroundLocationUpdates: true,
@@ -40,15 +40,12 @@ final class LocationHandlerTests: XCTestCase {
         let locationHandler = LocationHandler(context: container.container.mainContext, locationManager: locationManager)
 
         // when
-        
-        
         let location = try await locationHandler.currentLocation()
-        print(location.debugDescription)
-//        
+
+        // then
         XCTAssertEqual(location, randomLocation)
     }
 
-    
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {

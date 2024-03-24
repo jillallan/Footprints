@@ -30,7 +30,6 @@ protocol Locatable {
 }
 
 protocol LocatableDelegate {
-//    func locationPublisher() -> AnyPublisher<[CLLocation], Never>
     func locatableDidChangeAuthorization(_ manager: CLLocationManager)
     func locatable(_ manager: Locatable, didUpdateLocations locations: [CLLocation])
     func locatable(_ manager: Locatable, didFailWithError error: Error)
@@ -138,13 +137,7 @@ class LocationHandler: NSObject {
         }
     }
     
-    func getCurrentLocation() {
-        locationManager.requestLocation()
-    }
     
-//    func getLocale() -> Locale {
-//        return Locale.current
-//    }
 }
 
 extension LocationHandler: LocatableDelegate {
