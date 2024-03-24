@@ -12,3 +12,9 @@ import SwiftUI
 class NavigationController {
     var navigationPath = NavigationPath()
 }
+
+extension NavigationController {
+    static var preview: NavigationController = {
+        NavigationController()
+    }()
+}

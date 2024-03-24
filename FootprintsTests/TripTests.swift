@@ -3,8 +3,8 @@
 //  FootprintsTests
 //
 //  Created by Jill Allan on 27/10/2023.
-//
 
+import CoreLocation
 import SwiftData
 import XCTest
 @testable import Footprints
@@ -53,6 +53,20 @@ final class TripTests: BaseTestCase {
         modelContext.insert(trip)
         
         XCTAssertEqual(trip.tripDates, "3 - 30 Sep 2019")
+    }
+    
+    func test_TripDetailView_getLocationCoordinates_whenNoLocationsServices_returnsLocaleLocation() {
+        modelContext.insert(Trip.bedminsterToBeijing)
+        let tripDetailView = TripDetailView2(trip: Trip.bedminsterToBeijing)
+        
+        let coordinate = tripDetailView.getLocation()
+        print(coordinate)
+        
+        XCTAssertEqual(coordinate, CLLocation(latitude: 55.378051, longitude: -3.435973))
+    }
+    
+    func test_TripDetailView_getLocationCoordinates_returnsLocation() {
+
     }
 
 }

@@ -26,15 +26,39 @@ struct TripDetailView2: View {
                 }
             }
             .navigationDestination(for: Step.self) { step in
-                Text("New step")
+                StepDetailView2(step: step)
             }
     }
     
     func addStep() {
-        // TODO: comment
-        let newStep = Step(timestamp: Date.now, latitude: 51.5, longitude: 0.0)
+        let location = getLocation()
+        
+        let newStep = Step(
+            timestamp: Date.now,
+            latitude: location.coordinate.latitude,
+            longitude: location.coordinate.longitude)
+        
         modelContext.insert(newStep)
         navigation.navigationPath.append(newStep)
+    }
+    
+    func getLocation() -> CLLocation {
+        if let location = getPreciseLocation() {
+            return location
+        } else {
+            let localeRegion = LocaleProvider.getLocale()
+            let regions = LocaleProvider.regionsCoordinates
+            
+            let region = regions.first(where: { $0.name == localeRegion })
+            return CLLocation(
+                latitude: region?.latitude ?? 0.0,
+                longitude: region?.longitude ?? 0.0
+            )
+        }
+    }
+    
+    func getPreciseLocation() -> CLLocation? {
+        return nil
     }
 }
 
@@ -45,6 +69,7 @@ struct TripDetailView2: View {
         TabView {
             NavigationStack {
                 TripDetailView2(trip: .bedminsterToBeijing)
+                    
             }
         }
     }
@@ -59,6 +84,7 @@ struct TripDetailView2: View {
         } detail: {
             NavigationStack {
                 TripDetailView2(trip: .bedminsterToBeijing)
+                    .environment(NavigationController.preview)
             }
         }
     }

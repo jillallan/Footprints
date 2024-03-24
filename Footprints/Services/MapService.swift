@@ -9,6 +9,8 @@ import CoreLocation
 import Foundation
 import OSLog
 
+// Currently we can only call 50 in 60 seconds
+
 enum NetworkError: Error {
     case geocodeError, placemarkError, locationError
 }
