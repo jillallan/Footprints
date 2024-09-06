@@ -12,36 +12,18 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
 
+    @State private var selectedTab: Tabs = .trips
+
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
-                }
-                .onDelete(perform: deleteItems)
+        TabView(selection: $selectedTab) {
+            Tab(Tabs.trips.name, systemImage: Tabs.trips.symbol, value: .trips) {
+                TripView()
             }
-#if os(macOS)
-            .navigationSplitViewColumnWidth(min: 180, ideal: 200)
-#endif
-            .toolbar {
-#if os(iOS)
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-#endif
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
+            Tab(Tabs.steps.name, systemImage: Tabs.steps.symbol, value: .steps) {
+                Steps()
             }
-        } detail: {
-            Text("Select an item")
         }
+        .tabViewStyle(.sidebarAdaptable)
     }
 
     private func addItem() {
@@ -60,7 +42,6 @@ struct ContentView: View {
     }
 }
 
-#Preview {
+#Preview(traits: .previewData) {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
 }
