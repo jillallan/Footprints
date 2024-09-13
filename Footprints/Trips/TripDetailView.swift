@@ -11,18 +11,14 @@ import SwiftUI
 struct TripDetailView: View {
     @Bindable var trip: Trip
     var tripList: Namespace.ID
-    @State private var aspectRatio: CGFloat = 0
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.deviceType) private var deviceType
 
     var body: some View {
-        let _ = print(aspectRatio)
 
         VStack {
             Map()
-//            Text("\(trip.title)")
-//                .foregroundStyle(Color.white)
         }
         .if(verticalSizeClass == .regular && horizontalSizeClass == .compact) { map in
             map.safeAreaInset(edge: .bottom) {
@@ -47,15 +43,10 @@ struct TripDetailView: View {
         .toolbarBackground(.hidden, for: .navigationBar)
         .toolbarVisibility(deviceType == .pad ? .visible : .hidden, for: .tabBar)
 #elseif os(macOS)
-    .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
+        .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
 #endif
         .navigationDestination(for: Step.self) { step in
             Text(step.timestamp, style: .date)
-        }
-        .onGeometryChange(for: CGRect.self) { proxy in
-            proxy.frame(in: .global)
-        } action: { newValue in
-            aspectRatio = newValue.width / newValue.height
         }
 
 

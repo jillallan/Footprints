@@ -23,8 +23,8 @@ extension EnvironmentValues {
     /// This is used to apply the tab bar navigation on iPhone and TV platforms.
     /// Otherwise split view navigation is used
     var deviceType: DeviceType {
-        get { self[DeviceIdiomEnvironmentKey.self] }
-        set { self[DeviceIdiomEnvironmentKey.self] = newValue }
+        get { self[DeviceTypeEnvironmentKey.self] }
+        set { self[DeviceTypeEnvironmentKey.self] = newValue }
     }
 }
 
@@ -33,14 +33,13 @@ enum DeviceType: Equatable {
 }
 
 /// The default navigation is split view navigation
-struct DeviceIdiomEnvironmentKey: EnvironmentKey {
+struct DeviceTypeEnvironmentKey: EnvironmentKey {
     nonisolated(unsafe) static var defaultValue: DeviceType = .mac
 }
 
 #if os(iOS)
 
 extension DeviceTypeEnvironmentKey: UITraitBridgedEnvironmentKey {
-
     /// Reads the user interface idiom from the current UITraitCollection.
     /// Required by the UITraitBridgedEnvironmentKey protocol
     /// - Parameter traitCollection: UITraitCollection of the device
@@ -51,16 +50,13 @@ extension DeviceTypeEnvironmentKey: UITraitBridgedEnvironmentKey {
             return DeviceType.phone
         case .pad:
             return DeviceType.pad
-        case .watch:
-            return DeviceType.watch
         case .tv:
             return DeviceType.tv
         case .vision:
             return DeviceType.vision
         default:
-            DeviceType.unspecified
+            return DeviceType.unspecified
         }
-        return traitCollection.userInterfaceIdiom
     }
 
     /// Required by the UITraitBridgedEnvironmentKey protocol
@@ -70,7 +66,7 @@ extension DeviceTypeEnvironmentKey: UITraitBridgedEnvironmentKey {
     ///
     ///   Writes the user interface idiom to the current UITraitCollection.
     ///   Not implemented for this extension
-    static func write(to mutableTraits: inout UIMutableTraits, value: UIUserInterfaceIdiom) {
+    static func write(to mutableTraits: inout UIMutableTraits, value: DeviceType) {
         // Do not write
     }
 }
