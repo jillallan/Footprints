@@ -11,15 +11,18 @@ struct StepView: View {
     @Bindable var trip: Trip
 
     var body: some View {
-        List {
-            ForEach(trip.steps) { step in
-                NavigationLink(value: step) {
-                    Text(step.timestamp, style: .date)
+        VStack {
+            Text("Jan - Feb 2024")
+            List {
+                ForEach(trip.steps) { step in
+                    NavigationLink(value: step) {
+                        StepRow(step: step)
+                    }
                 }
             }
+            .listStyle(.plain)
+            .background(.background)
         }
-//        .listStyle(.plain)
-//        .background(.background)
     }
 }
 
