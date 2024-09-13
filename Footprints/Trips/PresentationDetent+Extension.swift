@@ -10,6 +10,8 @@ import SwiftUI
 
 extension PresentationDetent {
     static let bar = Self.custom(BarDetent.self)
+    static let small = Self.height(100)
+    static let extraLarge = Self.fraction(0.75)
 }
 
 private struct BarDetent: CustomPresentationDetent {
