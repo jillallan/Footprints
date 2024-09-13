@@ -12,12 +12,13 @@ struct TripView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @State private var navPath = NavigationPath()
-    @Query(sort: \Trip.startDate, order: .reverse) private var trips: [Trip]
+    @Query(sort: \Trip.startDate, order: .forward) private var trips: [Trip]
     @Namespace var tripList
 
 #if DEBUG
     @Environment(\.modelContext) private var modelContext
 #endif
+
 
     private var columns: [GridItem] {
         let gridItem = GridItem(.flexible(), spacing: Constants.cardSpacing)
@@ -35,6 +36,9 @@ struct TripView: View {
     }
 
     var body: some View {
+        let _ = print(horizontalSizeClass.debugDescription)
+        let _ = print(verticalSizeClass.debugDescription)
+
         NavigationStack(path: $navPath) {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: Constants.cardSpacing) {
@@ -72,9 +76,10 @@ struct TripView: View {
             }
         }
 #if os(macOS)
-        .containerBackground(Color.red, for: .window)
+        .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
+//        .containerBackground(Color.red, for: .window)
 #else
-        .containerBackground(Color.red, for: .navigation)
+//        .containerBackground(Color.red, for: .navigation)
 #endif
     }
 #if DEBUG
