@@ -17,46 +17,38 @@ struct TripDetailView: View {
 
     var body: some View {
 
-        VStack {
-            Map()
-        }
-        .if(verticalSizeClass == .regular && horizontalSizeClass == .compact) { map in
-            map.safeAreaInset(edge: .bottom) {
-                StepView(trip: trip)
-                    .frame(height: 400)
+        Map()
+            .if(verticalSizeClass == .regular && horizontalSizeClass == .compact) { map in
+                map.safeAreaInset(edge: .bottom) {
+                    StepView(trip: trip)
+                        .frame(height: 400)
+                    //                    .clipShape(RoundedRectangle(cornerRadius: 20.0, style: .continuous))
+                }
             }
-        }
-        .if(verticalSizeClass == .regular && horizontalSizeClass == .regular) { map in
-            map.safeAreaInset(edge: .trailing) {
-                StepView(trip: trip)
-                    .frame(width: 400)
+            .if(verticalSizeClass == .regular && horizontalSizeClass == .regular) { map in
+                map.safeAreaInset(edge: .trailing) {
+                    StepView(trip: trip)
+                        .frame(width: 400)
+                }
             }
-        }
-        .if(verticalSizeClass == .compact && horizontalSizeClass == .compact) { map in
-            map.safeAreaInset(edge: .trailing) {
-                StepView(trip: trip)
-                    .frame(width: 400)
+            .if(verticalSizeClass == .compact && horizontalSizeClass == .compact) { map in
+                map.safeAreaInset(edge: .trailing) {
+                    StepView(trip: trip)
+                        .frame(width: 400)
+                }
             }
-        }
-        .navigationTitle(trip.title)
+            .navigationTitle(trip.title)
 #if !os(macOS)
-        .toolbarBackground(.hidden, for: .navigationBar)
-        .toolbarVisibility(deviceType == .pad ? .visible : .hidden, for: .tabBar)
+            .toolbarBackground(.hidden, for: .navigationBar)
+            .toolbarVisibility(deviceType == .pad ? .visible : .hidden, for: .tabBar)
+            .navigationTransition(.zoom(sourceID: trip.id, in: tripList))
 #elseif os(macOS)
-        .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
+            .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
+        //        .navigationTransition(.automatic)
 #endif
-        .navigationDestination(for: Step.self) { step in
-            Text(step.timestamp, style: .date)
-        }
-
-
-
-#if os(macOS)
-        .navigationTransition(.automatic)
-#else
-        .navigationTransition(.zoom(sourceID: trip.id, in: tripList))
-#endif
-        
+            .navigationDestination(for: Step.self) { step in
+                Text(step.timestamp, style: .date)
+            }
     }
 }
 

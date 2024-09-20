@@ -5,6 +5,7 @@
 //  Created by Jill Allan on 09/08/2024.
 //
 
+import MapKit
 import SwiftData
 import SwiftUI
 

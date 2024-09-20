@@ -47,7 +47,7 @@ struct TripView: View {
                             TripCard(trip: trip)
                         }
                         .buttonStyle(.plain)
-                        .matchedTransitionSource(id: trip.id, in: tripList)
+//                        .matchedTransitionSource(id: trip.id, in: tripList)
                     }
                 }
                 .padding(Constants.outerPadding)
