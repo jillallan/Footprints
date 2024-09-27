@@ -33,6 +33,10 @@ extension CLLocationCoordinate2D: @retroactive Comparable {
 }
 
 extension CLLocationCoordinate2D {
+    static func defaultCoordinate() -> Self {
+        CLLocationCoordinate2D(latitude: 51.5, longitude: 0)
+    }
+
     static func calculateCentre(of coordinates: [CLLocationCoordinate2D]) -> Self? {
         let latitude = Double.midRange(of: coordinates.map(\.latitude))
         let longitude = Double.midRange(of: coordinates.map(\.longitude))

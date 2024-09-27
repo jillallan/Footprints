@@ -15,6 +15,10 @@ extension MKCoordinateSpan {
 
     static let sample = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
 
+    static func defaultSpan() -> Self {
+        MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+    }
+
     static func calculateSpan(of coordinates: [CLLocationCoordinate2D]) -> Self? {
         let latitude = Double.range(of: coordinates.map(\.latitude))
         let longitude = Double.range(of: coordinates.map(\.longitude))
