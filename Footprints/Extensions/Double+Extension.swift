@@ -19,4 +19,16 @@ extension Double {
             return nil
         }
     }
+
+    static func midRange(of doubles: [Double]) -> Self? {
+        let min = doubles.min()
+        let max = doubles.max()
+
+        if let min,
+            let max {
+            return (min + max) / 2
+        } else {
+            return nil
+        }
+    }
 }

@@ -31,3 +31,17 @@ extension CLLocationCoordinate2D: @retroactive Comparable {
         lhs.latitude < rhs.latitude && lhs.longitude < rhs.longitude
     }
 }
+
+extension CLLocationCoordinate2D {
+    static func calculateCentre(of coordinates: [CLLocationCoordinate2D]) -> Self? {
+        let latitude = Double.midRange(of: coordinates.map(\.latitude))
+        let longitude = Double.midRange(of: coordinates.map(\.longitude))
+
+        if let latitude,
+           let longitude {
+            return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        } else {
+            return nil
+        }
+    }
+}

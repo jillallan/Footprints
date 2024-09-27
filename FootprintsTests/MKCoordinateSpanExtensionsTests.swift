@@ -13,7 +13,8 @@ import Testing
 @Suite(.tags(.extensions))
 struct MKCoordinateSpanExtensionsTests {
 
-    @Test("Check coordinate span calculation", .tags(.extensions)) func example() async throws {
+    @Test("Check coordinate span calculation", .tags(.extensions))
+    func mkCoordinateSpan_calculateSpan_shoulReturnsSpanForRangeOfCoordinates() async throws {
         let coordinates = (0..<10).map { _ in
             CLLocationCoordinate2D(
                 latitude: Double.random(in: -90...90),
@@ -29,7 +30,8 @@ struct MKCoordinateSpanExtensionsTests {
         #expect(span == MKCoordinateSpan(latitudeDelta: latitudeRange, longitudeDelta: longitudeRange))
     }
     
-    @Test func testMKCoordinateSpan_equatable_shouldReturnTrueWhenSpansAreTheSame() {
+    @Test("Check MKCorrdinateSpan equality for matching coordinates")
+    func testMKCoordinateSpan_equatable_shouldReturnTrueWhenSpansAreTheSame() {
         let lhsSpan = MKCoordinateSpan(
             latitudeDelta: Double.random(in: -90...90),
             longitudeDelta: Double.random(in: -180...180)
@@ -39,7 +41,8 @@ struct MKCoordinateSpanExtensionsTests {
         #expect(lhsSpan == rhsSpan, "Matching coordinates should match")
     }
 
-    @Test func testMKCoordinateSpan_equatable_shouldReturnFalseWhenSpansAreNotTheSame() {
+    @Test("Check MKCorrdinateSpan equality for mismatching coordinates")
+    func testMKCoordinateSpan_equatable_shouldReturnFalseWhenSpansAreNotTheSame() {
         let lhsSpan = MKCoordinateSpan(
             latitudeDelta: Double.random(in: -90...90),
             longitudeDelta: Double.random(in: -180...180)
