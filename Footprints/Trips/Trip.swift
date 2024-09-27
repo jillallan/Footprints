@@ -32,6 +32,10 @@ final class Trip: CustomDebugStringConvertible {
 
     // MARK: - Computed Properties
 
+//    var tripRegion: MKCoordinateRegion {
+//
+//    }
+
     /// Required property for CustomDebugStringConvertible protocol
     var debugDescription: String {
         "Trip: \(title), start date: \(startDate), end date: \(endDate), tracking: \(isAutoTrackingOn))"
