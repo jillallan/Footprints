@@ -18,7 +18,11 @@ struct TripDetailView: View {
 
     var body: some View {
 
-        Map(position: $mapRegion)
+        Map(position: $mapRegion) {
+            ForEach(trip.steps) { step in
+                Marker("", coordinate: step.coordinate)
+            }
+        }
             .if(verticalSizeClass == .regular && horizontalSizeClass == .compact) { map in
                 map.safeAreaInset(edge: .bottom) {
                     StepView(trip: trip)
