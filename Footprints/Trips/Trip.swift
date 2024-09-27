@@ -33,18 +33,25 @@ final class Trip: CustomDebugStringConvertible {
     // MARK: - Computed Properties
 
     var tripRegion: MKCoordinateRegion {
-        if steps.isEmpty { return MKCoordinateRegion.defaultRegion() }
-        if steps.count == 1 {
-            if let coordinate = steps.first?.coordinate {
-                return MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan.defaultSpan())
-            } else { return MKCoordinateRegion.defaultRegion() }
-        }
 
-        guard let region = MKCoordinateRegion.calculateRegion(from: steps.map(\.coordinate)) else {
+        if steps.isEmpty {
             return MKCoordinateRegion.defaultRegion()
         }
 
-        return region
+        if steps.count == 1 {
+            if let coordinate = steps.first?.coordinate {
+                return MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan.defaultSpan())
+            } else {
+                return MKCoordinateRegion.defaultRegion()
+            }
+        }
+
+        if let span = MKCoordinateSpan.calculateSpan(of: steps.map(\.coordinate), addMargin: true),
+           let centre = CLLocationCoordinate2D.calculateCentre(of: steps.map(\.coordinate)) {
+            return MKCoordinateRegion(center: centre, span: span)
+        }
+
+        return MKCoordinateRegion.defaultRegion()
     }
 
     /// Required property for CustomDebugStringConvertible protocol
