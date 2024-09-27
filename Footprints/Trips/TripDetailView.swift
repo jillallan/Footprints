@@ -14,10 +14,11 @@ struct TripDetailView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.deviceType) private var deviceType
+    @State var mapRegion = MapCameraPosition.automatic
 
     var body: some View {
 
-        Map()
+        Map(position: $mapRegion)
             .if(verticalSizeClass == .regular && horizontalSizeClass == .compact) { map in
                 map.safeAreaInset(edge: .bottom) {
                     StepView(trip: trip)
@@ -48,6 +49,9 @@ struct TripDetailView: View {
 #endif
             .navigationDestination(for: Step.self) { step in
                 Text(step.timestamp, style: .date)
+            }
+            .onAppear {
+                mapRegion = MapCameraPosition.region(trip.tripRegion)
             }
     }
 }
