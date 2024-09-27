@@ -32,6 +32,21 @@ final class Trip: CustomDebugStringConvertible {
 
     // MARK: - Computed Properties
 
+    var tripRegion: MKCoordinateRegion {
+        if steps.isEmpty { return MKCoordinateRegion.defaultRegion() }
+        if steps.count == 1 {
+            if let coordinate = steps.first?.coordinate {
+                return MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan.defaultSpan())
+            } else { return MKCoordinateRegion.defaultRegion() }
+        }
+
+        guard let region = MKCoordinateRegion.calculateRegion(from: steps.map(\.coordinate)) else {
+            return MKCoordinateRegion.defaultRegion()
+        }
+
+        return region
+    }
+
     /// Required property for CustomDebugStringConvertible protocol
     var debugDescription: String {
         "Trip: \(title), start date: \(startDate), end date: \(endDate), tracking: \(isAutoTrackingOn))"
