@@ -27,7 +27,6 @@ struct TripDetailView: View {
                 map.safeAreaInset(edge: .bottom) {
                     StepView(trip: trip)
                         .frame(height: 400)
-                    //                    .clipShape(RoundedRectangle(cornerRadius: 20.0, style: .continuous))
                 }
             }
             .if(verticalSizeClass == .regular && horizontalSizeClass == .regular) { map in
