@@ -21,8 +21,9 @@ struct StepRow: View {
                 Text(step.timestamp, style: .date)
                     .font(.subheadline)
             }
+            Spacer()
         }
-        .padding(.vertical, 10)
+        .padding(.all, 10)
     }
 }
 

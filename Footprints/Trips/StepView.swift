@@ -11,18 +11,20 @@ struct StepView: View {
     @Bindable var trip: Trip
 
     var body: some View {
-        List {
-            Section {
-                ForEach(trip.steps) { step in
-                    NavigationLink(value: step) {
-                        StepRow(step: step)
+        ScrollView {
+            LazyVStack {
+                Section {
+                    ForEach(trip.steps) { step in
+                        NavigationLink(value: step) {
+                            StepRow(step: step)
+                        }
+                        .buttonStyle(.plain)
                     }
+                } header: {
+                    Text(trip.startDate, style: .date)
                 }
-            } header: {
-                Text(trip.startDate, style: .date)
             }
         }
-        .listStyle(.plain)
         .background(.background)
         .navigationTitle("Steps")
         .navigationDestination(for: Step.self) { step in
