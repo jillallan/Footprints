@@ -62,3 +62,5 @@ final class Step {
         self.init(timestamp: timestamp, latitude: 0.0, longitude: 0.0, altitude: 0.0)
     }
 }
+
+extension Step: Identifiable {}
