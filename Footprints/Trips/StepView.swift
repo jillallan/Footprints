@@ -9,11 +9,13 @@ import SwiftData
 import SwiftUI
 
 struct StepView: View {
+    @Environment(\.modelContext) private var modelContext
     @Bindable var trip: Trip
     @State private var position: PersistentIdentifier?
+    @State private var currentStep: Step?
 
     var body: some View {
-        let _ = print(position.debugDescription)
+
         ScrollView {
             LazyVStack {
                 Section {
@@ -25,6 +27,11 @@ struct StepView: View {
                     }
                 } header: {
                     Text(trip.startDate, style: .date)
+                } footer: {
+                    VStack {
+                        Text("Summary")
+                    }
+                    .frame(height: 400)
                 }
             }
             .scrollTargetLayout()
@@ -35,6 +42,18 @@ struct StepView: View {
         .navigationDestination(for: Step.self) { step in
             Text(step.timestamp, style: .date)
         }
+        .onChange(of: position) {
+            let step = getStep(for: position)
+            print(step?.timestamp.formatted(date: .abbreviated, time: .shortened) ?? Date.now)
+        }
+    }
+
+    func getStep(for id: PersistentIdentifier?) -> Step? {
+        guard let id else { return nil }
+        guard let step = modelContext.model(for: id) as? Step else {
+            return nil
+        }
+        return step
     }
 }
 
