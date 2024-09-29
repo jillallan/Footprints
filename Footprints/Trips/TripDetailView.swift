@@ -6,15 +6,19 @@
 //
 
 import MapKit
+import SwiftData
 import SwiftUI
 
 struct TripDetailView: View {
+    @Environment(\.modelContext) private var modelContext
     @Bindable var trip: Trip
     var tripList: Namespace.ID
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.deviceType) private var deviceType
     @State var mapRegion = MapCameraPosition.automatic
+    @State private var position: PersistentIdentifier?
+    @State private var currentStep: Step?
 
     var body: some View {
 
@@ -25,19 +29,19 @@ struct TripDetailView: View {
         }
             .if(verticalSizeClass == .regular && horizontalSizeClass == .compact) { map in
                 map.safeAreaInset(edge: .bottom) {
-                    StepView(trip: trip)
+                    StepView(trip: trip, position: $position)
                         .frame(height: 400)
                 }
             }
             .if(verticalSizeClass == .regular && horizontalSizeClass == .regular) { map in
                 map.safeAreaInset(edge: .trailing) {
-                    StepView(trip: trip)
+                    StepView(trip: trip, position: $position)
                         .frame(width: 400)
                 }
             }
             .if(verticalSizeClass == .compact && horizontalSizeClass == .compact) { map in
                 map.safeAreaInset(edge: .trailing) {
-                    StepView(trip: trip)
+                    StepView(trip: trip, position: $position)
                         .frame(width: 400)
                 }
             }
@@ -56,6 +60,27 @@ struct TripDetailView: View {
             .onAppear {
                 mapRegion = MapCameraPosition.region(trip.tripRegion)
             }
+            .onChange(of: position) {
+                if let step = getStep(for: position) {
+                    print(step.timestamp.formatted(date: .abbreviated, time: .shortened))
+                    withAnimation {
+                        updateMapPosition(for: step)
+                    }
+
+                }
+            }
+    }
+
+    func updateMapPosition(for step: Step) {
+        mapRegion = MapCameraPosition.region(step.region)
+    }
+
+    func getStep(for id: PersistentIdentifier?) -> Step? {
+        guard let id else { return nil }
+        guard let step = modelContext.model(for: id) as? Step else {
+            return nil
+        }
+        return step
     }
 }
 

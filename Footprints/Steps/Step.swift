@@ -31,7 +31,7 @@ final class Step {
     }
 
     var region: MKCoordinateRegion {
-        MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan.sample)
+        return MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan.defaultSpan())
     }
 
     /// Initializes a new instance of a Step
