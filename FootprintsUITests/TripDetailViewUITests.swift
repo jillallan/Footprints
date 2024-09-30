@@ -7,7 +7,7 @@
 
 import XCTest
 
-final class FootprintsUITests: XCTestCase {
+final class TripDetailViewUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -22,11 +22,45 @@ final class FootprintsUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
+    // VKPointFeature identifier for MKMapItem
+
     @MainActor
     func testExample() throws {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         app.launch()
+//        print(app.debugDescription)
+        let tripButton = app.buttons["Bedminste to Beijing, 28 July 2016"]
+        XCTAssertTrue(tripButton.isHittable)
+
+        tripButton.tap()
+
+
+
+//        let mapItems = app
+//        XCTAssertTrue(map.exists)
+        let mapPins = app.descendants(matching: .other).matching(identifier: "AnnotationContainer").children(matching: .other).count
+        print("map pins: \(mapPins)")
+
+        let mapPin = app.descendants(matching: .other).matching(identifier: "AnnotationContainer").children(matching: .other).firstMatch.frame
+        print(mapPin.debugDescription)
+
+        let mapFrame = app.descendants(matching: .map).firstMatch.frame
+        print(mapFrame.debugDescription)
+
+//        let scrollViewFrame = app.descendants(matching: .map).firstMatch.frame
+        print(mapFrame.debugDescription)
+
+
+
+        print("App info:")
+        print(app.debugDescription)
+
+//        let map = app.staticTexts["Map"]
+//        XCTAssertTrue(map.exists)
+//        print(app.debugDescription)
+
+        XCTFail()
 
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }

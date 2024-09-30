@@ -29,6 +29,10 @@ final class Trip: CustomDebugStringConvertible {
 
     var steps = [Step]()
 
+    var tripSteps: [Step] {
+        return steps.sorted()
+    }
+
 
     // MARK: - Computed Properties
 
