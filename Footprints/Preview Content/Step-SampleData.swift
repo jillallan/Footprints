@@ -42,9 +42,41 @@ extension Step {
 
     @MainActor
     /// A sample step
-    static let Ixelles = Step(
-        timestamp: Date.from(string: "2016/07/28 16:18:00"),
-        latitude: 50.838023,
-        longitude: 4.373529
+    static let brusselsMidi = Step(
+        timestamp: Date.from(string: "2016/07/29 16:18:00"),
+        latitude: 50.836228,
+        longitude: 4.335497
+    )
+
+    @MainActor
+    /// A sample step
+    static let grandPlace = Step(
+        timestamp: Date.from(string: "2016/07/30 09:00:00"),
+        latitude: 50.846858680448115,
+        longitude: 4.35252433960369
+    )
+
+    @MainActor
+    /// A sample step
+    static let atomium = Step(
+        timestamp: Date.from(string: "2016/07/30 10:18:00"),
+        latitude: 50.89504108327435,
+        longitude: 4.34157615494866
+    )
+
+    @MainActor
+    /// A sample step
+    static let cologne = Step(
+        timestamp: Date.from(string: "2016/07/29 16:00:00"),
+        latitude: 50.94145414220289,
+        longitude: 6.95822775310139
+    )
+
+    @MainActor
+    /// A sample step
+    static let warsaw = Step(
+        timestamp: Date.from(string: "2016/07/30 12:00:00"),
+        latitude: 52.24994691355245,
+        longitude: 21.012202783852473
     )
 }

@@ -37,6 +37,7 @@ struct StepView: View {
             .scrollTargetLayout()
         }
         .scrollPosition(id: $position)
+        .scrollTargetBehavior(.viewAligned(limitBehavior: .alwaysByOne))
         .background(.background)
         .navigationTitle("Steps")
         .navigationDestination(for: Step.self) { step in

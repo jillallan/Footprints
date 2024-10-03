@@ -19,18 +19,23 @@ struct TripDetailView: View {
     @State var mapRegion = MapCameraPosition.automatic
     @State private var position: PersistentIdentifier?
     @State private var currentStep: Step?
+    @State private var selectedMapStep: Step?
 
     var body: some View {
 
-        Map(position: $mapRegion) {
+        Map(position: $mapRegion, selection: $selectedMapStep) {
             ForEach(trip.steps) { step in
-                Marker("", coordinate: step.coordinate)
+                Marker(step.timestamp.formatted(date: .abbreviated, time: .shortened), coordinate: step.coordinate)
+                    .annotationTitles(.hidden)
+                    .tag(step)
             }
         }
+
             .if(verticalSizeClass == .regular && horizontalSizeClass == .compact) { map in
                 map.safeAreaInset(edge: .bottom) {
                     StepView(trip: trip, position: $position)
                         .frame(height: 400)
+                     
                 }
             }
             .if(verticalSizeClass == .regular && horizontalSizeClass == .regular) { map in
@@ -47,7 +52,7 @@ struct TripDetailView: View {
             }
             .navigationTitle(trip.title)
 #if !os(macOS)
-            .toolbarBackground(.hidden, for: .navigationBar)
+//            .toolbarBackground(.hidden, for: .navigationBar)
             .toolbarVisibility(deviceType == .pad ? .visible : .hidden, for: .tabBar)
             .navigationTransition(.zoom(sourceID: trip.id, in: tripList))
 #elseif os(macOS)

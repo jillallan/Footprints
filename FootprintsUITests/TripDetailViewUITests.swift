@@ -8,66 +8,91 @@
 import XCTest
 
 final class TripDetailViewUITests: XCTestCase {
+    var app: XCUIApplication!
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        app = XCUIApplication()
+        app.launch()
 
-        // In UI tests it is usually best to stop immediately when a failure occurs.
+        let tripsNavigationBar = app.navigationBars["Trips"]
+        tripsNavigationBar/*@START_MENU_TOKEN@*/.buttons["Clear"]/*[[".otherElements[\"Clear\"].buttons[\"Clear\"]",".buttons[\"Clear\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        tripsNavigationBar/*@START_MENU_TOKEN@*/.buttons["SAMPLES"]/*[[".otherElements[\"SAMPLES\"].buttons[\"SAMPLES\"]",".buttons[\"SAMPLES\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    // VKPointFeature identifier for MKMapItem
-
-    @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
-//        print(app.debugDescription)
+    func openTrip() {
         let tripButton = app.buttons["Bedminste to Beijing, 28 July 2016"]
         XCTAssertTrue(tripButton.isHittable)
 
         tripButton.tap()
+    }
 
-
-
-//        let mapItems = app
-//        XCTAssertTrue(map.exists)
-        let mapPins = app.descendants(matching: .other).matching(identifier: "AnnotationContainer").children(matching: .other).count
-        print("map pins: \(mapPins)")
-
-        let mapPin = app.descendants(matching: .other).matching(identifier: "AnnotationContainer").children(matching: .other).firstMatch.frame
-        print(mapPin.debugDescription)
-
+    func getMapCentreCoordinates() -> CGPoint {
         let mapFrame = app.descendants(matching: .map).firstMatch.frame
-        print(mapFrame.debugDescription)
 
-//        let scrollViewFrame = app.descendants(matching: .map).firstMatch.frame
-        print(mapFrame.debugDescription)
+        let predicate = NSPredicate(format: "label CONTAINS 'Legal'")
+        let legalLink = app.links.element(matching: predicate).firstMatch
+        XCTAssert(legalLink.exists)
 
+        let navBar = app.navigationBars.firstMatch
 
+        let mapMidX = mapFrame.midX
+        let mapMidY = ((legalLink.frame.minY - navBar.frame.maxY) / 2) + navBar.frame.maxY
+        print("map centre x \(mapMidX)")
+        print("map centre y \(mapMidY)")
+        return CGPoint(x: mapMidX, y: mapMidY)
+    }
 
-        print("App info:")
-        print(app.debugDescription)
+    // VKPointFeature identifier for MKMapItem
 
-//        let map = app.staticTexts["Map"]
-//        XCTAssertTrue(map.exists)
-//        print(app.debugDescription)
+    @MainActor
+    func testAllAnnotationsDisplayWhenTripOpens() throws {
 
-        XCTFail()
+        openTrip()
+        let mapAnnotationContainer = app.otherElements.element(matching: .other, identifier: "AnnotationContainer")
+        let mapAnnotationsCount = mapAnnotationContainer.children(matching: .other).count
 
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        XCTAssertEqual(mapAnnotationsCount, 9)
+
     }
 
     @MainActor
     func testThis() throws {
-        
+
+        openTrip()
+
+        let stepScrollView = app.descendants(matching: .scrollView).firstMatch
+        XCTAssertTrue(stepScrollView.exists)
+        stepScrollView.swipeUp(velocity: 100)
+
+        print(app.debugDescription)
+        let scrollViewViews = stepScrollView.descendants(matching: .button).descendants(matching: .staticText)
+
+        for i in 0..<scrollViewViews.count {
+            let stepRow = scrollViewViews.element(boundBy: i)
+            if stepRow.isHittable {
+
+                let mapAnnotationContainer = app.otherElements.element(matching: .other, identifier: "AnnotationContainer")
+                let predicate = NSPredicate(format: "label CONTAINS %@", stepRow.label)
+                let mapAnnotation = mapAnnotationContainer.children(matching: .other).matching(predicate).firstMatch
+
+
+                XCTAssertTrue(mapAnnotation.isHittable)
+                XCTAssertEqual(mapAnnotation.label, stepRow.label)
+
+                let mapCentreCoordinates = getMapCentreCoordinates()
+
+                XCTAssertEqual(mapCentreCoordinates.x, mapAnnotation.frame.midX, accuracy: 1.0)
+
+                if stepRow.isHittable {
+                    break
+                }
+            }
+        }
     }
 
     @MainActor
