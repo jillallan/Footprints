@@ -51,7 +51,7 @@ extension Step {
     @MainActor
     /// A sample step
     static let grandPlace = Step(
-        timestamp: Date.from(string: "2016/07/30 09:00:00"),
+        timestamp: Date.from(string: "2016/07/29 09:00:00"),
         latitude: 50.846858680448115,
         longitude: 4.35252433960369
     )
@@ -59,7 +59,7 @@ extension Step {
     @MainActor
     /// A sample step
     static let atomium = Step(
-        timestamp: Date.from(string: "2016/07/30 10:18:00"),
+        timestamp: Date.from(string: "2016/07/29 10:18:00"),
         latitude: 50.89504108327435,
         longitude: 4.34157615494866
     )

@@ -33,20 +33,20 @@ struct TripDetailView: View {
 
             .if(verticalSizeClass == .regular && horizontalSizeClass == .compact) { map in
                 map.safeAreaInset(edge: .bottom) {
-                    StepView(trip: trip, position: $position)
+                    StepView(trip: trip, position: $position, selectedStep: $selectedMapStep)
                         .frame(height: 400)
                      
                 }
             }
             .if(verticalSizeClass == .regular && horizontalSizeClass == .regular) { map in
                 map.safeAreaInset(edge: .trailing) {
-                    StepView(trip: trip, position: $position)
+                    StepView(trip: trip, position: $position, selectedStep: $selectedMapStep)
                         .frame(width: 400)
                 }
             }
             .if(verticalSizeClass == .compact && horizontalSizeClass == .compact) { map in
                 map.safeAreaInset(edge: .trailing) {
-                    StepView(trip: trip, position: $position)
+                    StepView(trip: trip, position: $position, selectedStep: $selectedMapStep)
                         .frame(width: 400)
                 }
             }
