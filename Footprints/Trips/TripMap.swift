@@ -14,30 +14,37 @@ struct TripMap: View {
     @Binding var selectedStep: Step?
     
     var body: some View {
-        Map(position: $mapRegion, selection: $selectedStep) {
-//            UserAnnotation()
-            MapPolyline(coordinates: trip.tripSteps.map(\.coordinate), contourStyle: .geodesic)
-                .stroke(Color.accentColor, lineWidth: 25/10)
-            ForEach(trip.tripSteps) { step in
-                Annotation(
-                    step.timestamp.formatted(date: .abbreviated, time: .shortened),
-                    coordinate: step.coordinate
-                ) {
-                    Image(systemName: "circle")
-                        .resizable()
-                        .foregroundStyle(Color.accentColor)
-                        .frame(width: 15, height: 15)
-                        .background(Color.white)
-                        .clipShape(.circle)
-//                    Image(PreviewDataGenerator.randomTripImage)
-//                        .resizable()
-//                        .scaledToFit()
-//                        .frame(width: 100, height: 25)
-//                        .clipShape(.circle)
-//                        .overlay(Circle().stroke(Color.white, lineWidth: 25/10))
+        MapReader { mapProxy in
+            Map(position: $mapRegion, selection: $selectedStep) {
+                UserAnnotation()
+                MapPolyline(coordinates: trip.tripSteps.map(\.coordinate), contourStyle: .geodesic)
+                    .stroke(Color.accentColor, lineWidth: 25/10)
+                ForEach(trip.tripSteps) { step in
+                    Annotation(
+                        step.timestamp.formatted(date: .abbreviated, time: .shortened),
+                        coordinate: step.coordinate
+                    ) {
+                        Image(systemName: "circle")
+                            .resizable()
+                            .foregroundStyle(Color.accentColor)
+                            .frame(width: 15, height: 15)
+                            .background(Color.white)
+                            .clipShape(.circle)
+    //                    Image(PreviewDataGenerator.randomTripImage)
+    //                        .resizable()
+    //                        .scaledToFit()
+    //                        .frame(width: 100, height: 25)
+    //                        .clipShape(.circle)
+    //                        .overlay(Circle().stroke(Color.white, lineWidth: 25/10))
+                    }
+                    .tag(step)
+                    .annotationTitles(.hidden)
                 }
-                .tag(step)
-                .annotationTitles(.hidden)
+            }
+            .onTapGesture { cgPoint in
+                if let coordinate = mapProxy.convert(cgPoint, from: .local) {
+                    print("tapped at: \(coordinate)")
+                }
             }
         }
         .onAppear {
