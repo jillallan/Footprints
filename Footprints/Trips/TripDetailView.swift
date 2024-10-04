@@ -14,7 +14,7 @@ struct TripDetailView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.deviceType) private var deviceType
-    
+
     @Bindable var trip: Trip
     var tripList: Namespace.ID
 
@@ -24,10 +24,29 @@ struct TripDetailView: View {
     var body: some View {
 
         Map(position: $mapRegion, selection: $selectedStep) {
+//            UserAnnotation()
+            MapPolyline(coordinates: trip.tripSteps.map(\.coordinate), contourStyle: .geodesic)
+                .stroke(Color.accentColor, lineWidth: 25/10)
             ForEach(trip.tripSteps) { step in
-                Marker(step.timestamp.formatted(date: .abbreviated, time: .shortened), coordinate: step.coordinate)
-//                    .annotationTitles(.hidden)
-                    .tag(step)
+                Annotation(
+                    step.timestamp.formatted(date: .abbreviated, time: .shortened),
+                    coordinate: step.coordinate
+                ) {
+                    Image(systemName: "circle")
+                        .resizable()
+                        .foregroundStyle(Color.accentColor)
+                        .frame(width: 15, height: 15)
+                        .background(Color.white)
+                        .clipShape(.circle)
+//                    Image(PreviewDataGenerator.randomTripImage)
+//                        .resizable()
+//                        .scaledToFit()
+//                        .frame(width: 100, height: 25)
+//                        .clipShape(.circle)
+//                        .overlay(Circle().stroke(Color.white, lineWidth: 25/10))
+                }
+                .tag(step)
+                .annotationTitles(.hidden)
             }
         }
 
