@@ -24,18 +24,7 @@ struct TripMap: View {
                         step.timestamp.formatted(date: .abbreviated, time: .shortened),
                         coordinate: step.coordinate
                     ) {
-                        Image(systemName: "circle")
-                            .resizable()
-                            .foregroundStyle(Color.accentColor)
-                            .frame(width: 15, height: 15)
-                            .background(Color.white)
-                            .clipShape(.circle)
-    //                    Image(PreviewDataGenerator.randomTripImage)
-    //                        .resizable()
-    //                        .scaledToFit()
-    //                        .frame(width: 100, height: 25)
-    //                        .clipShape(.circle)
-    //                        .overlay(Circle().stroke(Color.white, lineWidth: 25/10))
+                        DefaultStepMapAnnotation()
                     }
                     .tag(step)
                     .annotationTitles(.hidden)
