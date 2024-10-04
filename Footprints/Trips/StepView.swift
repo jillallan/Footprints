@@ -11,7 +11,6 @@ import SwiftUI
 struct StepView: View {
     
     @Bindable var trip: Trip
-    @Binding var position: PersistentIdentifier?
     @Binding var selectedStep: Step?
 
     var body: some View {
@@ -20,15 +19,18 @@ struct StepView: View {
             ScrollView {
                 LazyVStack {
                     Section {
-                        ForEach(trip.steps) { step in
+                        ForEach(trip.tripSteps) { step in
                             NavigationLink(value: step) {
                                 StepRow(step: step)
+                                let _ = print(selectedStep?.persistentModelID ?? "No ID")
                             }
                             .id(step)
                             .buttonStyle(.plain)
                         }
                     } header: {
                         Text(trip.startDate, style: .date)
+                            .id(trip)
+
                     } footer: {
                         VStack {
                             Text("Summary")
@@ -38,7 +40,7 @@ struct StepView: View {
                 }
                 .scrollTargetLayout()
             }
-            .scrollPosition(id: $position)
+            .scrollPosition(id: $selectedStep)
             .scrollTargetBehavior(.viewAligned(limitBehavior: .alwaysByOne))
             .onChange(of: selectedStep) {
                 withAnimation {
@@ -55,5 +57,5 @@ struct StepView: View {
 }
 
 #Preview(traits: .previewData) {
-    StepView(trip: .bedminsterToBeijing, position: .constant(Step.bedminsterStation.persistentModelID), selectedStep: .constant(Step.bedminsterStation))
+    StepView(trip: .bedminsterToBeijing, selectedStep: .constant(Step.bedminsterStation))
 }

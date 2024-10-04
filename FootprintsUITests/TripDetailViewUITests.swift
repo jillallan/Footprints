@@ -61,6 +61,34 @@ final class TripDetailViewUITests: XCTestCase {
     }
 
     @MainActor
+    func testScrollsToStepWhenSelectedOnMap() throws {
+
+        openTrip()
+        let mapAnnotationContainer = app.otherElements.element(matching: .other, identifier: "AnnotationContainer")
+        let mapAnnotation = mapAnnotationContainer.children(matching: .other).element(boundBy: Int.random(in: 0..<8))
+        XCTAssert(mapAnnotation.isHittable)
+        mapAnnotation.tap()
+        sleep(2)
+
+//        let label = mapAnnotation.label
+//        let predicate = NSPredicate(format: "label CONTAINS %@", mapAnnotation.label)
+        let stepScrollView = app.descendants(matching: .scrollView).firstMatch
+        let scrollViewViews = stepScrollView.descendants(matching: .button).descendants(matching: .staticText)
+
+        for i in 0..<scrollViewViews.count {
+            let stepRow = scrollViewViews.element(boundBy: i)
+            if stepRow.isHittable {
+                XCTAssertEqual(stepRow.label, mapAnnotation.label)
+            }
+
+            if stepRow.isHittable {
+                break
+            }
+        }
+        
+    }
+
+    @MainActor
     func testThis() throws {
 
         openTrip()

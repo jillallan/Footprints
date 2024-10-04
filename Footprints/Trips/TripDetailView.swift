@@ -11,48 +11,48 @@ import SwiftUI
 
 struct TripDetailView: View {
     @Environment(\.modelContext) private var modelContext
-    @Bindable var trip: Trip
-    var tripList: Namespace.ID
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.deviceType) private var deviceType
+    
+    @Bindable var trip: Trip
+    var tripList: Namespace.ID
+
     @State var mapRegion = MapCameraPosition.automatic
-    @State private var position: PersistentIdentifier?
-    @State private var currentStep: Step?
-    @State private var selectedMapStep: Step?
+    @State private var selectedStep: Step?
 
     var body: some View {
 
-        Map(position: $mapRegion, selection: $selectedMapStep) {
-            ForEach(trip.steps) { step in
+        Map(position: $mapRegion, selection: $selectedStep) {
+            ForEach(trip.tripSteps) { step in
                 Marker(step.timestamp.formatted(date: .abbreviated, time: .shortened), coordinate: step.coordinate)
-                    .annotationTitles(.hidden)
+//                    .annotationTitles(.hidden)
                     .tag(step)
             }
         }
 
             .if(verticalSizeClass == .regular && horizontalSizeClass == .compact) { map in
                 map.safeAreaInset(edge: .bottom) {
-                    StepView(trip: trip, position: $position, selectedStep: $selectedMapStep)
+                    StepView(trip: trip, selectedStep: $selectedStep)
                         .frame(height: 400)
                      
                 }
             }
             .if(verticalSizeClass == .regular && horizontalSizeClass == .regular) { map in
                 map.safeAreaInset(edge: .trailing) {
-                    StepView(trip: trip, position: $position, selectedStep: $selectedMapStep)
+                    StepView(trip: trip, selectedStep: $selectedStep)
                         .frame(width: 400)
                 }
             }
             .if(verticalSizeClass == .compact && horizontalSizeClass == .compact) { map in
                 map.safeAreaInset(edge: .trailing) {
-                    StepView(trip: trip, position: $position, selectedStep: $selectedMapStep)
+                    StepView(trip: trip, selectedStep: $selectedStep)
                         .frame(width: 400)
                 }
             }
             .navigationTitle(trip.title)
 #if !os(macOS)
-//            .toolbarBackground(.hidden, for: .navigationBar)
+            .toolbarBackground(.hidden, for: .navigationBar)
             .toolbarVisibility(deviceType == .pad ? .visible : .hidden, for: .tabBar)
             .navigationTransition(.zoom(sourceID: trip.id, in: tripList))
 #elseif os(macOS)
@@ -65,13 +65,11 @@ struct TripDetailView: View {
             .onAppear {
                 mapRegion = MapCameraPosition.region(trip.tripRegion)
             }
-            .onChange(of: position) {
-                if let step = getStep(for: position) {
-                    print(step.timestamp.formatted(date: .abbreviated, time: .shortened))
+            .onChange(of: selectedStep) {
+                if let selectedStep {
                     withAnimation {
-                        updateMapPosition(for: step)
+                        updateMapPosition(for: selectedStep)
                     }
-
                 }
             }
     }

@@ -43,7 +43,7 @@ extension Step {
     @MainActor
     /// A sample step
     static let brusselsMidi = Step(
-        timestamp: Date.from(string: "2016/07/29 16:18:00"),
+        timestamp: Date.from(string: "2016/07/28 16:18:00"),
         latitude: 50.836228,
         longitude: 4.335497
     )
