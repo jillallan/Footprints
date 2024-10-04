@@ -31,7 +31,7 @@ final class Step {
     }
 
     var region: MKCoordinateRegion {
-        MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan.sample)
+        return MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan.defaultSpan())
     }
 
     /// Initializes a new instance of a Step
@@ -60,5 +60,14 @@ final class Step {
     ///   - timestamp: The time of the step, the defualt is the current time
     convenience init(timestamp: Date = .now) {
         self.init(timestamp: timestamp, latitude: 0.0, longitude: 0.0, altitude: 0.0)
+    }
+}
+
+extension Step: Identifiable {}
+
+// Added comparable comformance to enable sorting by timestamp
+extension Step: Comparable {
+    public static func <(lhs: Step, rhs: Step) -> Bool {
+        lhs.timestamp < rhs.timestamp
     }
 }

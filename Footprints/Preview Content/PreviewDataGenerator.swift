@@ -29,13 +29,22 @@ struct PreviewDataGenerator {
         modelContext.insert(Step.templeMeads)
         modelContext.insert(Step.paddington)
         modelContext.insert(Step.stPancras)
-        modelContext.insert(Step.Ixelles)
+        modelContext.insert(Step.brusselsMidi)
+        modelContext.insert(Step.grandPlace)
+        modelContext.insert(Step.atomium)
+        modelContext.insert(Step.cologne)
+        modelContext.insert(Step.warsaw)
+
 
         Trip.bedminsterToBeijing.steps.append(Step.bedminsterStation)
         Trip.bedminsterToBeijing.steps.append(Step.templeMeads)
         Trip.bedminsterToBeijing.steps.append(Step.paddington)
         Trip.bedminsterToBeijing.steps.append(Step.stPancras)
-        Trip.bedminsterToBeijing.steps.append(Step.Ixelles)
+        Trip.bedminsterToBeijing.steps.append(Step.brusselsMidi)
+        Trip.bedminsterToBeijing.steps.append(Step.grandPlace)
+        Trip.bedminsterToBeijing.steps.append(Step.atomium)
+        Trip.bedminsterToBeijing.steps.append(Step.cologne)
+        Trip.bedminsterToBeijing.steps.append(Step.warsaw)
 
     }
 

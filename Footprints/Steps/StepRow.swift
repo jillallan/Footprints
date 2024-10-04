@@ -16,13 +16,14 @@ struct StepRow: View {
                 .font(.title)
                 .foregroundStyle(Color.pink)
             VStack(alignment: .leading) {
-                Text("The High Street, Pensford")
+                Text(step.timestamp.formatted(date: .abbreviated, time: .shortened))
                     .font(.headline)
-                Text(step.timestamp, style: .date)
+                Text(step.timestamp.formatted(date: .abbreviated, time: .shortened))
                     .font(.subheadline)
             }
+            Spacer()
         }
-        .padding(.vertical, 10)
+        .padding(.all, 10)
     }
 }
 

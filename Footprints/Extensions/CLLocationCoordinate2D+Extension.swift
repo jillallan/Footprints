@@ -27,7 +27,7 @@ extension CLLocationCoordinate2D: @retroactive Equatable {
 }
 
 extension CLLocationCoordinate2D: @retroactive Comparable {
-    public static func < (lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Bool {
+    public static func <(lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Bool {
         lhs.latitude < rhs.latitude && lhs.longitude < rhs.longitude
     }
 }
