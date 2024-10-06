@@ -16,6 +16,13 @@ struct AddStepView: View {
     @State var mapRegion = MapCameraPosition.region(MKCoordinateRegion.defaultRegion())
     @Environment(\.dismiss) private var dismiss
     @State private var date: Date = Date.now
+    let locationService = LocationService()
+    @State private var loadingState = LoadingState.empty
+    @State var placemarkName: String = ""
+    
+    enum LoadingState {
+        case empty, loading, success, failed
+    }
     
     var body: some View {
         MapReader { mapProxy in
@@ -32,12 +39,27 @@ struct AddStepView: View {
                     step.latitude = coordinate.latitude
                     step.longitude = coordinate.longitude
                     step.timestamp = date
+                    let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+                    Task {
+                        await fetchPlacemark(for: location)
+                    }
+                    loadingState = .loading
+                    
                     stepIsNotSet = false
                 }
             }
             .safeAreaInset(edge: .bottom) {
                 Form {
-                    Text("Step Name")
+                    switch loadingState {
+                    case .empty:
+                        EmptyNameView()
+                    case .loading:
+                        LoadingView()
+                    case .success:
+                        SuccessView(placemarkName: placemarkName)
+                    case .failed:
+                        FailedView()
+                    }
                     DatePicker("Step Date", selection: $date, displayedComponents: [.date, .hourAndMinute])
                 }
                 .frame(height: 400)
@@ -64,6 +86,22 @@ struct AddStepView: View {
                     dismiss()
                 }
             }
+        }
+    }
+    
+    func fetchPlacemark(for location: CLLocation) async {
+        do {
+            if let tempPlacemarkName = try await locationService.fetchPlacemark(for: location)?.name {
+                placemarkName = tempPlacemarkName
+                loadingState = .success
+            } else {
+                loadingState = .failed
+            }
+            
+            
+        } catch {
+            print("Error fetching placemark: \(error)")
+            loadingState = .failed
         }
     }
     
