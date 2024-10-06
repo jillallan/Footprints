@@ -11,15 +11,9 @@ import SwiftUI
 struct TripView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.verticalSizeClass) private var verticalSizeClass
-//    @State private var navPath = NavigationPath()
     @EnvironmentObject var navigationController: NavigationController
     @Query(sort: \Trip.startDate, order: .forward) private var trips: [Trip]
     @Namespace var tripList
-
-#if DEBUG
-    @Environment(\.modelContext) private var modelContext
-#endif
-
 
     private var columns: [GridItem] {
         let gridItem = GridItem(.flexible(), spacing: Constants.cardSpacing)
@@ -56,23 +50,9 @@ struct TripView: View {
             .navigationDestination(for: Trip.self) { trip in
                 TripDetailView(trip: trip, tripList: tripList)
             }
-
-            .toolbar {
 #if DEBUG
-                ToolbarItem {
-                    Button("SAMPLES") {
-                        Task {
-                            await createData()
-                        }
-                    }
-                }
-                ToolbarItem {
-                    Button("Clear") {
-                        deleteData()
-                    }
-                }
+            .toolbar {SamplesToolbarContent()}
 #endif
-            }
         }
 #if os(macOS)
         .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
@@ -81,17 +61,6 @@ struct TripView: View {
 //        .containerBackground(Color.red, for: .navigation)
 #endif
     }
-#if DEBUG
-    @MainActor
-    func createData() async {
-        deleteData()
-        await PreviewDataGenerator.generatePreviewData(modelContext: modelContext)
-    }
-
-    func deleteData() {
-        try? modelContext.delete(model: Trip.self)
-    }
-#endif
 }
 
 
