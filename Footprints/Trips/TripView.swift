@@ -11,7 +11,8 @@ import SwiftUI
 struct TripView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.verticalSizeClass) private var verticalSizeClass
-    @State private var navPath = NavigationPath()
+//    @State private var navPath = NavigationPath()
+    @EnvironmentObject var navigationController: NavigationController
     @Query(sort: \Trip.startDate, order: .forward) private var trips: [Trip]
     @Namespace var tripList
 
@@ -36,10 +37,8 @@ struct TripView: View {
     }
 
     var body: some View {
-        let _ = print(horizontalSizeClass.debugDescription)
-        let _ = print(verticalSizeClass.debugDescription)
 
-        NavigationStack(path: $navPath) {
+        NavigationStack(path: $navigationController.navigationPath) {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: Constants.cardSpacing) {
                     ForEach(trips) { trip in
@@ -47,7 +46,7 @@ struct TripView: View {
                             TripCard(trip: trip)
                         }
                         .buttonStyle(.plain)
-//                        .matchedTransitionSource(id: trip.id, in: tripList)
+                        .matchedTransitionSource(id: trip.id, in: tripList)
                     }
                 }
                 .padding(Constants.outerPadding)
@@ -96,7 +95,7 @@ struct TripView: View {
 }
 
 
-#Preview(traits: .previewData) {
+#Preview(traits: .previewData, .previewNavigation) {
     TripView()
 }
 
