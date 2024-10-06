@@ -22,6 +22,7 @@ struct TripMap: View {
                     coordinates: trip.tripSteps.map(\.coordinate),
                     contourStyle: .geodesic
                 )
+                .stroke(Color.accentColor, lineWidth: 25/10)
             
                 ForEach(trip.tripSteps) { step in
                     Annotation(
@@ -45,14 +46,6 @@ struct TripMap: View {
                 }
             }
         }
-    }
-    
-    func createNewStep(coordinate: CLLocationCoordinate2D) -> Step {
-        let newStep = Step(timestamp: Date.now, latitude: coordinate.latitude, longitude: coordinate.longitude)
-        trip.steps.append(newStep)
-//        modelContext.insert(newStep)
-        return newStep
-        
     }
     
     func updateMapPosition(for step: Step) {
