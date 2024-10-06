@@ -8,11 +8,20 @@
 import SwiftUI
 
 struct StepDetailView: View {
+    @Bindable var step: Step
+    var stepList: Namespace.ID
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        VStack {
+            Text("Step")
+        }
+//        .navigationTransition(.zoom(sourceID: step.id, in: stepList))
     }
 }
 
-#Preview {
-    StepDetailView()
+#Preview(traits: .previewData) {
+    @Previewable @Namespace var namespace
+    
+    StepDetailView(step: .bedminsterStation, stepList: namespace)
 }

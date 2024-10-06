@@ -9,6 +9,7 @@ import MapKit
 import SwiftUI
 
 struct TripMap: View {
+    @Environment(\.modelContext) var modelContext
     @Bindable var trip: Trip
     @State var mapRegion = MapCameraPosition.automatic
     @Binding var selectedStep: Step?
@@ -16,9 +17,12 @@ struct TripMap: View {
     var body: some View {
         MapReader { mapProxy in
             Map(position: $mapRegion, selection: $selectedStep) {
-                UserAnnotation()
-                MapPolyline(coordinates: trip.tripSteps.map(\.coordinate), contourStyle: .geodesic)
-                    .stroke(Color.accentColor, lineWidth: 25/10)
+
+                MapPolyline(
+                    coordinates: trip.tripSteps.map(\.coordinate),
+                    contourStyle: .geodesic
+                )
+            
                 ForEach(trip.tripSteps) { step in
                     Annotation(
                         step.timestamp.formatted(date: .abbreviated, time: .shortened),
@@ -28,11 +32,6 @@ struct TripMap: View {
                     }
                     .tag(step)
                     .annotationTitles(.hidden)
-                }
-            }
-            .onTapGesture { cgPoint in
-                if let coordinate = mapProxy.convert(cgPoint, from: .local) {
-                    print("tapped at: \(coordinate)")
                 }
             }
         }
@@ -48,11 +47,38 @@ struct TripMap: View {
         }
     }
     
+    func createNewStep(coordinate: CLLocationCoordinate2D) -> Step {
+        let newStep = Step(timestamp: Date.now, latitude: coordinate.latitude, longitude: coordinate.longitude)
+        trip.steps.append(newStep)
+//        modelContext.insert(newStep)
+        return newStep
+        
+    }
+    
     func updateMapPosition(for step: Step) {
         mapRegion = MapCameraPosition.region(step.region)
     }
 }
 
-#Preview {
-    TripMap(trip: .bedminsterToBeijing, selectedStep: .constant(Step.bedminsterStation))
+#Preview("view mode", traits: .previewData) {
+    TripMap(
+        trip: .bedminsterToBeijing,
+        selectedStep: .constant(Step.bedminsterStation)
+    )
+}
+
+#Preview("edit mode", traits: .previewData) {
+    TripMap(
+        trip: .bedminsterToBeijing,
+        selectedStep: .constant(Step.bedminsterStation)
+    )
+}
+
+#Preview("edit mode step added", traits: .previewData) {
+    let step = Step(timestamp: Date.now, latitude: 51.5, longitude: 0.5)
+    
+    TripMap(
+        trip: .bedminsterToBeijing,
+        selectedStep: .constant(Step.bedminsterStation)
+    )
 }

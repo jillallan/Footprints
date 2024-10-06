@@ -12,6 +12,7 @@ struct StepView: View {
     
     @Bindable var trip: Trip
     @Binding var selectedStep: Step?
+    var stepList: Namespace.ID
 
     var body: some View {
 
@@ -22,10 +23,11 @@ struct StepView: View {
                         ForEach(trip.tripSteps) { step in
                             NavigationLink(value: step) {
                                 StepRow(step: step)
-                                let _ = print(selectedStep?.persistentModelID ?? "No ID")
                             }
                             .id(step)
                             .buttonStyle(.plain)
+//                            .matchedTransitionSource(id: step.id, in: stepList)
+                       
                         }
                     } header: {
                         Text(trip.startDate, style: .date)
@@ -49,13 +51,22 @@ struct StepView: View {
             }
             .background(.background)
             .navigationTitle("Steps")
-            .navigationDestination(for: Step.self) { step in
-                Text(step.timestamp, style: .date)
-            }
+//            .navigationDestination(for: Step.self) { step in
+//                AddStepView(step: step)
+//            }
         }
     }
 }
 
 #Preview(traits: .previewData) {
-    StepView(trip: .bedminsterToBeijing, selectedStep: .constant(Step.bedminsterStation))
+    @Previewable @Namespace var namespace
+    
+    NavigationStack {
+        StepView(
+            trip: .bedminsterToBeijing,
+            selectedStep: .constant(Step.bedminsterStation),
+            stepList: namespace
+        )
+    }
+    
 }
