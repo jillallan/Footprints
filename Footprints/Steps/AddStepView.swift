@@ -15,6 +15,7 @@ struct AddStepView: View {
     @State var stepIsNotSet: Bool = true
     @State var mapRegion = MapCameraPosition.region(MKCoordinateRegion.defaultRegion())
     @Environment(\.dismiss) private var dismiss
+    @State private var date: Date = Date.now
     
     var body: some View {
         MapReader { mapProxy in
@@ -30,8 +31,19 @@ struct AddStepView: View {
                     print("tapped at: \(coordinate)")
                     step.latitude = coordinate.latitude
                     step.longitude = coordinate.longitude
+                    step.timestamp = date
                     stepIsNotSet = false
                 }
+            }
+            .safeAreaInset(edge: .bottom) {
+                Form {
+                    Text("Step Name")
+                    DatePicker("Step Date", selection: $date, displayedComponents: [.date, .hourAndMinute])
+                }
+                .frame(height: 400)
+            }
+            .onChange(of: date) {
+                step.timestamp = date
             }
         }
         .navigationTitle("Add step view")
