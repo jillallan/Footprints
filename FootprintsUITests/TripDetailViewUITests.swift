@@ -42,8 +42,6 @@ final class TripDetailViewUITests: XCTestCase {
 
         let mapMidX = mapFrame.midX
         let mapMidY = ((legalLink.frame.minY - navBar.frame.maxY) / 2) + navBar.frame.maxY
-        print("map centre x \(mapMidX)")
-        print("map centre y \(mapMidY)")
         return CGPoint(x: mapMidX, y: mapMidY)
     }
 

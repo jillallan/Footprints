@@ -10,10 +10,12 @@ import SwiftData
 
 @main
 struct FootprintsApp: App {
+    @StateObject var navigationController = NavigationController()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(navigationController)
         }
         .modelContainer(for: Trip.self)
     }

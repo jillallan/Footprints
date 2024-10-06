@@ -13,15 +13,5 @@ class NavigationController: ObservableObject {
 
     init() {
         navigationPath = NavigationPath()
-        print(navigationPath)
     }
-}
-
-extension NavigationController {
-    // Decorated with nonisolated(unsafe) as this
-    // is only for previews
-//    nonisolated(unsafe)
-    nonisolated(unsafe) static var preview: NavigationController = {
-        NavigationController()
-    }()
 }

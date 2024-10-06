@@ -51,7 +51,6 @@ struct MKCoordinateRegionExtensionTests {
         )
 
         let region = try #require(MKCoordinateRegion.calculateRegion(from: coordinates))
-        print(region)
 
         #expect(region == tempRegion)
 
