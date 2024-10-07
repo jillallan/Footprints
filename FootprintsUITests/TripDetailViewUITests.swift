@@ -9,9 +9,11 @@ import XCTest
 
 final class TripDetailViewUITests: XCTestCase {
     var app: XCUIApplication!
+    var helper: UITestHelpers!
 
     override func setUpWithError() throws {
         app = XCUIApplication()
+        helper = UITestHelpers()
         app.launch()
 
         let tripsNavigationBar = app.navigationBars["Trips"]
@@ -19,30 +21,8 @@ final class TripDetailViewUITests: XCTestCase {
         tripsNavigationBar/*@START_MENU_TOKEN@*/.buttons["SAMPLES"]/*[[".otherElements[\"SAMPLES\"].buttons[\"SAMPLES\"]",".buttons[\"SAMPLES\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
         continueAfterFailure = false
     }
-
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func openTrip() {
-        let tripButton = app.buttons["Bedminste to Beijing, 28 July 2016"]
-        XCTAssertTrue(tripButton.isHittable)
-
-        tripButton.tap()
-    }
-
-    func getMapCentreCoordinates() -> CGPoint {
-        let mapFrame = app.descendants(matching: .map).firstMatch.frame
-
-        let predicate = NSPredicate(format: "label CONTAINS 'Legal'")
-        let legalLink = app.links.element(matching: predicate).firstMatch
-        XCTAssert(legalLink.exists)
-
-        let navBar = app.navigationBars.firstMatch
-
-        let mapMidX = mapFrame.midX
-        let mapMidY = ((legalLink.frame.minY - navBar.frame.maxY) / 2) + navBar.frame.maxY
-        return CGPoint(x: mapMidX, y: mapMidY)
     }
 
     // VKPointFeature identifier for MKMapItem
@@ -50,75 +30,75 @@ final class TripDetailViewUITests: XCTestCase {
     @MainActor
     func testAllAnnotationsDisplayWhenTripOpens() throws {
 
-        openTrip()
+        helper.openTrip(app: app)
         let mapAnnotationContainer = app.otherElements.element(matching: .other, identifier: "AnnotationContainer")
         let mapAnnotationsCount = mapAnnotationContainer.children(matching: .other).count
-
+        sleep(1)
         XCTAssertEqual(mapAnnotationsCount, 9)
 
     }
 
     @MainActor
-    func testScrollsToStepWhenSelectedOnMap() throws {
+    func testTripDetailView_whenMapAnnotationSeelcted_ScrollsToStepInList() throws {
 
-        openTrip()
-        let mapAnnotationContainer = app.otherElements.element(matching: .other, identifier: "AnnotationContainer")
-        let mapAnnotation = mapAnnotationContainer.children(matching: .other).element(boundBy: Int.random(in: 0..<8))
+        helper.openTrip(app: app)
+        let mapAnnotationContainer = app
+            .otherElements
+            .element(matching: .other, identifier: "AnnotationContainer")
+        let mapAnnotation = mapAnnotationContainer
+            .children(matching: .other)
+            .element(boundBy: Int.random(in: 0..<8))
         XCTAssert(mapAnnotation.isHittable)
+        let mapAnnotationLabel = mapAnnotation.label
         mapAnnotation.tap()
-        sleep(2)
-
-//        let label = mapAnnotation.label
-//        let predicate = NSPredicate(format: "label CONTAINS %@", mapAnnotation.label)
-        let stepScrollView = app.descendants(matching: .scrollView).firstMatch
-        let scrollViewViews = stepScrollView.descendants(matching: .button).descendants(matching: .staticText)
-
-        for i in 0..<scrollViewViews.count {
-            let stepRow = scrollViewViews.element(boundBy: i)
-            if stepRow.isHittable {
-                XCTAssertEqual(stepRow.label, mapAnnotation.label)
-            }
-
-            if stepRow.isHittable {
-                break
-            }
-        }
         
+        sleep(3)
+        
+        let scrollView = app.scrollViews.matching(identifier: "Trip Activity").firstMatch
+        let firstDisplayedRow = helper.getFirstElementDisplayedIn(scrollView: scrollView, with: "Step")
+        
+        if let firstDisplayedRow {
+            let rowTitle = firstDisplayedRow
+                .staticTexts
+                .element(boundBy: 0)
+            XCTAssert(rowTitle.exists)
+            XCTAssertEqual(
+                rowTitle.label,
+                mapAnnotationLabel,
+                "map annotation: \(mapAnnotationLabel) should equal label: \(rowTitle.label)"
+            )
+        }
     }
 
     @MainActor
-    func testThis() throws {
+    func testTripDetailView_whenScrollingStepList_movesToMapAnnotation() throws {
 
-        openTrip()
+        helper.openTrip(app: app)
+        
+        let scrollView = app.scrollViews.matching(identifier: "Trip Activity").firstMatch
+        XCTAssert(scrollView.exists)
+        scrollView.swipeUp(velocity: 100)
+        sleep(3)
+        let firstDisplayedRow = helper.getFirstElementDisplayedIn(scrollView: scrollView, with: "Step")
+        
+        if let firstDisplayedRow {
+            let rowTitle = firstDisplayedRow.staticTexts.element(boundBy: 0)
+            
+//            print(rowTitle.label)
+            let mapAnnotationContainer = app.otherElements.element(matching: .other, identifier: "AnnotationContainer")
+            let predicate = NSPredicate(format: "label CONTAINS %@", rowTitle.label)
+            
+            print(app.debugDescription)
+            let mapAnnotation = mapAnnotationContainer.children(matching: .other).matching(predicate).firstMatch
+            
+            XCTAssertTrue(mapAnnotation.isHittable)
+            XCTAssertEqual(mapAnnotation.label, firstDisplayedRow.label)
+            
+            let mapCentreCoordinates = helper.getMapCentreCoordinates(app: app)
 
-        let stepScrollView = app.descendants(matching: .scrollView).firstMatch
-        XCTAssertTrue(stepScrollView.exists)
-        stepScrollView.swipeUp(velocity: 100)
-
-        print(app.debugDescription)
-        let scrollViewViews = stepScrollView.descendants(matching: .button).descendants(matching: .staticText)
-
-        for i in 0..<scrollViewViews.count {
-            let stepRow = scrollViewViews.element(boundBy: i)
-            if stepRow.isHittable {
-
-                let mapAnnotationContainer = app.otherElements.element(matching: .other, identifier: "AnnotationContainer")
-                let predicate = NSPredicate(format: "label CONTAINS %@", stepRow.label)
-                let mapAnnotation = mapAnnotationContainer.children(matching: .other).matching(predicate).firstMatch
-
-
-                XCTAssertTrue(mapAnnotation.isHittable)
-                XCTAssertEqual(mapAnnotation.label, stepRow.label)
-
-                let mapCentreCoordinates = getMapCentreCoordinates()
-
-                XCTAssertEqual(mapCentreCoordinates.x, mapAnnotation.frame.midX, accuracy: 1.0)
-
-                if stepRow.isHittable {
-                    break
-                }
-            }
+            XCTAssertEqual(mapCentreCoordinates.x, mapAnnotation.frame.midX, accuracy: 1.0)
         }
+
     }
 
     @MainActor

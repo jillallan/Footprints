@@ -16,7 +16,7 @@ struct StepRow: View {
                 .font(.title)
                 .foregroundStyle(Color.pink)
             VStack(alignment: .leading) {
-                Text(step.timestamp.formatted(date: .abbreviated, time: .shortened))
+                Text(step.title)
                     .font(.headline)
                 Text(step.timestamp.formatted(date: .abbreviated, time: .shortened))
                     .font(.subheadline)

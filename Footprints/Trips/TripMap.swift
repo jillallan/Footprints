@@ -26,7 +26,7 @@ struct TripMap: View {
             
                 ForEach(trip.tripSteps) { step in
                     Annotation(
-                        step.timestamp.formatted(date: .abbreviated, time: .shortened),
+                        step.title,
                         coordinate: step.coordinate
                     ) {
                         DefaultStepMapAnnotation()
@@ -68,7 +68,7 @@ struct TripMap: View {
 }
 
 #Preview("edit mode step added", traits: .previewData) {
-    let step = Step(timestamp: Date.now, latitude: 51.5, longitude: 0.5)
+    let step = Step(title: "New step", timestamp: Date.now, latitude: 51.5, longitude: 0.5)
     
     TripMap(
         trip: .bedminsterToBeijing,

@@ -12,7 +12,7 @@ extension Trip {
     @MainActor
     /// A sample trip
     static let bedminsterToBeijing = Trip(
-        title: "Bedminste to Beijing",
+        title: "Bedminster to Beijing",
 //        title: "Bedminster to Beijing via Eurpoe, Russia and Mongolia",
         startDate: Date.from(string: "2016/07/28 08:06:00"),
         endDate: Date.from(string: "2016/09/02 12:00:00"),

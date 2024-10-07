@@ -25,30 +25,34 @@ final class AddStepViewUITests: XCTestCase {
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
-                
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
     
-    func testExampleTwo() throws {
+    func testAddStepView_whenUserClicksOnMapToSelectLocation_LocationAppearsInSummary() throws {
         
         helper.openTrip(app: app)
         app.navigationBars["Steps"].buttons["Add step on map"].tap()
         let coordinates = helper.getMapCentreCoordinates(app: app)
     
-//        let testCoordinate = app.coordinate(withNormalizedOffset: CGVector(dx: coordinates.x, dy: coordinates.y))
-        let centreOfMap = app.coordinate(withNormalizedOffset: CGVector.zero).withOffset(CGVector(dx: coordinates.x, dy: coordinates.y))
+        let centreOfMap = app
+            .coordinate(withNormalizedOffset: CGVector.zero)
+            .withOffset(CGVector(dx: coordinates.x, dy: coordinates.y))
        
         centreOfMap.tap()
     
         XCTAssert(app.staticTexts["River Thames"].exists)
 
+    }
+    
+    func testAddStepView_whenUserScrollsToStepThenAddsStep_stepIsPopulatedWithScrolledToStep() throws {
+        helper.openTrip(app: app)
+        let scrollView = app.scrollViews.matching(identifier: "Trip Activity").firstMatch
+        let firstDisplayedRow = helper.getFirstElementDisplayedIn(scrollView: scrollView, with: "Step")
         
+        print("here is the first row")
+        print(firstDisplayedRow?.label ?? "No row")
         
+        print(app.debugDescription)
+    
+      
     }
 
     func testLaunchPerformance() throws {
