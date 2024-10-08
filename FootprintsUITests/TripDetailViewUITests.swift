@@ -42,12 +42,14 @@ final class TripDetailViewUITests: XCTestCase {
     func testTripDetailView_whenMapAnnotationSeelcted_ScrollsToStepInList() throws {
 
         helper.openTrip(app: app)
-        let mapAnnotationContainer = app
+        
+        let mapAnnotation = app
             .otherElements
             .element(matching: .other, identifier: "AnnotationContainer")
-        let mapAnnotation = mapAnnotationContainer
             .children(matching: .other)
             .element(boundBy: Int.random(in: 0..<8))
+    
+            
         XCTAssert(mapAnnotation.isHittable)
         let mapAnnotationLabel = mapAnnotation.label
         mapAnnotation.tap()
@@ -56,6 +58,8 @@ final class TripDetailViewUITests: XCTestCase {
         
         let scrollView = app.scrollViews.matching(identifier: "Trip Activity").firstMatch
         let firstDisplayedRow = helper.getFirstElementDisplayedIn(scrollView: scrollView, with: "Step")
+        
+     
         
         if let firstDisplayedRow {
             let rowTitle = firstDisplayedRow
@@ -75,24 +79,32 @@ final class TripDetailViewUITests: XCTestCase {
 
         helper.openTrip(app: app)
         
-        let scrollView = app.scrollViews.matching(identifier: "Trip Activity").firstMatch
+        let scrollView = app
+            .scrollViews
+            .matching(identifier: "Trip Activity")
+            .firstMatch
         XCTAssert(scrollView.exists)
         scrollView.swipeUp(velocity: 100)
+       
         sleep(3)
-        let firstDisplayedRow = helper.getFirstElementDisplayedIn(scrollView: scrollView, with: "Step")
         
-        if let firstDisplayedRow {
+        if let firstDisplayedRow = helper.getFirstElementDisplayedIn(
+            scrollView: scrollView, with: "Step"
+        ) {
             let rowTitle = firstDisplayedRow.staticTexts.element(boundBy: 0)
-            
-//            print(rowTitle.label)
-            let mapAnnotationContainer = app.otherElements.element(matching: .other, identifier: "AnnotationContainer")
             let predicate = NSPredicate(format: "label CONTAINS %@", rowTitle.label)
+
+            let mapAnnotation = app
+                .otherElements
+                .element(matching: .other, identifier: "AnnotationContainer")
+                .children(matching: .other)
+                .matching(predicate).firstMatch
             
-            print(app.debugDescription)
-            let mapAnnotation = mapAnnotationContainer.children(matching: .other).matching(predicate).firstMatch
+            try? print("map annotation: \(mapAnnotation.snapshot())")
+            try? print("row title: \(rowTitle.snapshot())")
             
             XCTAssertTrue(mapAnnotation.isHittable)
-            XCTAssertEqual(mapAnnotation.label, firstDisplayedRow.label)
+            XCTAssertEqual(mapAnnotation.label, rowTitle.label)
             
             let mapCentreCoordinates = helper.getMapCentreCoordinates(app: app)
 

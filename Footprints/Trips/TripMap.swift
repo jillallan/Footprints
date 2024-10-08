@@ -30,6 +30,7 @@ struct TripMap: View {
                         coordinate: step.coordinate
                     ) {
                         DefaultStepMapAnnotation()
+                            .accessibilityIdentifier("Step Annotation", isEnabled: true)
                     }
                     .tag(step)
                     .annotationTitles(.hidden)
