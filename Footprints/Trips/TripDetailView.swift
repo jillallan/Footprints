@@ -61,7 +61,7 @@ struct TripDetailView: View {
         //        .navigationTransition(.automatic)
 #endif
             .toolbar {
-                Button("Add step on map", systemImage: "plus") {
+                Button("Add Step", systemImage: "plus") {
                     let step = Step()
                     trip.steps.append(step)
                     modelContext.insert(step)

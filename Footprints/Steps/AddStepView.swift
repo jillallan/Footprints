@@ -91,8 +91,10 @@ struct AddStepView: View {
     
     func fetchPlacemark(for location: CLLocation) async {
         do {
-            if let tempPlacemarkName = try await locationService.fetchPlacemark(for: location)?.name {
-                placemarkName = tempPlacemarkName
+            if let tempPlacemark = try await locationService.fetchPlacemark(for: location) {
+                let title  = "\(tempPlacemark.name ?? "No name"), \(tempPlacemark.locality ?? "No Locality")"
+                placemarkName = title
+                
                 loadingState = .success
             } else {
                 loadingState = .failed

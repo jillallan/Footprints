@@ -54,6 +54,80 @@ final class AddStepViewUITests: XCTestCase {
     
       
     }
+    
+    func testSomething() throws {
+        helper.openTrip(app: app)
+        let scrollView = app
+            .scrollViews
+            .matching(identifier: "Trip Activity")
+            .firstMatch
+
+        scrollView.swipeUp(velocity: 100)
+        
+        if let stepRow = helper.getFirstElementDisplayedIn(
+            scrollView: scrollView,
+            with: "Step"
+        ) {
+            
+            XCTAssertTrue(stepRow.isHittable)
+            
+            let stepRowTimestamp = stepRow.staticTexts.element(boundBy: 1).label
+            let dateTimeArray = stepRowTimestamp.components(separatedBy: " at ")
+            let date = dateTimeArray[0]
+            let time = dateTimeArray[1]
+            print("dateTime: \(dateTimeArray)")
+            
+            let addButton = app.navigationBars.buttons["Add Step"]
+            XCTAssertTrue(addButton.isHittable)
+            addButton.tap()
+            sleep(2)
+            print(app.debugDescription)
+            
+            let datePicker = app.datePickers.element(boundBy: 0)
+            try print("date picker: \(datePicker.snapshot())")
+            
+            let newStepTime = app
+                .datePickers
+                .element(boundBy: 0)
+                .buttons.firstMatch
+                .buttons.element(boundBy: 1).label
+            let newStepDate = app
+                .datePickers
+                .element(boundBy: 0)
+                .buttons.firstMatch
+                .buttons.element(boundBy: 0).label
+            
+            XCTAssertEqual(date, newStepDate)
+            XCTAssertEqual(time, newStepTime)
+            
+        }
+        
+        
+        
+        
+    }
+
+    
+    func testSomethingElse() throws {
+        helper.openTrip(app: app)
+        let stepRow = app
+            .scrollViews
+            .matching(identifier: "Trip Activity")
+            .firstMatch
+            .children(matching: .button)
+            .element(boundBy: Int.random(in: 0..<5))
+        
+        XCTAssertTrue(stepRow.isHittable)
+        let stepRowTimestamp = stepRow.staticTexts.element(boundBy: 1).label
+        let dateTimeArray = stepRowTimestamp.components(separatedBy: " at ")
+        let date = dateTimeArray[0]
+        let time = dateTimeArray[1]
+        print("dateTime: \(dateTimeArray)")
+        stepRow.tap()
+        
+        
+        
+    }
 
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
