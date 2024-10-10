@@ -6,6 +6,7 @@
 //
 
 import Testing
+import Contacts
 import CoreLocation
 @testable import Footprints
 
@@ -17,6 +18,9 @@ struct TestLocationService {
         
         let location = CLLocation(latitude: 51.370791, longitude: -2.546549)
         let placemark = try await locationService.fetchPlacemark(for: location)
+        if let placemark {
+            print(String(describing: placemark.postalAddress))
+        }
         #expect(placemark?.name == "138 High Street")
 
     }
