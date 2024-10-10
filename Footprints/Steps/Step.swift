@@ -12,6 +12,7 @@ import SwiftUI
 
 @Model
 final class Step {
+    var title: String
     var timestamp: Date
     var latitude: Double
     var longitude: Double
@@ -21,7 +22,8 @@ final class Step {
     /// Required property for CustomDebugStringConvertible protocol
     var debugDescription: String {
         """
-        Step on: \(timestamp.formatted(date: .abbreviated, time: .shortened)), \
+        \(title), \
+        on: \(timestamp.formatted(date: .abbreviated, time: .shortened)), \
         latitude: \(latitude), longitude: \(longitude), altitude: \(altitude))
         """
     }
@@ -40,7 +42,8 @@ final class Step {
     ///   - latitude: The latitude of the step
     ///   - longitude: The longitude of a step
     ///   - altitude: The altitude of a step
-    init(timestamp: Date = .now, latitude: Double, longitude: Double, altitude: Double) {
+    init(title: String, timestamp: Date = .now, latitude: Double, longitude: Double, altitude: Double) {
+        self.title = title
         self.timestamp = timestamp
         self.latitude = latitude
         self.longitude = longitude
@@ -52,14 +55,14 @@ final class Step {
     ///   - timestamp: The time of the step, the defualt is the current time
     ///   - latitude: The latitude of the step
     ///   - longitude: The longitude of a step
-    convenience init(timestamp: Date = .now, latitude: Double, longitude: Double) {
-        self.init(timestamp: timestamp, latitude: latitude, longitude: longitude, altitude: 0.0)
+    convenience init(title: String, timestamp: Date = .now, latitude: Double, longitude: Double) {
+        self.init(title: title, timestamp: timestamp, latitude: latitude, longitude: longitude, altitude: 0.0)
     }
 
     /// Initializes a new instance of a Step, with a default latitude, longtiude and altitude of 0.0
     ///   - timestamp: The time of the step, the defualt is the current time
     convenience init(timestamp: Date = .now) {
-        self.init(timestamp: timestamp, latitude: 0.0, longitude: 0.0, altitude: 0.0)
+        self.init(title: "New step", timestamp: timestamp, latitude: 0.0, longitude: 0.0, altitude: 0.0)
     }
 }
 

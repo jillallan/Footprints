@@ -23,11 +23,12 @@ struct StepView: View {
                         ForEach(trip.tripSteps) { step in
                             NavigationLink(value: step) {
                                 StepRow(step: step)
+                     
                             }
                             .id(step)
                             .buttonStyle(.plain)
 //                            .matchedTransitionSource(id: step.id, in: stepList)
-                       
+                            .accessibilityIdentifier("Step", isEnabled: true)
                         }
                     } header: {
                         Text(trip.startDate, style: .date)
@@ -42,6 +43,7 @@ struct StepView: View {
                 }
                 .scrollTargetLayout()
             }
+            .accessibilityIdentifier("Trip Activity", isEnabled: true)
             .scrollPosition(id: $selectedStep)
             .scrollTargetBehavior(.viewAligned(limitBehavior: .alwaysByOne))
             .onChange(of: selectedStep) {

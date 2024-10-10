@@ -29,7 +29,6 @@ struct TripDetailView: View {
             trip: trip,
             selectedStep: $selectedStep
         )
-
             .if(verticalSizeClass == .regular && horizontalSizeClass == .compact) { map in
                 map.safeAreaInset(edge: .bottom) {
                     StepView(trip: trip, selectedStep: $selectedStep, stepList: stepList)
@@ -61,7 +60,7 @@ struct TripDetailView: View {
         //        .navigationTransition(.automatic)
 #endif
             .toolbar {
-                Button("Add step on map", systemImage: "plus") {
+                Button("Add Step", systemImage: "plus") {
                     let step = Step()
                     trip.steps.append(step)
                     modelContext.insert(step)
@@ -69,9 +68,40 @@ struct TripDetailView: View {
                 }
 //                .matchedTransitionSource(id: newStep.id, in: stepList)
             }
+            
             .navigationDestination(for: Step.self) { step in
-                AddStepView(trip: trip, step: step)
+                AddStepView(
+                    trip: trip,
+                    step: step,
+                    date: getTimestamp(selectedStep: selectedStep),
+                    coordinate: getCoordinate(selectedStep: selectedStep)
+                )
             }
+    }
+    
+    func getTimestamp(selectedStep: Step?) -> Date {
+        if let selectedStep {
+            return selectedStep.timestamp
+        } else {
+            if trip.tripSteps.isEmpty {
+                return Date.now
+            }
+            let stepTimestamps = trip.tripSteps.map(\.timestamp)
+            return stepTimestamps[stepTimestamps.count - 2]
+        }
+    }
+    
+    func getCoordinate(selectedStep: Step?) -> CLLocationCoordinate2D {
+        if let selectedStep {
+            print(selectedStep.coordinate)
+            return selectedStep.coordinate
+        } else {
+            if trip.tripSteps.isEmpty {
+                return CLLocationCoordinate2D.defaultCoordinate()
+            }
+            let stepCoordinates = trip.tripSteps.map(\.coordinate)
+            return stepCoordinates[stepCoordinates.count - 2]
+        }
     }
 }
 

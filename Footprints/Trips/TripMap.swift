@@ -18,18 +18,22 @@ struct TripMap: View {
         MapReader { mapProxy in
             Map(position: $mapRegion, selection: $selectedStep) {
 
-                MapPolyline(
-                    coordinates: trip.tripSteps.map(\.coordinate),
-                    contourStyle: .geodesic
-                )
-                .stroke(Color.accentColor, lineWidth: 25/10)
+                if !trip.tripSteps.isEmpty {
+                    MapPolyline(
+                        coordinates: trip.tripSteps.map(\.coordinate),
+                        contourStyle: .geodesic
+                    )
+                    .stroke(Color.accentColor, lineWidth: 25/10)
+                }
+                
             
                 ForEach(trip.tripSteps) { step in
                     Annotation(
-                        step.timestamp.formatted(date: .abbreviated, time: .shortened),
+                        step.title,
                         coordinate: step.coordinate
                     ) {
                         DefaultStepMapAnnotation()
+                            .accessibilityIdentifier("Step Annotation", isEnabled: true)
                     }
                     .tag(step)
                     .annotationTitles(.hidden)
@@ -68,7 +72,7 @@ struct TripMap: View {
 }
 
 #Preview("edit mode step added", traits: .previewData) {
-    let step = Step(timestamp: Date.now, latitude: 51.5, longitude: 0.5)
+    let step = Step(title: "New step", timestamp: Date.now, latitude: 51.5, longitude: 0.5)
     
     TripMap(
         trip: .bedminsterToBeijing,

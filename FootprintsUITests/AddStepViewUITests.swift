@@ -25,28 +25,150 @@ final class AddStepViewUITests: XCTestCase {
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
-                
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
     
-    func testExampleTwo() throws {
+    func testAddStepView_whenUserClicksOnMapToSelectLocation_LocationAppearsInSummary() throws {
         
         helper.openTrip(app: app)
         app.navigationBars["Steps"].buttons["Add step on map"].tap()
         let coordinates = helper.getMapCentreCoordinates(app: app)
     
-//        let testCoordinate = app.coordinate(withNormalizedOffset: CGVector(dx: coordinates.x, dy: coordinates.y))
-        let centreOfMap = app.coordinate(withNormalizedOffset: CGVector.zero).withOffset(CGVector(dx: coordinates.x, dy: coordinates.y))
+        let centreOfMap = app
+            .coordinate(withNormalizedOffset: CGVector.zero)
+            .withOffset(CGVector(dx: coordinates.x, dy: coordinates.y))
        
         centreOfMap.tap()
     
         XCTAssert(app.staticTexts["River Thames"].exists)
 
+    }
+    
+    func testAddStepView_whenUserScrollsToStepThenAddsStep_stepIsPopulatedWithScrolledToStep() throws {
+        helper.openTrip(app: app)
+        let scrollView = app.scrollViews.matching(identifier: "Trip Activity").firstMatch
+        let firstDisplayedRow = helper.getFirstElementDisplayedIn(scrollView: scrollView, with: "Step")
+        
+        print("here is the first row")
+        print(firstDisplayedRow?.label ?? "No row")
+        
+        print(app.debugDescription)
+    
+      
+    }
+    
+    func testSomething() throws {
+        helper.openTrip(app: app)
+        let scrollView = app
+            .scrollViews
+            .matching(identifier: "Trip Activity")
+            .firstMatch
+
+        let mapAnnotationCount = app
+            .otherElements
+            .element(matching: .other, identifier: "AnnotationContainer")
+            .children(matching: .other)
+            .count
+        
+        let lastMapAnnotation = app
+            .otherElements
+            .element(matching: .other, identifier: "AnnotationContainer")
+            .children(matching: .other)
+            .element(boundBy: mapAnnotationCount - 1)
+        
+        print(app.debugDescription)
+        
+        let AnnotationTimestamp = lastMapAnnotation.staticTexts.element(boundBy: 1).label
+//            let dateTimeArray = stepRowTimestamp.components(separatedBy: " at ")
+//            let date = dateTimeArray[0]
+//            let time = dateTimeArray[1]
+//            print("dateTime: \(dateTimeArray)")
+            
+            let addButton = app.navigationBars.buttons["Add Step"]
+            XCTAssertTrue(addButton.isHittable)
+            addButton.tap()
+            
+            let datePicker = app.datePickers.element(boundBy: 0)
+            try print("date picker: \(datePicker.snapshot())")
+            
+            let newStepTime = app
+                .datePickers
+                .element(boundBy: 0)
+                .buttons.firstMatch
+                .buttons.element(boundBy: 1).label
+            let newStepDate = app
+                .datePickers
+                .element(boundBy: 0)
+                .buttons.firstMatch
+                .buttons.element(boundBy: 0).label
+            
+//            XCTAssertEqual(date, newStepDate)
+//            XCTAssertEqual(time, newStepTime)
+        
+    }
+    
+//    func testSomethingElse() throws {
+//        helper.openTrip(app: app)
+//        let scrollView = app
+//            .scrollViews
+//            .matching(identifier: "Trip Activity")
+//            .firstMatch
+//
+//        scrollView.swipeUp(velocity: 100)
+//        
+//        if let stepRow = helper.getFirstElementDisplayedIn(
+//            scrollView: scrollView,
+//            with: "Step"
+//        ) {
+//            
+//            XCTAssertTrue(stepRow.isHittable)
+//            
+//            let stepRowTimestamp = stepRow.staticTexts.element(boundBy: 1).label
+//            let dateTimeArray = stepRowTimestamp.components(separatedBy: " at ")
+//            let date = dateTimeArray[0]
+//            let time = dateTimeArray[1]
+//            print("dateTime: \(dateTimeArray)")
+//            
+//            let addButton = app.navigationBars.buttons["Add Step"]
+//            XCTAssertTrue(addButton.isHittable)
+//            addButton.tap()
+//            
+//            let datePicker = app.datePickers.element(boundBy: 0)
+//            try print("date picker: \(datePicker.snapshot())")
+//            
+//            let newStepTime = app
+//                .datePickers
+//                .element(boundBy: 0)
+//                .buttons.firstMatch
+//                .buttons.element(boundBy: 1).label
+//            let newStepDate = app
+//                .datePickers
+//                .element(boundBy: 0)
+//                .buttons.firstMatch
+//                .buttons.element(boundBy: 0).label
+//            
+//            XCTAssertEqual(date, newStepDate)
+//            XCTAssertEqual(time, newStepTime)
+//            
+//        }
+//    }
+
+    
+    func testSomethingElseAgain() throws {
+        helper.openTrip(app: app)
+        let stepRow = app
+            .scrollViews
+            .matching(identifier: "Trip Activity")
+            .firstMatch
+            .children(matching: .button)
+            .element(boundBy: Int.random(in: 0..<5))
+        
+        XCTAssertTrue(stepRow.isHittable)
+        let stepRowTimestamp = stepRow.staticTexts.element(boundBy: 1).label
+        let dateTimeArray = stepRowTimestamp.components(separatedBy: " at ")
+        let date = dateTimeArray[0]
+        let time = dateTimeArray[1]
+        print("dateTime: \(dateTimeArray)")
+        stepRow.tap()
+        
         
         
     }
