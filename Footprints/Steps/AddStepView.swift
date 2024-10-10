@@ -13,9 +13,10 @@ struct AddStepView: View {
     let trip: Trip
     @Bindable var step: Step
     @State var stepIsNotSet: Bool = true
-    @State var mapRegion = MapCameraPosition.region(MKCoordinateRegion.defaultRegion())
+    @State var mapRegion = MapCameraPosition.automatic
     @Environment(\.dismiss) private var dismiss
-    @State private var date: Date = Date.now
+    @State var date: Date = Date.now
+    @State var coordinate: CLLocationCoordinate2D
     let locationService = LocationService()
     @State private var loadingState = LoadingState.empty
     @State var placemarkName: String = ""
@@ -26,7 +27,7 @@ struct AddStepView: View {
     
     var body: some View {
         MapReader { mapProxy in
-            Map(initialPosition: mapRegion) {
+            Map(position: $mapRegion) {
                 if step.hasChanges {
                     Annotation("", coordinate: step.coordinate) {
                         DefaultStepMapAnnotation()
@@ -67,6 +68,15 @@ struct AddStepView: View {
             .onChange(of: date) {
                 step.timestamp = date
             }
+            
+        }
+        .onAppear {
+            mapRegion = MapCameraPosition.region(
+                MKCoordinateRegion(
+                    center: coordinate,
+                    span: MKCoordinateSpan.defaultSpan()
+                )
+            )
         }
         .navigationTitle("Add step view")
 #if !os(macOS)
@@ -120,7 +130,7 @@ struct AddStepView: View {
 
 #Preview(traits: .previewData) {
     NavigationStack {
-        AddStepView(trip: .bedminsterToBeijing, step: .atomium)
+        AddStepView(trip: .bedminsterToBeijing, step: .atomium, coordinate: CLLocationCoordinate2D())
     }
     
 }

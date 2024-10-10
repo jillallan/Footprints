@@ -18,11 +18,14 @@ struct TripMap: View {
         MapReader { mapProxy in
             Map(position: $mapRegion, selection: $selectedStep) {
 
-                MapPolyline(
-                    coordinates: trip.tripSteps.map(\.coordinate),
-                    contourStyle: .geodesic
-                )
-                .stroke(Color.accentColor, lineWidth: 25/10)
+                if !trip.tripSteps.isEmpty {
+                    MapPolyline(
+                        coordinates: trip.tripSteps.map(\.coordinate),
+                        contourStyle: .geodesic
+                    )
+                    .stroke(Color.accentColor, lineWidth: 25/10)
+                }
+                
             
                 ForEach(trip.tripSteps) { step in
                     Annotation(

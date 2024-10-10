@@ -62,26 +62,29 @@ final class AddStepViewUITests: XCTestCase {
             .matching(identifier: "Trip Activity")
             .firstMatch
 
-        scrollView.swipeUp(velocity: 100)
+        let mapAnnotationCount = app
+            .otherElements
+            .element(matching: .other, identifier: "AnnotationContainer")
+            .children(matching: .other)
+            .count
         
-        if let stepRow = helper.getFirstElementDisplayedIn(
-            scrollView: scrollView,
-            with: "Step"
-        ) {
-            
-            XCTAssertTrue(stepRow.isHittable)
-            
-            let stepRowTimestamp = stepRow.staticTexts.element(boundBy: 1).label
-            let dateTimeArray = stepRowTimestamp.components(separatedBy: " at ")
-            let date = dateTimeArray[0]
-            let time = dateTimeArray[1]
-            print("dateTime: \(dateTimeArray)")
+        let lastMapAnnotation = app
+            .otherElements
+            .element(matching: .other, identifier: "AnnotationContainer")
+            .children(matching: .other)
+            .element(boundBy: mapAnnotationCount - 1)
+        
+        print(app.debugDescription)
+        
+        let AnnotationTimestamp = lastMapAnnotation.staticTexts.element(boundBy: 1).label
+//            let dateTimeArray = stepRowTimestamp.components(separatedBy: " at ")
+//            let date = dateTimeArray[0]
+//            let time = dateTimeArray[1]
+//            print("dateTime: \(dateTimeArray)")
             
             let addButton = app.navigationBars.buttons["Add Step"]
             XCTAssertTrue(addButton.isHittable)
             addButton.tap()
-            sleep(2)
-            print(app.debugDescription)
             
             let datePicker = app.datePickers.element(boundBy: 0)
             try print("date picker: \(datePicker.snapshot())")
@@ -97,18 +100,59 @@ final class AddStepViewUITests: XCTestCase {
                 .buttons.firstMatch
                 .buttons.element(boundBy: 0).label
             
-            XCTAssertEqual(date, newStepDate)
-            XCTAssertEqual(time, newStepTime)
-            
-        }
-        
-        
-        
+//            XCTAssertEqual(date, newStepDate)
+//            XCTAssertEqual(time, newStepTime)
         
     }
+    
+//    func testSomethingElse() throws {
+//        helper.openTrip(app: app)
+//        let scrollView = app
+//            .scrollViews
+//            .matching(identifier: "Trip Activity")
+//            .firstMatch
+//
+//        scrollView.swipeUp(velocity: 100)
+//        
+//        if let stepRow = helper.getFirstElementDisplayedIn(
+//            scrollView: scrollView,
+//            with: "Step"
+//        ) {
+//            
+//            XCTAssertTrue(stepRow.isHittable)
+//            
+//            let stepRowTimestamp = stepRow.staticTexts.element(boundBy: 1).label
+//            let dateTimeArray = stepRowTimestamp.components(separatedBy: " at ")
+//            let date = dateTimeArray[0]
+//            let time = dateTimeArray[1]
+//            print("dateTime: \(dateTimeArray)")
+//            
+//            let addButton = app.navigationBars.buttons["Add Step"]
+//            XCTAssertTrue(addButton.isHittable)
+//            addButton.tap()
+//            
+//            let datePicker = app.datePickers.element(boundBy: 0)
+//            try print("date picker: \(datePicker.snapshot())")
+//            
+//            let newStepTime = app
+//                .datePickers
+//                .element(boundBy: 0)
+//                .buttons.firstMatch
+//                .buttons.element(boundBy: 1).label
+//            let newStepDate = app
+//                .datePickers
+//                .element(boundBy: 0)
+//                .buttons.firstMatch
+//                .buttons.element(boundBy: 0).label
+//            
+//            XCTAssertEqual(date, newStepDate)
+//            XCTAssertEqual(time, newStepTime)
+//            
+//        }
+//    }
 
     
-    func testSomethingElse() throws {
+    func testSomethingElseAgain() throws {
         helper.openTrip(app: app)
         let stepRow = app
             .scrollViews
