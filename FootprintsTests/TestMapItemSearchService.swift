@@ -15,10 +15,16 @@ struct TestMapItemSearchService {
         // Write your test here and use APIs like `#expect(...)` to check expected conditions.
         let mapItemSearchService = MapItemSearchService()
         
-        let searchTerm = "London"
+        let searchTerm = "138 High Street, Pensford, BS39 4BH"
         let mapItems = await mapItemSearchService.search(for: searchTerm, in: MKCoordinateRegion.defaultRegion())
         mapItems.map { mapItem in
             print(mapItem.name)
+            
+            print("placemark: \(String(describing: mapItem.placemark.debugDescription)) \n")
+            print("map item: \(String(describing: mapItem.debugDescription)) \n")
+            
+            print("alternate identifier: \(String(describing: mapItem.alternateIdentifiers)) \n")
+            print("identifier: \(String(describing: mapItem.identifier)) \n")
         }
         #expect(mapItems.count > 0)
     }

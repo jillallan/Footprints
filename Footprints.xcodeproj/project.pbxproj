@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		78EFD8352CB8666E001FB3A6 /* RealModule in Frameworks */ = {isa = PBXBuildFile; productRef = 78EFD8342CB8666E001FB3A6 /* RealModule */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		786B17732C664E590097C3E3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -65,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78EFD8352CB8666E001FB3A6 /* RealModule in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +130,7 @@
 			);
 			name = Footprints;
 			packageProductDependencies = (
+				78EFD8342CB8666E001FB3A6 /* RealModule */,
 			);
 			productName = Footprints;
 			productReference = 786B175E2C664E570097C3E3 /* Footprints.app */;
@@ -208,6 +214,9 @@
 			);
 			mainGroup = 786B17552C664E570097C3E3;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				78EFD8332CB8666E001FB3A6 /* XCRemoteSwiftPackageReference "swift-numerics" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 786B175F2C664E570097C3E3 /* Products */;
 			projectDirPath = "";
@@ -606,6 +615,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		78EFD8332CB8666E001FB3A6 /* XCRemoteSwiftPackageReference "swift-numerics" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-numerics.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		78EFD8342CB8666E001FB3A6 /* RealModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 78EFD8332CB8666E001FB3A6 /* XCRemoteSwiftPackageReference "swift-numerics" */;
+			productName = RealModule;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 786B17562C664E570097C3E3 /* Project object */;
 }
