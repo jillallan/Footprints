@@ -12,7 +12,7 @@ struct TestLocationSearchService {
 
     @Test func testLocationSearchServie_whenSearchForLocationFromString_returnsListOfLocations() async throws {
         let locationSearchService = await LocationSuggestionSearch()
-        let locations = try await locationSearchService.fetchLocationSuggestions(for: "138 High Street, Pensford")
+        let locations = try await locationSearchService.fetchLocationSuggestions(for: "London")
         _ = locations.map({ completion in
             print("\(completion) \n")
         })

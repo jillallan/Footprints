@@ -93,7 +93,6 @@ struct TripDetailView: View {
     
     func getCoordinate(selectedStep: Step?) -> CLLocationCoordinate2D {
         if let selectedStep {
-            print(selectedStep.coordinate)
             return selectedStep.coordinate
         } else {
             if trip.tripSteps.isEmpty {
