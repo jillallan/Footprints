@@ -27,11 +27,17 @@ final class Placemark {
     var ocean: String?
     var areaOfInterest: String?
 //    var PointOfInterestCategory: MKPointOfInterestCategory?
-    var timeZone: TimeZone?
+//    var timeZone: TimeZone?
     
     var latitude: Double?
     var longitude: Double?
     var radius: Double?
+    
+    var steps = [Step]()
+
+    var placemarkSteps: [Step] {
+        return steps.sorted()
+    }
     
     init(
         title: String? = nil,
@@ -50,7 +56,7 @@ final class Placemark {
         ocean: String? = nil,
         areaOfInterest: String? = nil,
 //        PointOfInterestCategory: MKPointOfInterestCategory? = nil,
-        timeZone: TimeZone? = nil,
+//        timeZone: TimeZone? = nil,
         latitude: Double? = nil,
         longitude: Double? = nil,
         radius: Double? = nil
@@ -71,7 +77,7 @@ final class Placemark {
         self.ocean = ocean
         self.areaOfInterest = areaOfInterest
 //        self.PointOfInterestCategory = PointOfInterestCategory
-        self.timeZone = timeZone
+//        self.timeZone = timeZone
         self.latitude = latitude
         self.longitude = longitude
         self.radius = radius
@@ -99,7 +105,7 @@ final class Placemark {
             inlandWater: placemark.inlandWater,
             ocean: placemark.ocean,
             areaOfInterest: placemark.areasOfInterest?.first,
-            timeZone: placemark.timeZone,
+//            timeZone: placemark.timeZone,
             latitude: placemark.location?.coordinate.latitude,
             longitude: placemark.location?.coordinate.longitude,
             radius: radius

@@ -32,6 +32,7 @@ struct EditStepForm: View {
     @State private var locationSuggestions: [LocationSuggestion] = []
     @State private var selectedLocationSuggestion: LocationSuggestion?
     @Binding var mapItem: MKMapItem?
+    @Bindable var step: Step
     
     var body: some View {
         NavigationStack {
@@ -72,7 +73,7 @@ struct EditStepForm: View {
             .sheet(item: $selectedLocationSuggestion) {
                 
             } content: { locationSuggestion in
-                PlacemarkResult(locationSuggestion: locationSuggestion, mapItem: $mapItem)
+                PlacemarkResult(locationSuggestion: locationSuggestion, mapItem: $mapItem, step: step)
                     .presentationDetents([.height(400)])
                     
             }
@@ -100,6 +101,6 @@ struct EditStepForm: View {
                     coordinate: CLLocationCoordinate2D(latitude: 51.5072, longitude: 0.0)
                 )
             )
-        )
+        ), step: .atomium
     )
 }

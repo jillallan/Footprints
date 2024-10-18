@@ -13,39 +13,52 @@ struct PlacemarkResult: View {
     @State var mapItemSearchService = MapItemSearchService()
     @Binding var mapItem: MKMapItem?
     @State private var loadingState = LoadingState.loading
-    
+    @Bindable var step: Step
+    @Environment(\.modelContext) private var modelContext
     
     var body: some View {
-        VStack {
-            switch loadingState {
-            case .empty:
-                EmptyView()
-            case .loading:
-                ProgressView()
-            case .success:
-                Form {
-                    Text(mapItem?.name ?? "")
-                    Text(mapItem?.placemark.title ?? "")
+        NavigationStack {
+            VStack {
+                switch loadingState {
+                case .empty:
+                    EmptyView()
+                case .loading:
+                    ProgressView()
+                case .success:
+                    Form {
+                        Text(locationSuggestion.subtitle)
+                        Text(mapItem?.name ?? "")
+                        Text(mapItem?.placemark.title ?? "")
+                        Text(mapItem?.placemark.subtitle ?? "")
+                    }
+                case .failed:
+                    FailedView()
                 }
-            case .failed:
-                FailedView()
             }
-            Text(locationSuggestion.title)
-        }
-        .navigationTitle(locationSuggestion.title)
-        .onAppear {
-            Task {
-                do {
-                    mapItem = try await mapItemSearchService.search(
-                        for: locationSuggestion.mapItemSearchTerm,
-                        in: MKCoordinateRegion.defaultRegion()
-                    )
-                    loadingState = .success
-                } catch {
-                    print("Error fetching map item: \(error.localizedDescription)")
-                    loadingState = .failed
+            .navigationTitle(locationSuggestion.title)
+            .onAppear {
+                Task {
+                    do {
+                        mapItem = try await mapItemSearchService.search(
+                            for: locationSuggestion.mapItemSearchTerm,
+                            in: MKCoordinateRegion.defaultRegion()
+                        )
+                        //                    if let mapItemPlacemark = mapItem?.placemark {
+                        //                        let placemark = Placemark(
+                        //                            title: locationSuggestion.title,
+                        //                            subtitle: locationSuggestion.subtitle,
+                        //                            placemark: mapItemPlacemark)
+                        //                        modelContext.insert(placemark)
+                        //                        placemark.steps.append(step)
+                        //                    }
+                        
+                        loadingState = .success
+                    } catch {
+                        print("Error fetching map item: \(error.localizedDescription)")
+                        loadingState = .failed
+                    }
+                    
                 }
-                
             }
         }
     }
@@ -57,6 +70,6 @@ struct PlacemarkResult: View {
         title: "London",
         subtitle: "England"
     ),
-        mapItem: .constant(MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: 51.5072, longitude: 0.0))))
+        mapItem: .constant(MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: 51.5072, longitude: 0.0)))), step: .atomium
     )
 }

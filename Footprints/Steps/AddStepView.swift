@@ -110,7 +110,7 @@ struct AddStepView: View {
         .sheet(isPresented: .constant(true)) {
             
         } content: {
-            EditStepForm(loadingState: .empty, placemarkName: placemarkName, date: date, mapItem: $mapItem)
+            EditStepForm(loadingState: .empty, placemarkName: placemarkName, date: date, mapItem: $mapItem, step: step)
                 .interactiveDismissDisabled()
                 .presentationDetents([.height(400), .large], selection: $presentationDetents)
         }

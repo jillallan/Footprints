@@ -18,6 +18,7 @@ final class Step {
     var longitude: Double
     var altitude: Double
     var trip: Trip?
+    var placemark: Placemark?
 
     /// Required property for CustomDebugStringConvertible protocol
     var debugDescription: String {
