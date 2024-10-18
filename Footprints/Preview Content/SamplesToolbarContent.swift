@@ -11,14 +11,14 @@ struct SamplesToolbarContent: ToolbarContent {
     @Environment(\.modelContext) private var modelContext
     
     var body: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
+        ToolbarItem(placement: .primaryAction) {
             Button("SAMPLES") {
                 Task {
                     await createData()
                 }
             }
         }
-        ToolbarItem(placement: .topBarTrailing) {
+        ToolbarItem(placement: .secondaryAction) {
             Button("Clear") {
                 deleteData()
             }
