@@ -81,7 +81,7 @@ struct AddStepView: View {
 #endif
         .navigationBarBackButtonHidden(true)
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
+            ToolbarItem(placement: .principal) {
                 Button("back", systemImage: "chevron.left") {
                     print("Step has changes: \(step.hasChanges)")
                     deleteStep()
