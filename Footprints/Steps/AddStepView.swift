@@ -8,6 +8,11 @@
 import MapKit
 import SwiftUI
 
+enum LoadingState {
+    case empty, loading, success, failed
+}
+
+
 struct AddStepView: View {
     @Environment(\.modelContext) var modelContext
     let trip: Trip
@@ -20,11 +25,10 @@ struct AddStepView: View {
     let locationService = LocationService()
     @State private var loadingState = LoadingState.empty
     @State var placemarkName: String = ""
+    @State var presentationDetents: PresentationDetent = .height(400)
+ 
     
-    enum LoadingState {
-        case empty, loading, success, failed
-    }
-    
+   
     var body: some View {
         MapReader { mapProxy in
             Map(position: $mapRegion) {
@@ -50,19 +54,7 @@ struct AddStepView: View {
                 }
             }
             .safeAreaInset(edge: .bottom) {
-                Form {
-                    switch loadingState {
-                    case .empty:
-                        EmptyNameView()
-                    case .loading:
-                        LoadingView()
-                    case .success:
-                        SuccessView(placemarkName: placemarkName)
-                    case .failed:
-                        FailedView()
-                    }
-                    DatePicker("Step Date", selection: $date, displayedComponents: [.date, .hourAndMinute])
-                }
+                Color(.clear)
                 .frame(height: 400)
             }
             .onChange(of: date) {
@@ -97,6 +89,16 @@ struct AddStepView: View {
                 }
             }
         }
+        .sheet(isPresented: .constant(true)) {
+            
+        } content: {
+            EditStepForm(loadingState: .empty, placemarkName: placemarkName, date: date)
+                .interactiveDismissDisabled()
+                .presentationDetents([.height(400), .large], selection: $presentationDetents)
+        }
+
+
+  
     }
     
     func fetchPlacemark(for location: CLLocation) async {
