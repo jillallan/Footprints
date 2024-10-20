@@ -11,7 +11,7 @@ import SwiftUI
 struct StepDetailView: View {
     @State private var mapRegion = MapCameraPosition.automatic
     @Bindable var step: Step
-    var stepList: Namespace.ID
+//    var stepList: Namespace.ID
     
     var body: some View {
         MapReader { mapProxy in
@@ -40,6 +40,9 @@ struct StepDetailView: View {
     @Previewable @Namespace var namespace
     
     NavigationStack {
-        StepDetailView(step: .atomium, stepList: namespace)
+        StepDetailView(
+            step: .atomium
+//            , stepList: namespace
+        )
     }
 }

@@ -70,12 +70,13 @@ struct TripDetailView: View {
             }
             
             .navigationDestination(for: Step.self) { step in
-                AddStepView(
-                    trip: trip,
-                    step: step,
-                    date: getTimestamp(selectedStep: selectedStep),
-                    coordinate: getCoordinate(selectedStep: selectedStep)
-                )
+                StepDetailView(step: step)
+//                AddStepView(
+//                    trip: trip,
+//                    step: step,
+//                    date: getTimestamp(selectedStep: selectedStep),
+//                    coordinate: getCoordinate(selectedStep: selectedStep)
+//                )
             }
     }
     
