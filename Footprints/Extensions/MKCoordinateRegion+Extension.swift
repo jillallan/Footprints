@@ -22,15 +22,10 @@ extension MKCoordinateRegion {
         )
     }
     
-    static func calculateRegion(from coordinates: [CLLocationCoordinate2D]) -> Self? {
+    static func calculateRegion(from coordinates: [CLLocationCoordinate2D], with Margin: Double = 1.0) -> Self {
         let centre = CLLocationCoordinate2D.calculateCentre(of: coordinates)
-        let span = MKCoordinateSpan.calculateSpan(of: coordinates)
+        let span = MKCoordinateSpan.calculateSpan(of: coordinates, marginFactor: Margin)
 
-        if let centre, let span {
-            return MKCoordinateRegion(center: centre, span: span)
-        }
-        else {
-            return nil
-        }
+        return MKCoordinateRegion(center: centre, span: span)
     }
 }

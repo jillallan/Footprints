@@ -50,12 +50,10 @@ final class Trip: CustomDebugStringConvertible {
             }
         }
 
-        if let span = MKCoordinateSpan.calculateSpan(of: steps.map(\.coordinate), addMargin: true),
-           let centre = CLLocationCoordinate2D.calculateCentre(of: steps.map(\.coordinate)) {
-            return MKCoordinateRegion(center: centre, span: span)
-        }
-
-        return MKCoordinateRegion.defaultRegion()
+        let span = MKCoordinateSpan.calculateSpan(of: steps.map(\.coordinate), marginFactor: 1.5)
+        let centre = CLLocationCoordinate2D.calculateCentre(of: steps.map(\.coordinate))
+        
+        return MKCoordinateRegion(center: centre, span: span)
     }
 
     /// Required property for CustomDebugStringConvertible protocol

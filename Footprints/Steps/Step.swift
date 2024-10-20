@@ -34,7 +34,11 @@ final class Step {
     }
 
     var region: MKCoordinateRegion {
-        return MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan.defaultSpan())
+        return MKCoordinateRegion.calculateRegion(from: [coordinate], with: 1.5)
+    }
+    
+    var regionZoomedOut: MKCoordinateRegion {
+        return MKCoordinateRegion.calculateRegion(from: [coordinate], with: 2.0)
     }
 
     /// Initializes a new instance of a Step

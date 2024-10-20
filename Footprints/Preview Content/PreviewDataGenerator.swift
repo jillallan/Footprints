@@ -34,6 +34,58 @@ struct PreviewDataGenerator {
         modelContext.insert(Step.atomium)
         modelContext.insert(Step.cologne)
         modelContext.insert(Step.warsaw)
+        
+        let locationService = LocationService()
+        do {
+            if let clPlacemark = try await locationService.fetchPlacemark(for: Step.bedminsterStation.coordinate) {
+                let placemark = Placemark(title: clPlacemark.name ?? "", subtitle: clPlacemark.name ?? "", placemark: clPlacemark)
+                placemark.steps.append(Step.bedminsterStation)
+            }
+            
+            if let clPlacemark = try await locationService.fetchPlacemark(for: Step.templeMeads.coordinate) {
+                let placemark = Placemark(title: clPlacemark.name ?? "", subtitle: clPlacemark.name ?? "", placemark: clPlacemark)
+                placemark.steps.append(Step.templeMeads)
+            }
+            
+            if let clPlacemark = try await locationService.fetchPlacemark(for: Step.paddington.coordinate) {
+                let placemark = Placemark(title: clPlacemark.name ?? "", subtitle: clPlacemark.name ?? "", placemark: clPlacemark)
+                placemark.steps.append(Step.paddington)
+            }
+            
+            if let clPlacemark = try await locationService.fetchPlacemark(for: Step.stPancras.coordinate) {
+                let placemark = Placemark(title: clPlacemark.name ?? "", subtitle: clPlacemark.name ?? "", placemark: clPlacemark)
+                placemark.steps.append(Step.stPancras)
+            }
+            
+            if let clPlacemark = try await locationService.fetchPlacemark(for: Step.brusselsMidi.coordinate) {
+                let placemark = Placemark(title: clPlacemark.name ?? "", subtitle: clPlacemark.name ?? "", placemark: clPlacemark)
+                placemark.steps.append(Step.brusselsMidi)
+            }
+            
+            if let clPlacemark = try await locationService.fetchPlacemark(for: Step.grandPlace.coordinate) {
+                let placemark = Placemark(title: clPlacemark.name ?? "", subtitle: clPlacemark.name ?? "", placemark: clPlacemark)
+                placemark.steps.append(Step.grandPlace)
+            }
+            
+            if let clPlacemark = try await locationService.fetchPlacemark(for: Step.atomium.coordinate) {
+                let placemark = Placemark(title: clPlacemark.name ?? "", subtitle: clPlacemark.name ?? "", placemark: clPlacemark)
+                placemark.steps.append(Step.atomium)
+            }
+            
+            if let clPlacemark = try await locationService.fetchPlacemark(for: Step.cologne.coordinate) {
+                let placemark = Placemark(title: clPlacemark.name ?? "", subtitle: clPlacemark.name ?? "", placemark: clPlacemark)
+                placemark.steps.append(Step.cologne)
+            }
+            
+            if let clPlacemark = try await locationService.fetchPlacemark(for: Step.warsaw.coordinate) {
+                let placemark = Placemark(title: clPlacemark.name ?? "", subtitle: clPlacemark.name ?? "", placemark: clPlacemark)
+                placemark.steps.append(Step.warsaw)
+            }
+            
+        } catch {
+            
+        }
+        
 
 
         Trip.bedminsterToBeijing.steps.append(Step.bedminsterStation)

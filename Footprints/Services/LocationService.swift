@@ -20,6 +20,16 @@ struct LocationService {
         }
     }
     
+    func fetchPlacemark(for coordinate: CLLocationCoordinate2D) async throws -> CLPlacemark? {
+        let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        let placemarks = try await geocoder.reverseGeocodeLocation(location)
+        if let placemark = placemarks.first {
+            return placemark
+        } else {
+            return nil
+        }
+    }
+    
     func fetchLocation(for addressString: String) async throws -> CLLocation? {
         let locations = try await geocoder.geocodeAddressString(addressString)
         if let location = locations.first?.location {

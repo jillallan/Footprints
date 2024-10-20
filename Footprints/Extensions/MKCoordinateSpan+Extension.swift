@@ -19,21 +19,19 @@ extension MKCoordinateSpan {
         MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
     }
 
-    static func calculateSpan(of coordinates: [CLLocationCoordinate2D], addMargin: Bool = false) -> Self? {
-        var marginFactor = 1.0
+    static func calculateSpan(of coordinates: [CLLocationCoordinate2D], marginFactor: Double = 1.0) -> Self {
 
-        if addMargin {
-            marginFactor = 1.15
+        var latitude = Double.range(of: coordinates.map(\.latitude)) ?? 0.01
+        var longitude = Double.range(of: coordinates.map(\.longitude)) ?? 0.01
+        
+        if latitude == 0.0 {
+            latitude = 0.01
         }
-
-        let latitude = Double.range(of: coordinates.map(\.latitude))
-        let longitude = Double.range(of: coordinates.map(\.longitude))
-
-        if let latitude,
-           let longitude {
-            return MKCoordinateSpan(latitudeDelta: latitude * marginFactor, longitudeDelta: longitude * marginFactor)
-        } else {
-            return nil
+        
+        if longitude == 0.0 {
+            longitude = 0.01
         }
+        
+        return MKCoordinateSpan(latitudeDelta: latitude * marginFactor, longitudeDelta: longitude * marginFactor)
     }
 }

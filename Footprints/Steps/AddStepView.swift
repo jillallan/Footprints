@@ -47,8 +47,6 @@ struct AddStepView: View {
                         .stroke(Color.accentColor, lineWidth: 25/10)
                         .foregroundStyle(Color.clear)
                     }
-                    
-                    
                 }
             }
             .onTapGesture { value in
@@ -88,8 +86,23 @@ struct AddStepView: View {
                     span: MKCoordinateSpan.defaultSpan()
                 )
             )
+//            Task {
+//                do {
+//                    if step.placemark == nil {
+//                        if let clPlacemark = try await locationService.fetchPlacemark(for: CLLocation(latitude: step.latitude, longitude: step.longitude)) {
+//                            let placemark = Placemark(title: clPlacemark.name ?? "", subtitle: clPlacemark.name ?? "", placemark: clPlacemark)
+//                            modelContext.insert(placemark)
+//                            placemark.steps.append(step)
+//                        }
+//                    }
+//                    
+//                    
+//                } catch {
+//                    
+//                }
+//            }
         }
-        .navigationTitle("Add step view")
+        .navigationTitle(step.placemark?.name ?? "New step")
 #if !os(macOS)
         .toolbarBackground(.hidden, for: .navigationBar)
         
