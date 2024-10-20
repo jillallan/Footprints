@@ -14,24 +14,33 @@ struct StepDetailView: View {
 //    var stepList: Namespace.ID
     
     var body: some View {
-        MapReader { mapProxy in
-            Map(position: $mapRegion) {
-                Annotation(step.placemark?.name ?? "", coordinate: step.coordinate) {
-                    DefaultStepMapAnnotation()
+        
+        ScrollView {
+            DatePicker("Step Date", selection: $step.timestamp, displayedComponents: [.date, .hourAndMinute])
+                .padding()
+            LazyVStack {
+                Map(position: $mapRegion) {
+                    Annotation(step.placemark?.name ?? "", coordinate: step.coordinate) {
+                        DefaultStepMapAnnotation()
+                    }
+                }
+                .frame(height: 250)
+                ForEach(0..<3) { int in
+                    Image(.EBC_1)
+                        .resizable()
+                        .scaledToFit()
                 }
             }
+            .clipShape(RoundedRectangle(cornerRadius: 25.0, style: .continuous))
+            .padding()
+            
         }
+  
+
         .onAppear {
             mapRegion = .region(step.region)
         }
-        .safeAreaInset(edge: .bottom) {
-            Image(.EBC_1)
-                .resizable()
-                .scaledToFit()
-                .clipShape(RoundedRectangle(cornerRadius: 25.0, style: .continuous))
-        }
         .navigationTitle(step.placemark?.name ?? "Step")
-//        .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(.hidden, for: .navigationBar)
     }
 }

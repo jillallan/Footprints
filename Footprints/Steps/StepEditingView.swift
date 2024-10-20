@@ -20,6 +20,7 @@ struct StepEditingView: View {
         MapReader { mapProxy in
             Map(position: $mapRegion)
         }
+        .navigationTitle("New Step")
     }
 }
 
