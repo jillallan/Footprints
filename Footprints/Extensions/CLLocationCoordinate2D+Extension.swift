@@ -37,15 +37,10 @@ extension CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: 51.5, longitude: 0)
     }
 
-    static func calculateCentre(of coordinates: [CLLocationCoordinate2D]) -> Self? {
-        let latitude = Double.midRange(of: coordinates.map(\.latitude))
-        let longitude = Double.midRange(of: coordinates.map(\.longitude))
-
-        if let latitude,
-           let longitude {
-            return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        } else {
-            return nil
-        }
+    static func calculateCentre(of coordinates: [CLLocationCoordinate2D]) -> Self {
+        let latitude = Double.midRange(of: coordinates.map(\.latitude)) ?? 0.0
+        let longitude = Double.midRange(of: coordinates.map(\.longitude)) ?? 0.0
+        
+        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 }

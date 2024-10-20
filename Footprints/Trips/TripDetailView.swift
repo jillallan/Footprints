@@ -70,12 +70,13 @@ struct TripDetailView: View {
             }
             
             .navigationDestination(for: Step.self) { step in
-                AddStepView(
-                    trip: trip,
-                    step: step,
-                    date: getTimestamp(selectedStep: selectedStep),
-                    coordinate: getCoordinate(selectedStep: selectedStep)
-                )
+                StepDetailView(step: step)
+//                AddStepView(
+//                    trip: trip,
+//                    step: step,
+//                    date: getTimestamp(selectedStep: selectedStep),
+//                    coordinate: getCoordinate(selectedStep: selectedStep)
+//                )
             }
     }
     
@@ -93,7 +94,6 @@ struct TripDetailView: View {
     
     func getCoordinate(selectedStep: Step?) -> CLLocationCoordinate2D {
         if let selectedStep {
-            print(selectedStep.coordinate)
             return selectedStep.coordinate
         } else {
             if trip.tripSteps.isEmpty {

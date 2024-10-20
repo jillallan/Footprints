@@ -13,12 +13,6 @@ struct EmptyNameView: View {
         Text("New Step")
     }
 }
-    
-struct LoadingView: View {
-    var body: some View {
-        Text("Loading...")
-    }
-}
 
 struct SuccessView: View {
     let placemarkName: String
@@ -28,11 +22,6 @@ struct SuccessView: View {
     }
 }
 
-struct FailedView: View {
-    var body: some View {
-        Text("Failed.")
-    }
-}
 
 struct EditStepForm: View {
     @State var loadingState: LoadingState
@@ -40,7 +29,10 @@ struct EditStepForm: View {
     @State var date: Date
     @State private var searchQuery: String = ""
     @State private var locationSuggestionSearch = LocationSuggestionSearch()
-    @State private var locationSuggestions: [MKLocalSearchCompletion] = []
+    @State private var locationSuggestions: [LocationSuggestion] = []
+    @State private var selectedLocationSuggestion: LocationSuggestion?
+    @Binding var mapItem: MKMapItem?
+    @Bindable var step: Step
     
     var body: some View {
         NavigationStack {
@@ -60,13 +52,13 @@ struct EditStepForm: View {
             }
             .searchable(text: $searchQuery)
             .searchSuggestions {
-                ForEach(locationSuggestions, id: \.self) { suggestion in
-                    VStack(alignment: .leading) {
-                        Text(suggestion.title)
-                            .font(.headline)
-                        Text(suggestion.subtitle)
-                            .font(.subheadline)
+                ForEach(locationSuggestions) { suggestion in
+                    Button {
+                        selectedLocationSuggestion = suggestion
+                    } label: {
+                        LocationSuggestionRow(locationSuggestion: suggestion)
                     }
+                    .buttonStyle(.plain)
                 }
             }
             .onChange(of: searchQuery) {
@@ -78,11 +70,15 @@ struct EditStepForm: View {
                     }
                 }
             }
-            
+            .sheet(item: $selectedLocationSuggestion) {
+                
+            } content: { locationSuggestion in
+                PlacemarkResult(locationSuggestion: locationSuggestion, mapItem: $mapItem, step: step)
+                    .presentationDetents([.height(400)])
+                    
+            }
         }
-        
         .presentationBackgroundInteraction(.enabled(upThrough: .large))
-        
     }
     
     func updateSearchResults() async {
@@ -95,5 +91,16 @@ struct EditStepForm: View {
 }
     
 #Preview {
-    EditStepForm(loadingState: .success, placemarkName: "Placemark name", date: Date.now)
+    EditStepForm(
+        loadingState: .success,
+        placemarkName: "Placemark name",
+        date: Date.now,
+        mapItem: .constant(
+            MKMapItem(
+                placemark: MKPlacemark(
+                    coordinate: CLLocationCoordinate2D(latitude: 51.5072, longitude: 0.0)
+                )
+            )
+        ), step: .atomium
+    )
 }

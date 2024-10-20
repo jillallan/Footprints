@@ -28,7 +28,7 @@ final class LocationSuggestionSearch: NSObject {
         completer.delegate = self
     }
     
-    func fetchLocationSuggestions(for query: String) async throws -> [MKLocalSearchCompletion] {
+    func fetchLocationSuggestions(for query: String) async throws -> [LocationSuggestion] {
         
         guard !query.isEmpty else {
             return []
@@ -37,7 +37,10 @@ final class LocationSuggestionSearch: NSObject {
         completer.queryFragment = query
      
         for try await searchCompletions in stream {
-            return searchCompletions
+            let locationSuggestions = searchCompletions.map { searchCompletion in
+                LocationSuggestion(title: searchCompletion.title, subtitle: searchCompletion.subtitle)
+            }
+            return locationSuggestions
         }
         return []
 

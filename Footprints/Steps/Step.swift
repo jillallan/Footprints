@@ -18,6 +18,7 @@ final class Step {
     var longitude: Double
     var altitude: Double
     var trip: Trip?
+    var placemark: Placemark?
 
     /// Required property for CustomDebugStringConvertible protocol
     var debugDescription: String {
@@ -33,7 +34,11 @@ final class Step {
     }
 
     var region: MKCoordinateRegion {
-        return MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan.defaultSpan())
+        return MKCoordinateRegion.calculateRegion(from: [coordinate], with: 1.5)
+    }
+    
+    var regionZoomedOut: MKCoordinateRegion {
+        return MKCoordinateRegion.calculateRegion(from: [coordinate], with: 2.0)
     }
 
     /// Initializes a new instance of a Step

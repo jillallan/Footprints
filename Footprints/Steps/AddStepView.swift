@@ -26,8 +26,8 @@ struct AddStepView: View {
     @State private var loadingState = LoadingState.empty
     @State var placemarkName: String = ""
     @State var presentationDetents: PresentationDetent = .height(400)
- 
-    
+    @State var mapItem: MKMapItem?
+
    
     var body: some View {
         MapReader { mapProxy in
@@ -37,10 +37,21 @@ struct AddStepView: View {
                         DefaultStepMapAnnotation()
                     }
                 }
+                if let mapItem {
+                    if let region = mapItem.placemark.region,
+                       let coordinate = mapItem.placemark.location?.coordinate {
+                        MapCircle(
+                            center: coordinate,
+                            radius: CLRegion.getRadius(from: region) ?? 0.0
+                        )
+                        .stroke(Color.accentColor, lineWidth: 25/10)
+                        .foregroundStyle(Color.clear)
+                    }
+                }
             }
             .onTapGesture { value in
                 if let coordinate = mapProxy.convert(value, from: .local) {
-                    print("tapped at: \(coordinate)")
+
                     step.latitude = coordinate.latitude
                     step.longitude = coordinate.longitude
                     step.timestamp = date
@@ -60,6 +71,12 @@ struct AddStepView: View {
             .onChange(of: date) {
                 step.timestamp = date
             }
+            .onChange(of: mapItem) {
+                if let mapItem {
+                    mapRegion = MapCameraPosition.item(mapItem)
+                }
+                
+            }
             
         }
         .onAppear {
@@ -69,8 +86,23 @@ struct AddStepView: View {
                     span: MKCoordinateSpan.defaultSpan()
                 )
             )
+//            Task {
+//                do {
+//                    if step.placemark == nil {
+//                        if let clPlacemark = try await locationService.fetchPlacemark(for: CLLocation(latitude: step.latitude, longitude: step.longitude)) {
+//                            let placemark = Placemark(title: clPlacemark.name ?? "", subtitle: clPlacemark.name ?? "", placemark: clPlacemark)
+//                            modelContext.insert(placemark)
+//                            placemark.steps.append(step)
+//                        }
+//                    }
+//                    
+//                    
+//                } catch {
+//                    
+//                }
+//            }
         }
-        .navigationTitle("Add step view")
+        .navigationTitle(step.placemark?.name ?? "New step")
 #if !os(macOS)
         .toolbarBackground(.hidden, for: .navigationBar)
         
@@ -83,7 +115,6 @@ struct AddStepView: View {
         .toolbar {
             ToolbarItem(placement: .principal) {
                 Button("back", systemImage: "chevron.left") {
-                    print("Step has changes: \(step.hasChanges)")
                     deleteStep()
                     dismiss()
                 }
@@ -92,7 +123,7 @@ struct AddStepView: View {
         .sheet(isPresented: .constant(true)) {
             
         } content: {
-            EditStepForm(loadingState: .empty, placemarkName: placemarkName, date: date)
+            EditStepForm(loadingState: .empty, placemarkName: placemarkName, date: date, mapItem: $mapItem, step: step)
                 .interactiveDismissDisabled()
                 .presentationDetents([.height(400), .large], selection: $presentationDetents)
         }
@@ -120,7 +151,7 @@ struct AddStepView: View {
     }
     
     func deleteStep() {
-        print(stepIsNotSet)
+
         if stepIsNotSet {
             if let stepIndex = trip.steps.firstIndex(of: step) {
                 trip.steps.remove(at: stepIndex)

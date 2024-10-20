@@ -45,8 +45,6 @@ struct TestLocationService {
         let expectedLocation = CLLocation(latitude: 51.370791, longitude: -2.546549)
         let placemark = try await locationService.fetchPlacemark(for: address)
         
-        print(String(describing: placemark.debugDescription))
-        
         let fetchedLocation = try #require(placemark?.location)
         #expect(fetchedLocation.coordinate.latitude.isApproximatelyEqual(to: expectedLocation.coordinate.latitude))
 
