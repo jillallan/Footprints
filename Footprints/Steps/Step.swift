@@ -12,7 +12,7 @@ import SwiftUI
 
 @Model
 final class Step {
-    var title: String
+    var title: String?
     var timestamp: Date
     var latitude: Double
     var longitude: Double
@@ -23,10 +23,14 @@ final class Step {
     /// Required property for CustomDebugStringConvertible protocol
     var debugDescription: String {
         """
-        \(title), \
+        \(stepTitle), \
         on: \(timestamp.formatted(date: .abbreviated, time: .shortened)), \
         latitude: \(latitude), longitude: \(longitude), altitude: \(altitude))
         """
+    }
+    
+    var stepTitle: String {
+        title ?? placemark?.name ?? "A Step"
     }
 
     var coordinate: CLLocationCoordinate2D {
@@ -47,7 +51,7 @@ final class Step {
     ///   - latitude: The latitude of the step
     ///   - longitude: The longitude of a step
     ///   - altitude: The altitude of a step
-    init(title: String, timestamp: Date = .now, latitude: Double, longitude: Double, altitude: Double) {
+    init(title: String? = nil, timestamp: Date = .now, latitude: Double, longitude: Double, altitude: Double) {
         self.title = title
         self.timestamp = timestamp
         self.latitude = latitude
@@ -60,7 +64,7 @@ final class Step {
     ///   - timestamp: The time of the step, the defualt is the current time
     ///   - latitude: The latitude of the step
     ///   - longitude: The longitude of a step
-    convenience init(title: String, timestamp: Date = .now, latitude: Double, longitude: Double) {
+    convenience init(title: String? = nil, timestamp: Date = .now, latitude: Double, longitude: Double) {
         self.init(title: title, timestamp: timestamp, latitude: latitude, longitude: longitude, altitude: 0.0)
     }
 
