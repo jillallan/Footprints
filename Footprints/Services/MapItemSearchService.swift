@@ -23,10 +23,10 @@ final class MapItemSearchService: ObservableObject {
         let response = try await search.start()
         guard let mapItem = response.mapItems.first else { return nil }
         
-        let region = CLCircularRegion(center: mapItem.placemark.coordinate, radius: 20.0, identifier: "testRegion")
+//        let region = CLCircularRegion(center: mapItem.placemark.coordinate, radius: 20.0, identifier: "testRegion")
         
 //        mapItem.placemark.region?.radius
-        print(mapItem.placemark.region?.identifier)
+//        print(mapItem.placemark.region?.identifier)
     
         
         return mapItem

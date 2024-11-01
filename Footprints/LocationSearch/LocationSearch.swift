@@ -19,30 +19,30 @@ struct LocationSearch: View {
                     Text("Name")
                 }
                 Section {
-                    Text(step.placemark?.pointOfInterestCategory ?? "No placemark")
+                    Text(step.location?.pointOfInterestCategory ?? "No placemark")
                 } header: {
                     Text("Category")
                 }
                 Section {
-                    Text(step.placemark?.firstLineOfAddress ?? "No placemark")
-                    Text(step.placemark?.localitySublocality ?? "No placemark")
-                    Text(step.placemark?.administrativeAreaSubAdministrativeArea ?? "No placemark")
-                    Text(step.placemark?.postalCode ?? "No placemark")
+//                    Text(step.location?.firstLineOfAddress ?? "No placemark")
+//                    Text(step.location?.localitySublocality ?? "No placemark")
+//                    Text(step.location?.administrativeAreaSubAdministrativeArea ?? "No placemark")
+                    Text(step.location?.postalCode ?? "No placemark")
                 } header: {
                     Text("Address")
                 }
                 Section {
-                    Text(step.placemark?.country ?? "No placemark")
+                    Text(step.location?.country ?? "No placemark")
                 } header: {
                     Text("Country")
                 }
                 Section {
-                    Text(step.placemark?.areaOfInterest ?? "No placemark")
+                    Text(step.location?.areaOfInterest ?? "No placemark")
                 } header: {
                     Text("Area of interest")
                 }
                 Section {
-                    Text(step.placemark?.geography ?? "No placemark")
+//                    Text(step.location?.geography ?? "No placemark")
                 } header: {
                     Text("Area of interest")
                 }

@@ -43,10 +43,15 @@ struct TestLocationService {
     
     @Test func example4() async throws {
         let locationService = LocationService()
-        let atomium = CLLocationCoordinate2D(latitude: 50.89504108327435,
-                                             longitude: 4.34157615494866)
+//        let atomium = CLLocationCoordinate2D(latitude: 50.89504108327435,
+//                                             longitude: 4.34157615494866)
         
-        let mapItem = try await locationService.findNearestMapItem(at: atomium)
+        let restaurant = CLLocationCoordinate2D(
+            latitude: 51.449532,
+            longitude: -2.589309
+        )
+        
+        let mapItem = try await locationService.findNearestMapItem(at: restaurant)
         
         #expect(mapItem != nil)
     }

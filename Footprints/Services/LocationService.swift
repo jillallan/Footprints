@@ -81,14 +81,16 @@ struct LocationService {
         return response.mapItems
     }
     
-    func findNearestMapItem(at coordinate: CLLocationCoordinate2D) async throws -> MKMapItem? {
+    func findNearestMapItem(at coordinate: CLLocationCoordinate2D) async throws -> (MKMapItem, LocationType)?  {
         let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 50, longitudinalMeters: 50)
-        var mapItems: [MKMapItem] = []
+        var mapItems: [(MKMapItem, LocationType)] = []
         
         do {
             let pointsOfInterest = try await fetchPointOfInterestMapItems(for: coordinate)
-            logger.debug("Points of interest: \(pointsOfInterest.debugDescription)")
-            mapItems.append(contentsOf: pointsOfInterest)
+//            logger.debug("Points of interest: \(pointsOfInterest.debugDescription)")
+            for pointOfInterest in pointsOfInterest {
+                mapItems.append((pointOfInterest, .pointOfInterest))
+            }
         } catch {
             logger.debug("points od interest error: \(error.localizedDescription)")
         }
@@ -99,24 +101,30 @@ struct LocationService {
         if let queryString = query?.localAddressString {
             do {
                 let physicalFeatures = try await fetchMapItems(for: queryString, in: region, resultType: .physicalFeature)
-                logger.debug("Physical features: \(physicalFeatures.debugDescription)")
-                mapItems.append(contentsOf: physicalFeatures)
+//                logger.debug("Physical features: \(physicalFeatures.debugDescription)")
+                for physicalFeatures in physicalFeatures {
+                    mapItems.append((physicalFeatures, .physicalFeature))
+                }
             } catch {
                 logger.debug("physical feature error: \(error.localizedDescription)")
             }
             
             do {
-                let other = try await fetchMapItems(for: queryString, in: region)
-                logger.debug("Other: \(other.debugDescription)")
-                mapItems.append(contentsOf: other)
+                let others = try await fetchMapItems(for: queryString, in: region)
+//                logger.debug("Other: \(other.debugDescription)")
+                for other in others {
+                    mapItems.append((other, .other))
+                }
             } catch {
                 logger.debug("other result type error: \(error.localizedDescription)")
             }
             
             do {
                 let addresses = try await fetchMapItems(for: queryString, in: region, resultType: .address)
-                logger.debug("Address: \(addresses.debugDescription)")
-                mapItems.append(contentsOf: addresses)
+//                logger.debug("Address: \(addresses.debugDescription)")
+                for address in addresses {
+                    mapItems.append((address, .address))
+                }
             } catch {
                 logger.debug("address result type error: \(error.localizedDescription)")
             }
@@ -126,13 +134,14 @@ struct LocationService {
         logger.debug("Location: \(location.debugDescription)")
         
         let nearestMapItem = mapItems.min { mapItem1, mapItem2 in
-            let distance1 = mapItem1.placemark.location?.distance(from: location) ?? .greatestFiniteMagnitude
-            let distance2 = mapItem2.placemark.location?.distance(from: location) ?? .greatestFiniteMagnitude
+            let distance1 = mapItem1.0.placemark.location?.distance(from: location) ?? .greatestFiniteMagnitude
+            let distance2 = mapItem2.0.placemark.location?.distance(from: location) ?? .greatestFiniteMagnitude
             
             return distance1 < distance2
     
         }
         logger.debug("map item: \(nearestMapItem.debugDescription)")
+        logger.debug("map item point of interest: \(nearestMapItem?.0.pointOfInterestCategory?.rawValue ?? "No place of interest")")
         
         return nearestMapItem
     }

@@ -18,7 +18,7 @@ final class Step {
     var longitude: Double
     var altitude: Double
     var trip: Trip?
-    var placemark: Placemark?
+    var location: Location?
 
     /// Required property for CustomDebugStringConvertible protocol
     var debugDescription: String {
@@ -30,7 +30,7 @@ final class Step {
     }
     
     var stepTitle: String {
-        title ?? placemark?.name ?? "A Step"
+        title ?? location?.name ?? "A Step"
     }
 
     var coordinate: CLLocationCoordinate2D {

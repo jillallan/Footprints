@@ -12,6 +12,7 @@ struct StepEditingView: View {
     @Bindable var step: Step
     @State private var mapRegion = MapCameraPosition.automatic
     @State private var isSearchSheetPresented: Bool = false
+    @State private var presentationDetent: PresentationDetent = .medium
     
     enum LoadingState {
         case empty, loading, success, failed
@@ -27,11 +28,14 @@ struct StepEditingView: View {
             .sheet(isPresented: .constant(true)) {
                 
             } content: {
-                
+                LocationSearchSheet()
+                    .presentationDetents([.large, .medium], selection: $presentationDetent)
             }
 
         }
     }
+    
+    
 }
 
 #Preview {

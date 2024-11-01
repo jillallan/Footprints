@@ -33,4 +33,8 @@ extension CLRegion {
         // Return nil if no match is found
         return nil
     }
+    
+    func getRadius() -> Double? {
+        return Self.getRadius(from: self)
+    }
 }

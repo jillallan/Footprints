@@ -80,9 +80,7 @@ struct TripDetailView: View {
                     longitude: 0.0
                 )
                 StepEditingView(step: newStep)
-                    
             }
-
     }
     
     func getTimestamp(selectedStep: Step?) -> Date {

@@ -24,7 +24,7 @@ struct StepDetailView: View {
                     isStepEditingViewPresented.toggle()
                 } label: {
                     Map(position: $mapRegion) {
-                        Annotation(step.placemark?.name ?? "", coordinate: step.coordinate) {
+                        Annotation(step.location?.name ?? "", coordinate: step.coordinate) {
                             DefaultStepMapAnnotation()
                         }
                     }

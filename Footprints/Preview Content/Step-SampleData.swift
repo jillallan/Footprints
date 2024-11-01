@@ -20,6 +20,8 @@ extension Step {
     /// A sample step
     static let bedminsterStation = Step(
         timestamp: Date.from(string: "2016/07/28 08:15:00"),
+//        latitude: 51.449532,
+//        longitude: -2.589309
         latitude: 51.440658,
         longitude: -2.593528
     )

@@ -1,38 +1,19 @@
 //
-//  EditStepForm.swift
+//  LocationSearchSheet.swift
 //  Footprints
 //
-//  Created by Jill Allan on 06/10/2024.
+//  Created by Jill Allan on 01/11/2024.
 //
 
-import MapKit
 import SwiftUI
 
-struct EmptyNameView: View {
-    var body: some View {
-        Text("New Step")
-    }
-}
-
-struct SuccessView: View {
-//    let placemarkName: String
-    
-    var body: some View {
-        Text("Hello")
-    }
-}
-
-
-struct EditStepForm: View {
-    @State var loadingState: LoadingState
-    @State var placemarkName: String
-    @State var date: Date
+struct LocationSearchSheet: View {
     @State private var searchQuery: String = ""
     @State private var locationSuggestionSearch = LocationSuggestionSearch()
     @State private var locationSuggestions: [LocationSuggestion] = []
     @State private var selectedLocationSuggestion: LocationSuggestion?
-    @Binding var mapItem: MKMapItem?
-    @Bindable var step: Step
+    @State var loadingState: LoadingState = .empty
+    
     
     var body: some View {
         NavigationStack {
@@ -48,7 +29,7 @@ struct EditStepForm: View {
                 case .failed:
                     FailedView()
                 }
-                DatePicker("Step Date", selection: $date, displayedComponents: [.date, .hourAndMinute])
+//                DatePicker("Step Date", selection: $date, displayedComponents: [.date, .hourAndMinute])
             }
             .searchable(text: $searchQuery)
             .searchSuggestions {
@@ -69,12 +50,15 @@ struct EditStepForm: View {
             .sheet(item: $selectedLocationSuggestion) {
                 
             } content: { locationSuggestion in
-//                LocationSearchResult(locationSuggestion: locationSuggestion, mapItem: $mapItem, step: step)
-//                    .presentationDetents([.height(400)])
+                LocationSearchResult(
+                    locationSuggestion: locationSuggestion //,
+//                    mapItem: $mapItem,
+//                    step: step
+                )
+                .presentationDetents([.height(400)])
                     
             }
         }
-        .presentationBackgroundInteraction(.enabled(upThrough: .large))
     }
     
     func updateSearchResults() async {
@@ -85,18 +69,7 @@ struct EditStepForm: View {
         }
     }
 }
-    
-#Preview {
-    EditStepForm(
-        loadingState: .success,
-        placemarkName: "Placemark name",
-        date: Date.now,
-        mapItem: .constant(
-            MKMapItem(
-                placemark: MKPlacemark(
-                    coordinate: CLLocationCoordinate2D(latitude: 51.5072, longitude: 0.0)
-                )
-            )
-        ), step: .atomium
-    )
-}
+
+//#Preview {
+//    LocationSearchSheet()
+//}
