@@ -9,9 +9,11 @@ import MapKit
 import SwiftUI
 
 struct StepDetailView: View {
+    @Environment(\.modelContext) private var modelContext
     @State private var mapRegion = MapCameraPosition.automatic
     @Bindable var step: Step
     @State private var isStepEditingViewPresented: Bool = false
+    @State private var mapItem: MKMapItem?
 //    var stepList: Namespace.ID
     
     var body: some View {
@@ -51,9 +53,21 @@ struct StepDetailView: View {
         .navigationTitle(step.stepTitle)
         .toolbarBackground(.hidden, for: .navigationBar)
         .sheet(isPresented: $isStepEditingViewPresented) {
-            StepEditingView(step: step)
-                .presentationDragIndicator(.visible)
+            if let mapItem {
+                let newLocation = Location(
+                    coordinate: mapItem.placemark.coordinate,
+                    mapItem: mapItem, resultType: .pointOfInterest
+                )
+                modelContext.insert(newLocation)
+                newLocation.steps.append(step)
+            }
+        } content: {
+            LocationEditingView(step: step) { item in
+                mapItem = item
+            }
+            .presentationDragIndicator(.visible)
         }
+
     }
 }
 

@@ -13,6 +13,7 @@ struct ContentView: View {
     @State private var selectedTab: Tabs = .trips
 
     var body: some View {
+        let _ = print(modelContext.sqliteCommand)
         TabView(selection: $selectedTab) {
             Tab(Tabs.trips.name, systemImage: Tabs.trips.symbol, value: .trips) {
                 TripView()

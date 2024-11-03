@@ -1,80 +1,68 @@
 //
-//  LocationSearch.swift
+//  LocationSearchSheet.swift
 //  Footprints
 //
-//  Created by Jill Allan on 20/10/2024.
+//  Created by Jill Allan on 01/11/2024.
 //
 
+import MapKit
+import OSLog
 import SwiftUI
 
 struct LocationSearch: View {
-    let step: Step?
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: LocationService.self))
+    
+    @Environment(\.dismiss) var dismiss
+    @State private var searchQuery: String = ""
+    @State private var locationSuggestionSearch = LocationSuggestionSearch()
+    @State private var locationSuggestions: [LocationSuggestion] = []
+    @State private var selectedLocationSuggestion: LocationSuggestion?
+    @State private var mapItem: MKMapItem?
+    let mapItemClosure: (MKMapItem) -> Void
     
     var body: some View {
-        if let step {
-            Form {
-                Section {
-                    Text(step.stepTitle)
-                } header: {
-                    Text("Name")
-                }
-                Section {
-                    Text(step.location?.pointOfInterestCategory ?? "No placemark")
-                } header: {
-                    Text("Category")
-                }
-                Section {
-//                    Text(step.location?.firstLineOfAddress ?? "No placemark")
-//                    Text(step.location?.localitySublocality ?? "No placemark")
-//                    Text(step.location?.administrativeAreaSubAdministrativeArea ?? "No placemark")
-                    Text(step.location?.postalCode ?? "No placemark")
-                } header: {
-                    Text("Address")
-                }
-                Section {
-                    Text(step.location?.country ?? "No placemark")
-                } header: {
-                    Text("Country")
-                }
-                Section {
-                    Text(step.location?.areaOfInterest ?? "No placemark")
-                } header: {
-                    Text("Area of interest")
-                }
-                Section {
-//                    Text(step.location?.geography ?? "No placemark")
-                } header: {
-                    Text("Area of interest")
+        NavigationStack {
+            LocationSearchStart(selectedLocationSuggestion: $selectedLocationSuggestion) { item in
+                mapItemClosure(item)
+                mapItem = item
+            }
+            .searchable(text: $searchQuery)
+            .searchSuggestions {
+                ForEach(locationSuggestions) { suggestion in
+                    Button {
+                        selectedLocationSuggestion = suggestion
+                    } label: {
+                        LocationSuggestionRow(locationSuggestion: suggestion)
+                    }
+                    .buttonStyle(.plain)
                 }
             }
+            .onChange(of: searchQuery) {
+                Task {
+                    await updateSearchResults()
+                }
+            }
+            .toolbar {
+                Button("Dismiss") {
+                    dismiss()
+                }
+            }
+//            .onChange(of: mapItem) {
+//                dismiss()
+//            }
+        }
+    }
+    
+    func updateSearchResults() async {
+        do {
+            locationSuggestions = try await locationSuggestionSearch.fetchLocationSuggestions(for: searchQuery)
+        } catch {
+            logger.error("Failed to fetch search results: \(error.localizedDescription)")
         }
     }
 }
 
-#Preview("St Johns Lane", traits: .previewData) {
-    LocationSearch(step: .stJohnsLane)
-}
-
-#Preview("Atomium", traits: .previewData) {
-    LocationSearch(step: .atomium)
-}
-
-#Preview("everest", traits: .previewData) {
-    LocationSearch(step: .everestBaseCamp)
-}
-
-#Preview("Statue of Liberty", traits: .previewData) {
-    LocationSearch(step: .statueOfLiberty)
-}
-
-#Preview("Bedminster Station", traits: .previewData) {
-    LocationSearch(step: .bedminsterStation)
-}
-
-#Preview("Temple meads", traits: .previewData) {
-    LocationSearch(step: .templeMeads)
-}
-
-#Preview("New step", traits: .previewData) {
-    LocationSearch(step: .atomium)
+#Preview {
+    let mapItemClosure: (MKMapItem) -> Void = { _ in }
+    LocationSearch(mapItemClosure: mapItemClosure)
 }

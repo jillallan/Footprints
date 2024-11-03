@@ -9,12 +9,13 @@ import MapKit
 import SwiftUI
 
 struct LocationSearchResult: View {
-    @State var locationSuggestion: LocationSuggestion
-    @State var mapItemSearchService = MapItemSearchService()
-    @State var mapItem: MKMapItem?
+    @Environment(\.dismiss) var dismiss
+    var dismissSearch: DismissSearchAction
     @State private var loadingState = LoadingState.loading
-//    @Bindable var step: Step
-    @Environment(\.modelContext) private var modelContext
+    @State var mapItemSearchService = MapItemSearchService()
+    @State var locationSuggestion: LocationSuggestion
+    @State var mapItem: MKMapItem?
+    let mapItemClosure: (MKMapItem) -> Void
     
     var body: some View {
         NavigationStack {
@@ -34,6 +35,14 @@ struct LocationSearchResult: View {
                 case .failed:
                     FailedView()
                 }
+                Button("Select") {
+                    if let mapItem {
+                        mapItemClosure(mapItem)
+                    }
+                    dismiss()
+                    dismissSearch()
+                }
+                .disabled(mapItem == nil)
             }
             .navigationTitle(locationSuggestion.title)
             .onAppear {

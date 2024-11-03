@@ -1,35 +1,27 @@
 //
-//  LocationSearchSheet.swift
+//  StepEditView.swift
 //  Footprints
 //
-//  Created by Jill Allan on 01/11/2024.
+//  Created by Jill Allan on 02/11/2024.
 //
 
+import MapKit
+import SwiftData
 import SwiftUI
 
-struct LocationSearchSheet: View {
+struct LocationEditingView: View {
+    @Environment(\.dismiss) var dismiss
+    @Bindable var step: Step
     @State private var searchQuery: String = ""
     @State private var locationSuggestionSearch = LocationSuggestionSearch()
     @State private var locationSuggestions: [LocationSuggestion] = []
     @State private var selectedLocationSuggestion: LocationSuggestion?
-    @State var loadingState: LoadingState = .empty
-    
+    let mapItemClosure: (MKMapItem) -> Void
     
     var body: some View {
         NavigationStack {
-            Form {
-                
-                switch loadingState {
-                case .empty:
-                    EmptyNameView()
-                case .loading:
-                    LoadingView()
-                case .success:
-                    SuccessView()
-                case .failed:
-                    FailedView()
-                }
-//                DatePicker("Step Date", selection: $date, displayedComponents: [.date, .hourAndMinute])
+            LocationEditingMap(step: step, selectedLocationSuggestion: $selectedLocationSuggestion) { item in
+                mapItemClosure(item)
             }
             .searchable(text: $searchQuery)
             .searchSuggestions {
@@ -42,21 +34,17 @@ struct LocationSearchSheet: View {
                     .buttonStyle(.plain)
                 }
             }
+            .navigationTitle(step.stepTitle)
+            .toolbarBackground(.hidden, for: .navigationBar)
+            .toolbar {
+                Button("Done") {
+                    dismiss()
+                }
+            }
             .onChange(of: searchQuery) {
                 Task {
                     await updateSearchResults()
                 }
-            }
-            .sheet(item: $selectedLocationSuggestion) {
-                
-            } content: { locationSuggestion in
-                LocationSearchResult(
-                    locationSuggestion: locationSuggestion //,
-//                    mapItem: $mapItem,
-//                    step: step
-                )
-                .presentationDetents([.height(400)])
-                    
             }
         }
     }
@@ -65,11 +53,13 @@ struct LocationSearchSheet: View {
         do {
             locationSuggestions = try await locationSuggestionSearch.fetchLocationSuggestions(for: searchQuery)
         } catch {
-//            logger.error("Failed to fetch search results: \(error.localizedDescription)")
+            //            logger.error("Failed to fetch search results: \(error.localizedDescription)")
         }
     }
+    
 }
 
-//#Preview {
-//    LocationSearchSheet()
-//}
+#Preview {
+    let mapItemClosure: (MKMapItem) -> Void = { _ in }
+    LocationEditingView(step: .bedminsterStation, mapItemClosure: mapItemClosure)
+}

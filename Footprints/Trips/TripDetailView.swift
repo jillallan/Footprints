@@ -79,7 +79,8 @@ struct TripDetailView: View {
                     latitude: 51.5094,
                     longitude: 0.0
                 )
-                StepEditingView(step: newStep)
+                StepDetailView(step: newStep)
+//                StepEditingView(step: newStep)
             }
     }
     
