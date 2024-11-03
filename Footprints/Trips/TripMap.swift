@@ -29,7 +29,7 @@ struct TripMap: View {
             
                 ForEach(trip.tripSteps) { step in
                     Annotation(
-                        step.title,
+                        step.stepTitle,
                         coordinate: step.coordinate
                     ) {
                         DefaultStepMapAnnotation()

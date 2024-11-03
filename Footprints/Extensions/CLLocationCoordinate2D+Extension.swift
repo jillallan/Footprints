@@ -7,6 +7,7 @@
 
 import CoreLocation
 import Foundation
+import MapKit
 
 extension CLLocationCoordinate2D: Codable {
     public init(from decoder: Decoder) throws {
@@ -42,5 +43,10 @@ extension CLLocationCoordinate2D {
         let longitude = Double.midRange(of: coordinates.map(\.longitude)) ?? 0.0
         
         return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
+    
+    func calculateRegion(metersSpan: Double) -> MKCoordinateRegion {
+        return MKCoordinateRegion(center: self, latitudinalMeters: 50, longitudinalMeters: 50)
+        
     }
 }

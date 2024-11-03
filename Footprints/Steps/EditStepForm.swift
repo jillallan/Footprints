@@ -15,10 +15,10 @@ struct EmptyNameView: View {
 }
 
 struct SuccessView: View {
-    let placemarkName: String
+//    let placemarkName: String
     
     var body: some View {
-        Text(placemarkName)
+        Text("Hello")
     }
 }
 
@@ -44,7 +44,7 @@ struct EditStepForm: View {
                 case .loading:
                     LoadingView()
                 case .success:
-                    SuccessView(placemarkName: placemarkName)
+                    SuccessView()
                 case .failed:
                     FailedView()
                 }
@@ -63,18 +63,14 @@ struct EditStepForm: View {
             }
             .onChange(of: searchQuery) {
                 Task {
-                    do {
-                        locationSuggestions = try await locationSuggestionSearch.fetchLocationSuggestions(for: searchQuery)
-                    } catch {
-                        
-                    }
+                    await updateSearchResults()
                 }
             }
             .sheet(item: $selectedLocationSuggestion) {
                 
             } content: { locationSuggestion in
-                PlacemarkResult(locationSuggestion: locationSuggestion, mapItem: $mapItem, step: step)
-                    .presentationDetents([.height(400)])
+//                LocationSearchResult(locationSuggestion: locationSuggestion, mapItem: $mapItem, step: step)
+//                    .presentationDetents([.height(400)])
                     
             }
         }

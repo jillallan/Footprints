@@ -15,6 +15,7 @@ struct TripDetailView: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.deviceType) private var deviceType
     @EnvironmentObject var navigationController: NavigationController
+    @State var isAddStepViewPresented: Bool = false
 
     @Bindable var trip: Trip
     var tripList: Namespace.ID
@@ -61,22 +62,25 @@ struct TripDetailView: View {
 #endif
             .toolbar {
                 Button("Add Step", systemImage: "plus") {
-                    let step = Step()
-                    trip.steps.append(step)
-                    modelContext.insert(step)
-                    navigationController.navigationPath.append(step)
+                    isAddStepViewPresented.toggle()
+                    
                 }
 //                .matchedTransitionSource(id: newStep.id, in: stepList)
             }
             
             .navigationDestination(for: Step.self) { step in
                 StepDetailView(step: step)
-//                AddStepView(
-//                    trip: trip,
-//                    step: step,
-//                    date: getTimestamp(selectedStep: selectedStep),
-//                    coordinate: getCoordinate(selectedStep: selectedStep)
-//                )
+            }
+            .sheet(isPresented: $isAddStepViewPresented) {
+                
+            } content: {
+                let newStep = Step(
+                    title: "New Step",
+                    latitude: 51.5094,
+                    longitude: 0.0
+                )
+                StepDetailView(step: newStep)
+//                StepEditingView(step: newStep)
             }
     }
     

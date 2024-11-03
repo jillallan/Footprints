@@ -102,7 +102,7 @@ struct AddStepView: View {
 //                }
 //            }
         }
-        .navigationTitle(step.placemark?.name ?? "New step")
+        .navigationTitle(step.location?.name ?? "New step")
 #if !os(macOS)
         .toolbarBackground(.hidden, for: .navigationBar)
         

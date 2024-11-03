@@ -12,11 +12,13 @@ struct StepRow: View {
 
     var body: some View {
         HStack {
-            Image(systemName: "car")
-                .font(.title)
-                .foregroundStyle(Color.pink)
+//            Image(systemName: "car")
+            Image(systemName: step.location?.locationCategory?.icon ?? "car")
+//            step.location?.locationCategoryType?.icon
+//                .font(.title)
+                .foregroundStyle(step.location?.locationCategory?.color ?? Color.gray)
             VStack(alignment: .leading) {
-                Text(step.title)
+                Text(step.stepTitle)
                     .font(.headline)
                 Text(step.timestamp.formatted(date: .abbreviated, time: .shortened))
                     .font(.subheadline)
