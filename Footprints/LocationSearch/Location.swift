@@ -47,26 +47,26 @@ final class Location {
 //        """
         
         """
-        Location(name: \(name),\n \
-        subThoroughfare: \(subThoroughfare ?? "nil"),\n \
-        horoughfare: \(thoroughfare ?? "nil"),\n \
-        subLocality: \(subLocality ?? "nil"),\n \
-        locality: \(locality ?? "nil"),\n \
-        subAdministrativeArea: \(subAdministrativeArea ?? "nil"),\n \
-        administrativeArea: \(administrativeArea ?? "nil"),\n \
-        postalCode: \(postalCode ?? "nil"),\n \
-        isoCountryCode: \(isoCountryCode ?? "nil"),\n \
-        country: \(country ?? "nil"),\n \
-        inlandWater: \(inlandWater ?? "nil"),\n \
-        ocean: \(ocean ?? "nil"),\n \
-        areaOfInterest: \(areaOfInterest ?? "nil"),\n \
-        pointOfInterestCategory: \(pointOfInterestCategory ?? "nil"),\n \
-        mapItemIdentifier: \(mapItemIdentifier ?? "nil"),\n \
+        Location(name: "\(name)",\n \
+        subThoroughfare: "\(subThoroughfare ?? "nil")",\n \
+        thoroughfare: "\(thoroughfare ?? "nil")",\n \
+        subLocality: "\(subLocality ?? "nil")",\n \
+        locality: "\(locality ?? "nil")",\n \
+        subAdministrativeArea: "\(subAdministrativeArea ?? "nil")",\n \
+        administrativeArea: "\(administrativeArea ?? "nil")",\n \
+        postalCode: "\(postalCode ?? "nil")",\n \
+        isoCountryCode: "\(isoCountryCode ?? "nil")",\n \
+        country: "\(country ?? "nil")",\n \
+        inlandWater: "\(inlandWater ?? "nil")",\n \
+        ocean: "\(ocean ?? "nil")",\n \
+        areaOfInterest: "\(areaOfInterest ?? "nil")",\n \
+        pointOfInterestCategory: "\(pointOfInterestCategory ?? "nil")",\n \
+        mapItemIdentifier: "\(mapItemIdentifier ?? "nil")",\n \
         latitude: \(latitude ?? 0.0),\n \
         longitude: \(longitude ?? 0.0),\n \
         radius: \(radius ?? 0.0),\n \
-        locationType: \(locationType ?? .other),\n \
-        locationCategory: \(locationCategory ?? .other)\n \
+        locationType: .\(locationType ?? .other),\n \
+        locationCategory: .\(locationCategory ?? .other)\n \
         )
         """
     }

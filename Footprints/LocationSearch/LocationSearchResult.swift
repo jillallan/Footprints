@@ -14,8 +14,7 @@ struct LocationSearchResult: View {
     @State private var loadingState = LoadingState.loading
     @State var mapItemSearchService = MapItemSearchService()
     @State var locationSuggestion: LocationSuggestion
-    @State var mapItem: MKMapItem?
-    let mapItemClosure: (MKMapItem) -> Void
+    @Binding var mapItem: MKMapItem?
     
     var body: some View {
         NavigationStack {
@@ -26,25 +25,31 @@ struct LocationSearchResult: View {
                 case .loading:
                     ProgressView()
                 case .success:
-                    Form {
-                        Text(locationSuggestion.subtitle)
-                        Text(mapItem?.name ?? "")
-                        Text(mapItem?.placemark.title ?? "")
-                        Text(mapItem?.placemark.subtitle ?? "")
+                    if let mapItem {
+                        MapItemSuccessView(mapItem: mapItem)
                     }
+                    
+//                    Form {
+//                        Text(locationSuggestion.subtitle)
+//                        Text(mapItem?.name ?? "")
+//                        Text(mapItem?.placemark.title ?? "")
+//                        Text(mapItem?.placemark.subtitle ?? "")
+//                    }
                 case .failed:
                     FailedView()
                 }
-                Button("Select") {
-                    if let mapItem {
-                        mapItemClosure(mapItem)
-                    }
-                    dismiss()
-                    dismissSearch()
-                }
-                .disabled(mapItem == nil)
+                
             }
             .navigationTitle(locationSuggestion.title)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Select") {
+                        dismiss()
+                        dismissSearch()
+                    }
+                    .disabled(mapItem == nil)
+                }
+            }
             .onAppear {
                 Task {
                     mapItem = await fetchMapItem(for: locationSuggestion.mapItemSearchTerm)

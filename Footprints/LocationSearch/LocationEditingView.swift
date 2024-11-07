@@ -11,18 +11,21 @@ import SwiftUI
 
 struct LocationEditingView: View {
     @Environment(\.dismiss) var dismiss
-    @Bindable var step: Step
+    let mapRegion: MapCameraPosition
     @State private var searchQuery: String = ""
     @State private var locationSuggestionSearch = LocationSuggestionSearch()
     @State private var locationSuggestions: [LocationSuggestion] = []
     @State private var selectedLocationSuggestion: LocationSuggestion?
+    @State var mapItem: MKMapItem?
     let mapItemClosure: (MKMapItem) -> Void
     
     var body: some View {
         NavigationStack {
-            LocationEditingMap(step: step, selectedLocationSuggestion: $selectedLocationSuggestion) { item in
-                mapItemClosure(item)
-            }
+            LocationEditingMap(
+                mapRegion: mapRegion,
+                selectedLocationSuggestion: $selectedLocationSuggestion,
+                mapItem: $mapItem
+            )
             .searchable(text: $searchQuery)
             .searchSuggestions {
                 ForEach(locationSuggestions) { suggestion in
@@ -34,10 +37,14 @@ struct LocationEditingView: View {
                     .buttonStyle(.plain)
                 }
             }
-            .navigationTitle(step.stepTitle)
+            .navigationTitle("Edit Location")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.hidden, for: .navigationBar)
             .toolbar {
                 Button("Done") {
+                    if let mapItem {
+                        mapItemClosure(mapItem)
+                    }
                     dismiss()
                 }
             }
@@ -61,5 +68,8 @@ struct LocationEditingView: View {
 
 #Preview {
     let mapItemClosure: (MKMapItem) -> Void = { _ in }
-    LocationEditingView(step: .bedminsterStation, mapItemClosure: mapItemClosure)
+    LocationEditingView(
+        mapRegion: MapCameraPosition.region(Step.bedminsterStation.region),
+        mapItemClosure: mapItemClosure
+    )
 }

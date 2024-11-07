@@ -33,8 +33,6 @@ struct StepDetailView: View {
                     .frame(height: 250)
                 }
                 .buttonStyle(.plain)
-
-                
                 ForEach(0..<3) { int in
                     Image(.EBC_1)
                         .resizable()
@@ -45,8 +43,6 @@ struct StepDetailView: View {
             .padding()
             
         }
-  
-
         .onAppear {
             mapRegion = .region(step.region)
         }
@@ -62,17 +58,18 @@ struct StepDetailView: View {
                 newLocation.steps.append(step)
             }
         } content: {
-            LocationEditingView(step: step) { item in
+            LocationEditingView(
+                mapRegion: MapCameraPosition.region(step.region)
+            ) { item in
                 mapItem = item
             }
             .presentationDragIndicator(.visible)
         }
-
     }
 }
 
 #Preview(traits: .previewData) {
-    @Previewable @Namespace var namespace
+//    @Previewable @Namespace var namespace
     
     NavigationStack {
         StepDetailView(

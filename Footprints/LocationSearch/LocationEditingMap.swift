@@ -6,40 +6,74 @@
 //
 
 import MapKit
+import OSLog
 import SwiftUI
 
 struct LocationEditingMap: View {
-    @Bindable var step: Step
-    @State private var mapRegion = MapCameraPosition.automatic
+    private let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier!,
+        category: String(describing: LocationEditingMap.self)
+    )
+    
+    let mapRegion: MapCameraPosition
     @Environment(\.isSearching) private var isSearching
     @Environment(\.dismissSearch) private var dismissSearch
     @Binding var selectedLocationSuggestion: LocationSuggestion?
-    let mapItemClosure: (MKMapItem) -> Void
+    @State private var selectedMapFeature: MapFeature?
+    @State private var isLocationSuggestionViewPresented: Bool = false
+    @State private var isMapFeatureViewPresented: Bool = false
+    @Binding var mapItem: MKMapItem?
+//    var
     
     var body: some View {
-        Map(position: $mapRegion)
+        let _ = logger.info("selectedMapFeature: \(selectedMapFeature.debugDescription)")
+        
+        Map(initialPosition: mapRegion, selection: $selectedMapFeature) {
             
-            .sheet(item: $selectedLocationSuggestion) {
-                
-            } content: { locationSuggestion in
+            
+        }
+            .sheet(item: $selectedLocationSuggestion) { locationSuggestion in
                 LocationSearchResult(
                     dismissSearch: dismissSearch,
-                    locationSuggestion: locationSuggestion
-                ) { item in
-                    mapItemClosure(item)
-                }
-                .presentationDetents([.height(400)])
+                    locationSuggestion: locationSuggestion,
+                    mapItem: $mapItem
+                )
+                .presentationDetents([.medium])
+                .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+                .presentationDragIndicator(.visible)
                 
+            }
+            .sheet(isPresented: $isMapFeatureViewPresented) {
+                if let selectedMapFeature {
+                    MapFeatureDetail(mapFeature: selectedMapFeature)
+                        .presentationDetents([.medium])
+                        .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+                        .presentationDragIndicator(.visible)
+                }
+            }
+            .onChange(of: selectedMapFeature) {
+                isMapFeatureViewPresented = true
             }
             .onChange(of: selectedLocationSuggestion) {
                 dismissSearch()
-            }
-            .onAppear {
-                mapRegion = .region(step.region)
             }
     }
 }
 
 //#Preview {
-//    StrepEditMap()
+//    let mapCameraRegion = MapCameraPosition.region(Step.bedminsterStation.region)
+//    let mapItemClosure: (MKMapItem) -> Void = { _ in }
+//    let locationSuggestion = LocationSuggestion(title: "Bristol", subtitle: "England")
+//    LocationEditingMap(
+//        mapRegion: mapCameraRegion,
+//        selectedLocationSuggestion: .constant(locationSuggestion),
+//        mapItemClosure: mapItemClosure
+//    )
 //}
+
+
+extension MapFeature: @retroactive Identifiable {
+    public var id: UUID {
+        UUID()
+    }
+}

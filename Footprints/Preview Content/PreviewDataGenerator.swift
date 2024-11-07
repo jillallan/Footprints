@@ -41,23 +41,29 @@ struct PreviewDataGenerator {
             Step.cologne,
             Step.warsaw,
             Step.everestBaseCamp,
-            Step.statueOfLiberty
+//            Step.statueOfLiberty
         ]
         
-        let locationService = LocationService()
+        let locations = [
+            Location.stJohnsLane,
+            Location.bedminsterStation,
+            Location.templeMeads,
+            Location.paddington,
+            Location.stPancras,
+            Location.brusselsMidi,
+            Location.grandPlace,
+            Location.atomium,
+            Location.cologne,
+            Location.warsaw,
+            Location.everestBaseCamp,
+//            Location.statueOfLiberty
+        ]
         
-        for step in steps {
+        for (index, step) in steps.enumerated() {
             modelContext.insert(step)
             Trip.bedminsterToBeijing.steps.append(step)
-            do {
-                if let mapItem = try await locationService.findNearestMapItem(at: step.coordinate) {
-                    let location = Location(coordinate: step.coordinate, mapItem: mapItem.0, resultType: mapItem.1)
-                    print("location: \(location.debugDescription)")
-                    location.steps.append(step)
-                }
-            } catch {
-                
-            }
+            modelContext.insert(locations[index])
+            locations[index].steps.append(step)
         }
     }
 

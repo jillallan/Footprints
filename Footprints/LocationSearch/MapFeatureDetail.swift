@@ -26,27 +26,29 @@ struct MapFeatureDetail: View {
                 case .empty:
                     EmptyView()
                 case .loading:
-                    ProgressView()
+                    MapItemLoadingView(title: mapFeature.title ?? "Location")
+                        .navigationTitle(mapFeature.title ?? "Location")
                 case .success:
-                    Form {
-                        Text(mapItem?.name ?? "")
-                        Text(mapItem?.placemark.title ?? "")
-                        Text(mapItem?.placemark.subtitle ?? "")
+                    if let mapItem {
+                        MapItemSuccessView(mapItem: mapItem)
+                            
                     }
+                    
                 case .failed:
-                    FailedView()
+                    MapItemFailedView()
                 }
             }
-            .navigationTitle(mapItem?.name ?? "loading")
-            .onAppear {
-                Task {
-                    mapItem = await fetchMapItem(for: mapFeature)
-                }
+            .navigationTitle(mapItem?.name ?? "No name")
+            
+        }
+        .onAppear {
+            Task {
+                mapItem = await fetchMapItem(for: mapFeature)
             }
-            .onChange(of: mapFeature) {
-                Task {
-                    mapItem = await fetchMapItem(for: mapFeature)
-                }
+        }
+        .onChange(of: mapFeature) {
+            Task {
+                mapItem = await fetchMapItem(for: mapFeature)
             }
         }
     }
