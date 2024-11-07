@@ -18,45 +18,55 @@ struct LocationEditingMap: View {
     let mapRegion: MapCameraPosition
     @Environment(\.isSearching) private var isSearching
     @Environment(\.dismissSearch) private var dismissSearch
+    let mapItemIdentifier: String
     @Binding var selectedLocationSuggestion: LocationSuggestion?
+    @State private var locationService = LocationService()
     @State private var selectedMapFeature: MapFeature?
     @State private var isLocationSuggestionViewPresented: Bool = false
     @State private var isMapFeatureViewPresented: Bool = false
     @Binding var mapItem: MKMapItem?
-//    var
     
     var body: some View {
         let _ = logger.info("selectedMapFeature: \(selectedMapFeature.debugDescription)")
         
         Map(initialPosition: mapRegion, selection: $selectedMapFeature) {
-            
+            if let mapItem {
+                Marker(item: mapItem)
+                    
+            }
+        }
+        
+        .safeAreaInset(edge: .bottom) {
+            if selectedMapFeature != nil {
+                Color(.clear)
+                    .frame(height: 400)
+            }
+        }
+        .sheet(item: $selectedLocationSuggestion) { locationSuggestion in
+            LocationSearchResult(
+                dismissSearch: dismissSearch,
+                locationSuggestion: locationSuggestion,
+                mapItem: $mapItem
+            )
+            .presentationDetents([.medium])
+            .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+            .presentationDragIndicator(.visible)
             
         }
-            .sheet(item: $selectedLocationSuggestion) { locationSuggestion in
-                LocationSearchResult(
-                    dismissSearch: dismissSearch,
-                    locationSuggestion: locationSuggestion,
-                    mapItem: $mapItem
-                )
-                .presentationDetents([.medium])
-                .presentationBackgroundInteraction(.enabled(upThrough: .medium))
-                .presentationDragIndicator(.visible)
-                
+        .sheet(isPresented: $isMapFeatureViewPresented) {
+            if let selectedMapFeature {
+                MapFeatureDetail(mapFeature: selectedMapFeature)
+                    .presentationDetents([.medium])
+                    .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+                    .presentationDragIndicator(.visible)
             }
-            .sheet(isPresented: $isMapFeatureViewPresented) {
-                if let selectedMapFeature {
-                    MapFeatureDetail(mapFeature: selectedMapFeature)
-                        .presentationDetents([.medium])
-                        .presentationBackgroundInteraction(.enabled(upThrough: .medium))
-                        .presentationDragIndicator(.visible)
-                }
-            }
-            .onChange(of: selectedMapFeature) {
-                isMapFeatureViewPresented = true
-            }
-            .onChange(of: selectedLocationSuggestion) {
-                dismissSearch()
-            }
+        }
+        .onChange(of: selectedMapFeature) {
+            isMapFeatureViewPresented = true
+        }
+        .onChange(of: selectedLocationSuggestion) {
+            dismissSearch()
+        }
     }
 }
 

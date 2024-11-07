@@ -60,6 +60,13 @@ struct LocationService {
         return response.mapItems
     }
     
+    func fetchMapItem(for identifier: String) async throws -> MKMapItem? {
+        guard let id = MKMapItem.Identifier(rawValue: identifier) else { return nil }
+        let request = MKMapItemRequest(mapItemIdentifier: id)
+        
+        return try await request.mapItem
+    }
+    
     func fetchMapItems(
         for query: String,
         in region: MKCoordinateRegion? = nil,

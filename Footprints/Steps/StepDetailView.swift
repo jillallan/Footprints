@@ -10,14 +10,13 @@ import SwiftUI
 
 struct StepDetailView: View {
     @Environment(\.modelContext) private var modelContext
-    @State private var mapRegion = MapCameraPosition.automatic
+    @State private var locationService = LocationService()
     @Bindable var step: Step
-    @State private var isStepEditingViewPresented: Bool = false
     @State private var mapItem: MKMapItem?
+    @State private var isStepEditingViewPresented: Bool = false
 //    var stepList: Namespace.ID
     
     var body: some View {
-        
         ScrollView {
             DatePicker("Step Date", selection: $step.timestamp, displayedComponents: [.date, .hourAndMinute])
                 .padding()
@@ -25,12 +24,7 @@ struct StepDetailView: View {
                 Button {
                     isStepEditingViewPresented.toggle()
                 } label: {
-                    Map(position: $mapRegion) {
-                        Annotation(step.location?.name ?? "", coordinate: step.coordinate) {
-                            DefaultStepMapAnnotation()
-                        }
-                    }
-                    .frame(height: 250)
+                    StepMap(step: step, mapItem: $mapItem)
                 }
                 .buttonStyle(.plain)
                 ForEach(0..<3) { int in
@@ -42,9 +36,6 @@ struct StepDetailView: View {
             .clipShape(RoundedRectangle(cornerRadius: 25.0, style: .continuous))
             .padding()
             
-        }
-        .onAppear {
-            mapRegion = .region(step.region)
         }
         .navigationTitle(step.stepTitle)
         .toolbarBackground(.hidden, for: .navigationBar)
@@ -59,12 +50,41 @@ struct StepDetailView: View {
             }
         } content: {
             LocationEditingView(
-                mapRegion: MapCameraPosition.region(step.region)
+                mapRegion: MapCameraPosition.region(step.region),
+                mapItemIdentifier: step.location?.mapItemIdentifier ?? "",
+                mapItem: $mapItem
             ) { item in
                 mapItem = item
             }
             .presentationDragIndicator(.visible)
         }
+        .onAppear {
+            Task {
+//                mapItem = await fetchMapItem(for: step.location?.mapItemIdentifier ?? "")
+                mapItem = decodeMapItem(step: step)
+            }
+        }
+    }
+    
+    func decodeMapItem(step: Step) -> MKMapItem? {
+        guard let data = step.location?.encodedMapItem else { return nil }
+        var mapItem: MKMapItem? = nil
+        
+        if let decodedMapItem = MKMapItem.decode(from: data) {
+            mapItem = decodedMapItem
+            print("decoded map item: \(String(describing: mapItem))")
+        }
+        return mapItem
+    }
+    
+    func fetchMapItem(for identifier: String) async -> MKMapItem? {
+        var mapItem: MKMapItem? = nil
+        do {
+            mapItem = try await locationService.fetchMapItem(for: identifier)
+        } catch {
+            
+        }
+        return mapItem
     }
 }
 

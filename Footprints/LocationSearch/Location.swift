@@ -31,6 +31,7 @@ final class Location {
     var radius: Double?
     var locationType: LocationType?
     var locationCategory: LocationCategory?
+    var encodedMapItem: Data?
     
     var steps = [Step]()
 
@@ -91,7 +92,8 @@ final class Location {
         longitude: Double? = nil,
         radius: Double? = nil,
         locationType: LocationType? = nil,
-        locationCategory: LocationCategory? = nil
+        locationCategory: LocationCategory? = nil,
+        encodedMapItem: Data? = nil
     ) {
         self.name = name
         self.subThoroughfare = subThoroughfare
@@ -113,6 +115,7 @@ final class Location {
         self.radius = radius
         self.locationType = locationType
         self.locationCategory = locationCategory
+        self.encodedMapItem = encodedMapItem
     }
     
     convenience init(coordinate: CLLocationCoordinate2D, mapItem: MKMapItem, resultType: LocationType) {
@@ -127,6 +130,7 @@ final class Location {
             locationType = LocationType.pointOfInterest
         }
         
+        let data = mapItem.encode()
         
         self.init(
             name: mapItem.name ?? "name",
@@ -148,7 +152,8 @@ final class Location {
             longitude: mapItem.placemark.location?.coordinate.longitude ?? coordinate.longitude,
             radius: radius,
             locationType: locationType,
-            locationCategory: locationCategory
+            locationCategory: locationCategory,
+            encodedMapItem: data
         )
     }
 }

@@ -65,6 +65,19 @@ struct PreviewDataGenerator {
             modelContext.insert(locations[index])
             locations[index].steps.append(step)
         }
+        
+        let locationService = LocationService()
+        Task {
+            do {
+                if let mapItem = try await locationService.fetchMapItem(for: "IA38F89DAE1ADF2C1") {
+                    let location = Location(coordinate: Step.bedminsterStation.coordinate, mapItem: mapItem, resultType: .pointOfInterest)
+                    modelContext.insert(location)
+                    Step.bedminsterStation.location = location
+                }
+            } catch {
+                
+            }
+        }
     }
 
     /// A random image to display in trip view
@@ -73,4 +86,5 @@ struct PreviewDataGenerator {
         let randomInt = Int.random(in: 0...2)
         return images[randomInt]
     }
+
 }

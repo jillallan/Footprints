@@ -12,17 +12,19 @@ import SwiftUI
 struct LocationEditingView: View {
     @Environment(\.dismiss) var dismiss
     let mapRegion: MapCameraPosition
+    let mapItemIdentifier: String
     @State private var searchQuery: String = ""
     @State private var locationSuggestionSearch = LocationSuggestionSearch()
     @State private var locationSuggestions: [LocationSuggestion] = []
     @State private var selectedLocationSuggestion: LocationSuggestion?
-    @State var mapItem: MKMapItem?
+    @Binding var mapItem: MKMapItem?
     let mapItemClosure: (MKMapItem) -> Void
     
     var body: some View {
         NavigationStack {
             LocationEditingMap(
                 mapRegion: mapRegion,
+                mapItemIdentifier: mapItemIdentifier,
                 selectedLocationSuggestion: $selectedLocationSuggestion,
                 mapItem: $mapItem
             )
@@ -68,8 +70,13 @@ struct LocationEditingView: View {
 
 #Preview {
     let mapItemClosure: (MKMapItem) -> Void = { _ in }
+    let placemark = MKPlacemark(coordinate: Step.brusselsMidi.coordinate)
+    let mapItem = MKMapItem(placemark: placemark)
     LocationEditingView(
         mapRegion: MapCameraPosition.region(Step.bedminsterStation.region),
+        mapItemIdentifier: "IA38F89DAE1ADF2C1",
+        mapItem: .constant(mapItem),
         mapItemClosure: mapItemClosure
+        
     )
 }

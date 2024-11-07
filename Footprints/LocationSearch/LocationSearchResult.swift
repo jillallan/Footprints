@@ -12,7 +12,7 @@ struct LocationSearchResult: View {
     @Environment(\.dismiss) var dismiss
     var dismissSearch: DismissSearchAction
     @State private var loadingState = LoadingState.loading
-    @State var mapItemSearchService = MapItemSearchService()
+    @State private var locationService = LocationService()
     @State var locationSuggestion: LocationSuggestion
     @Binding var mapItem: MKMapItem?
     
@@ -59,18 +59,17 @@ struct LocationSearchResult: View {
     }
     
     func fetchMapItem(for searchSuggestion: String) async -> MKMapItem? {
+        var mapItem: MKMapItem? = nil
         do {
-            mapItem = try await mapItemSearchService.search(
-                for: locationSuggestion.mapItemSearchTerm,
-                in: MKCoordinateRegion.defaultRegion()
-            )
-            loadingState = .success
-            return mapItem
+            if let mapItem = try await locationService.fetchMapItems(for: searchSuggestion).first {
+                loadingState = .success
+            } else {
+                loadingState = .failed
+            }
         } catch {
-            print("Error fetching map item: \(error.localizedDescription)")
             loadingState = .failed
-            return nil
         }
+        return mapItem
     }
 }
 

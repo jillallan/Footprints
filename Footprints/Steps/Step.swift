@@ -41,6 +41,10 @@ final class Step {
         return MKCoordinateRegion.calculateRegion(from: [coordinate], with: 1.5)
     }
     
+    var mapRegion: MapCameraPosition {
+        MapCameraPosition.region(region)
+    }
+    
     var regionZoomedOut: MKCoordinateRegion {
         return MKCoordinateRegion.calculateRegion(from: [coordinate], with: 2.0)
     }
