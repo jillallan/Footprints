@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct MapItemLoadingView: View {
-    let title: String
     
     var body: some View {
         VStack {
@@ -16,10 +15,9 @@ struct MapItemLoadingView: View {
                 Text("Loading...")
             }
         }
-        .navigationTitle(title)
     }
 }
 
 #Preview {
-    MapItemLoadingView(title: "The Shop")
+    MapItemLoadingView()
 }

@@ -9,25 +9,16 @@ import MapKit
 import SwiftUI
 
 struct StepMap: View {
-    let step: Step
-    @Binding var mapItem: MKMapItem?
+    @Bindable var step: Step
     
     var body: some View {
-        Map(initialPosition: step.mapRegion) {
-            if let mapItem {
-                Marker(item: mapItem)
-            } else {
-                Annotation(step.location?.name ?? "", coordinate: step.coordinate) {
-                    DefaultStepMapAnnotation()
-                }
-            }
+        Map(initialPosition: MapCameraPosition.item(step.mapItem)) {
+            Marker(item: step.mapItem)
         }
         .frame(height: 250)
     }
 }
 
 #Preview {
-    let placemark = MKPlacemark(coordinate: Step.brusselsMidi.coordinate)
-    let mapItem = MKMapItem(placemark: placemark)
-    StepMap(step: .brusselsMidi, mapItem: .constant(mapItem))
+    StepMap(step: .bedminsterStation)
 }

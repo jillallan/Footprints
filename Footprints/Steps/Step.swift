@@ -36,6 +36,14 @@ final class Step {
     var coordinate: CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
+    
+    var mapItem: MKMapItem {
+        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate))
+        guard let data = location?.encodedMapItem else { return mapItem }
+        guard let decodedMapItem = MKMapItem.decode(from: data) else { return mapItem }
+    
+        return decodedMapItem
+    }
 
     var region: MKCoordinateRegion {
         return MKCoordinateRegion.calculateRegion(from: [coordinate], with: 1.5)

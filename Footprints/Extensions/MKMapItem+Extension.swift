@@ -23,18 +23,3 @@ extension MKMapItem {
         return unarchivedObject
     }
 }
-
-//// Encode the MKMapItem to Data
-//if let encodedData = mapItem.encode() {
-//    print("Encoded successfully!")
-//    
-//    // Decode the Data back to MKMapItem
-//    if let decodedMapItem = MKMapItem.decode(from: encodedData) {
-//        print("Decoded successfully!\nName: \(decodedMapItem.name ?? "Unknown")")
-//        print("Coordinates: \(decodedMapItem.placemark.coordinate)")
-//    } else {
-//        print("Decoding failed.")
-//    }
-//} else {
-//    print("Encoding failed.")
-//}

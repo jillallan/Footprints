@@ -15,57 +15,60 @@ struct LocationEditingMap: View {
         category: String(describing: LocationEditingMap.self)
     )
     
-    let mapRegion: MapCameraPosition
+    @Environment(\.modelContext) private var modelContext
+    @Bindable var step: Step
+    @State var mapRegion: MapCameraPosition
+    @Binding var mapItem: MKMapItem
     @Environment(\.isSearching) private var isSearching
     @Environment(\.dismissSearch) private var dismissSearch
-    let mapItemIdentifier: String
+    let dismiss: DismissAction
     @Binding var selectedLocationSuggestion: LocationSuggestion?
     @State private var locationService = LocationService()
-    @State private var selectedMapFeature: MapFeature?
+    @State private var mapSelection: MapSelection<MKMapItem>?
     @State private var isLocationSuggestionViewPresented: Bool = false
     @State private var isMapFeatureViewPresented: Bool = false
-    @Binding var mapItem: MKMapItem?
+    
     
     var body: some View {
-        let _ = logger.info("selectedMapFeature: \(selectedMapFeature.debugDescription)")
+        let _ = Self._printChanges()
+        let _ = logger.info("mapItem map view: \(mapItem.debugDescription)")
         
-        Map(initialPosition: mapRegion, selection: $selectedMapFeature) {
-            if let mapItem {
-                Marker(item: mapItem)
-                    
-            }
+        Map(initialPosition: mapRegion, selection: $mapSelection) {
+            Marker(item: mapItem)
+                .tag(MapSelection(mapItem))
         }
-        
         .safeAreaInset(edge: .bottom) {
-            if selectedMapFeature != nil {
+            if mapSelection != nil {
                 Color(.clear)
-                    .frame(height: 400)
+                    .frame(height: 300)
             }
         }
-        .sheet(item: $selectedLocationSuggestion) { locationSuggestion in
-            LocationSearchResult(
-                dismissSearch: dismissSearch,
-                locationSuggestion: locationSuggestion,
-                mapItem: $mapItem
-            )
-            .presentationDetents([.medium])
-            .presentationBackgroundInteraction(.enabled(upThrough: .medium))
-            .presentationDragIndicator(.visible)
-            
-        }
-        .sheet(isPresented: $isMapFeatureViewPresented) {
-            if let selectedMapFeature {
-                MapFeatureDetail(mapFeature: selectedMapFeature)
-                    .presentationDetents([.medium])
-                    .presentationBackgroundInteraction(.enabled(upThrough: .medium))
-                    .presentationDragIndicator(.visible)
-            }
-        }
-        .onChange(of: selectedMapFeature) {
+//        .sheet(isPresented: $isMapFeatureViewPresented, onDismiss: {
+//            // TODO: -
+//        }, content: {
+//            MapItemDetail(mapSelection: mapSelection) { selectedMapItem in
+//                if let selectedMapItem {
+//                    mapItem = selectedMapItem
+//                    let newLocation = Location(coordinate: mapItem.placemark.coordinate, mapItem: mapItem, resultType: .pointOfInterest)
+//                    modelContext.insert(newLocation)
+////                    step.location = newLocation
+//                    newLocation.steps.append(step)
+//                    print("step location: \(step.location?.name ?? "none")")
+//             
+//                    dismiss()
+//                }
+//            }
+//            .mapDetailPresentationStyle()
+//        })
+        .onChange(of: mapSelection) {
             isMapFeatureViewPresented = true
         }
-        .onChange(of: selectedLocationSuggestion) {
-            dismissSearch()
+//        .onChange(of: selectedLocationSuggestion) {
+//            isMapFeatureViewPresented = true
+//            dismissSearch()
+//        }
+        .onChange(of: mapItem) {
+            mapRegion = MapCameraPosition.item(mapItem)
         }
     }
 }
@@ -83,6 +86,12 @@ struct LocationEditingMap: View {
 
 
 extension MapFeature: @retroactive Identifiable {
+    public var id: UUID {
+        UUID()
+    }
+}
+
+extension MapSelection: @retroactive Identifiable {
     public var id: UUID {
         UUID()
     }

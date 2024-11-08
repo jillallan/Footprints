@@ -20,7 +20,6 @@ struct MapItemSuccessView: View {
                 Image(systemName: icon)
                     .foregroundStyle(color)
                 Text(category)
-                
             }
         }
         

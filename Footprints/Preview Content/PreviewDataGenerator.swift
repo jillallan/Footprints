@@ -34,48 +34,34 @@ struct PreviewDataGenerator {
             Step.bedminsterStation,
             Step.templeMeads,
             Step.paddington,
-            Step.stPancras,
-            Step.brusselsMidi,
-            Step.grandPlace,
-            Step.atomium,
-            Step.cologne,
-            Step.warsaw,
-            Step.everestBaseCamp,
+//            Step.stPancras,
+//            Step.brusselsMidi,
+//            Step.grandPlace,
+//            Step.atomium,
+//            Step.cologne,
+//            Step.warsaw,
+//            Step.everestBaseCamp,
 //            Step.statueOfLiberty
         ]
         
-        let locations = [
-            Location.stJohnsLane,
-            Location.bedminsterStation,
-            Location.templeMeads,
-            Location.paddington,
-            Location.stPancras,
-            Location.brusselsMidi,
-            Location.grandPlace,
-            Location.atomium,
-            Location.cologne,
-            Location.warsaw,
-            Location.everestBaseCamp,
-//            Location.statueOfLiberty
-        ]
+        let locationService = LocationService()
         
-        for (index, step) in steps.enumerated() {
+        for step in steps {
             modelContext.insert(step)
             Trip.bedminsterToBeijing.steps.append(step)
-            modelContext.insert(locations[index])
-            locations[index].steps.append(step)
-        }
-        
-        let locationService = LocationService()
-        Task {
-            do {
-                if let mapItem = try await locationService.fetchMapItem(for: "IA38F89DAE1ADF2C1") {
-                    let location = Location(coordinate: Step.bedminsterStation.coordinate, mapItem: mapItem, resultType: .pointOfInterest)
-                    modelContext.insert(location)
-                    Step.bedminsterStation.location = location
+            
+            Task {
+                do {
+                    if let mapItem = try await locationService.findNearestMapItem(at: step.coordinate)?.0 {
+                        let location = Location(mapItem: mapItem)
+                        modelContext.insert(location)
+                        step.location = location
+                        print(String(describing: step.mapItem.name))
+                        print(location.debugDescription)
+                    }
+                } catch {
+                    
                 }
-            } catch {
-                
             }
         }
     }

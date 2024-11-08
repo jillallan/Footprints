@@ -32,3 +32,9 @@ extension View {
         }
     }
 }
+
+extension View {
+    func mapDetailPresentationStyle() -> some View {
+        modifier(MapDetailPresentation())
+    }
+}

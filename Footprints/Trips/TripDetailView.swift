@@ -69,19 +69,22 @@ struct TripDetailView: View {
             }
             
             .navigationDestination(for: Step.self) { step in
-                StepDetailView(step: step)
-            }
-            .sheet(isPresented: $isAddStepViewPresented) {
-                
-            } content: {
-                let newStep = Step(
-                    title: "New Step",
-                    latitude: 51.5094,
-                    longitude: 0.0
+                StepDetailView(
+                    step: step,
+                    mapItem: step.mapItem
                 )
-                StepDetailView(step: newStep)
-//                StepEditingView(step: newStep)
             }
+//            .sheet(isPresented: $isAddStepViewPresented) {
+//                
+//            } content: {
+//                let newStep = Step(
+//                    title: "New Step",
+//                    latitude: 51.5094,
+//                    longitude: 0.0
+//                )
+//                StepDetailView(step: newStep, mapItem: newStep.mapItem)
+////                StepEditingView(step: newStep)
+//            }
     }
     
     func getTimestamp(selectedStep: Step?) -> Date {

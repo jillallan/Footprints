@@ -8,11 +8,6 @@
 import MapKit
 import SwiftUI
 
-struct EmptyNameView: View {
-    var body: some View {
-        Text("New Step")
-    }
-}
 
 struct SuccessView: View {
 //    let placemarkName: String
@@ -37,16 +32,10 @@ struct EditStepForm: View {
     var body: some View {
         NavigationStack {
             Form {
-                
                 switch loadingState {
-                case .empty:
-                    EmptyNameView()
-                case .loading:
-                    LoadingView()
-                case .success:
-                    SuccessView()
-                case .failed:
-                    FailedView()
+                case .loading: LoadingView()
+                case .success: SuccessView()
+                case .failed: FailedView()
                 }
                 DatePicker("Step Date", selection: $date, displayedComponents: [.date, .hourAndMinute])
             }
@@ -97,6 +86,6 @@ struct EditStepForm: View {
                     coordinate: CLLocationCoordinate2D(latitude: 51.5072, longitude: 0.0)
                 )
             )
-        ), step: .atomium
+        ), step: .bedminsterStation
     )
 }
