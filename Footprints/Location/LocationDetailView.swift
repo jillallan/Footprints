@@ -68,11 +68,18 @@ struct LocationDetailView: View {
             // MARK: Navigation
             .navigationTitle("Location Details")
             .toolbarBackground(.hidden, for: .navigationBar)
+            
             // Is sheet(isPresented) used here instead of sheet(item) otherwise when the item changes the view is dismissed rather than updated
             .sheet(isPresented: $isPlacemarkSheetPresented) {
+                mapItem(selectedMapItem)
+                dismiss()
+            } content: {
                 if let tappedLocation {
-                    LocationDetailSheet2(coordinate: tappedLocation, location: $location)
-                        .mapDetailPresentationStyle()
+                    TappedLocationDetail(
+                        coordinate: tappedLocation,
+                        mapItem: $selectedMapItem
+                    )
+                    .mapDetailPresentationStyle()
                 }
             }
             .sheet(isPresented: $isMapItemSheetPresented) {
@@ -80,8 +87,11 @@ struct LocationDetailView: View {
                 dismiss()
             } content: {
                 if let mapFeature {
-                    MapItemDetail(mapFeature: mapFeature, mapItem: $selectedMapItem)
-                        .mapDetailPresentationStyle()
+                    MapFeatureDetail(
+                        mapFeature: mapFeature,
+                        mapItem: $selectedMapItem
+                    )
+                    .mapDetailPresentationStyle()
                 }
             }
     
