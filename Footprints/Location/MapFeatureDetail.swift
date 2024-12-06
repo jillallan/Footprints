@@ -8,10 +8,10 @@
 import MapKit
 import SwiftUI
 
-struct MapItemDetail: View {
+struct MapFeatureDetail: View {
     @Environment(\.dismiss) var dismiss
-    @State var loadingState: LoadingState = .loading
     @State private var locationService = LocationService()
+    @State var loadingState: LoadingState = .loading
     let mapFeature: MapFeature
     @Binding var mapItem: MKMapItem?
     @State var errorMessage: String?
@@ -41,8 +41,6 @@ struct MapItemDetail: View {
                 }
             }
         }
-        .navigationTitle("Location")
-        .navigationBarTitleDisplayMode(.large)
         .onAppear {
             Task {
                 let result = await fetchMapItem(for: mapFeature)

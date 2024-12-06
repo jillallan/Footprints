@@ -39,7 +39,7 @@ struct EditLocationView: View {
     var body: some View {
 //        let  _ = logger.debug("tapped location in view: \(String(describing: tappedLocation))")
         NavigationStack {
-            EditLocationMapOld(mapItem: $mapItem, mapSelection: $mapSelection, tappedLocation: $tappedLocation)
+//            EditLocationMapOld(mapItem: $mapItem, mapSelection: $mapSelection, tappedLocation: $tappedLocation)
 //                .searchable(text: $searchQuery, prompt: "Search for a location")
 //                .searchSuggestions {
 //                    ForEach(locationSuggestions) { suggestion in
