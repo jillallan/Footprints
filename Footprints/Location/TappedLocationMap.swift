@@ -1,5 +1,5 @@
 //
-//  LocationEditingMap.swift
+//  TappedLocationMap.swift
 //  Footprints
 //
 //  Created by Jill Allan on 16/11/2024.
@@ -9,7 +9,7 @@ import MapKit
 import OSLog
 import SwiftUI
 
-struct LocationEditingMap: View {
+struct TappedLocationMap: View {
     private let logger = Logger(
         subsystem: Bundle.main.bundleIdentifier!,
         category: String(describing: EditLocationView.self)
@@ -46,7 +46,7 @@ struct LocationEditingMap: View {
     let region = MKCoordinateRegion(center: currentLocation, latitudinalMeters: 500, longitudinalMeters: 500)
     let mapCameraPosition: MapCameraPosition = .region(region)
     
-    LocationEditingMap(
+    TappedLocationMap(
         mapCameraPosition: .constant(mapCameraPosition),
         currentLocation: currentLocation,
         tappedLocation: .constant(nil)

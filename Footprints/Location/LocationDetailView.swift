@@ -46,7 +46,7 @@ struct LocationDetailView: View {
                         mapFeature: $mapFeature
                     )
                 case .anyLocation:
-                    LocationEditingMap(
+                    TappedLocationMap(
                         mapCameraPosition: $mapCameraPosition,
                         currentLocation: currentLocation,
                         tappedLocation: $tappedLocation
