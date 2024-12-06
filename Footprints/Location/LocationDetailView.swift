@@ -9,9 +9,11 @@ import MapKit
 import SwiftUI
 
 struct LocationDetailView: View {
+    @Environment(\.dismiss) var dismiss
     @State var currentLocation: CLLocationCoordinate2D
     @State var tappedLocation: Coordinate?
     @State var mapFeature: MapFeature?
+    @State var selectedMapItem: MKMapItem?
     @State var location: Location?
     @State var mapCameraPosition: MapCameraPosition = .automatic
     @State var isMapTappable: Bool = false
@@ -63,11 +65,15 @@ struct LocationDetailView: View {
                 }
             }
             .sheet(isPresented: $isMapItemSheetPresented) {
+                mapItem(selectedMapItem)
+                dismiss()
+            } content: {
                 if let mapFeature {
-                    MapItemDetail(mapFeature: mapFeature)
+                    MapItemDetail(mapFeature: mapFeature, mapItem: $selectedMapItem)
                         .mapDetailPresentationStyle()
                 }
             }
+    
             // MARK: View Updates
             .onAppear {
                 mapCameraPosition = MapCameraPosition.region(currentLocation.region)

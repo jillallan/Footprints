@@ -84,6 +84,10 @@ final class Step {
     convenience init(timestamp: Date = .now) {
         self.init(title: "New step", timestamp: timestamp, latitude: 0.0, longitude: 0.0, altitude: 0.0)
     }
+    
+    convenience init(title: String? = nil, timestamp: Date = .now, location: Location) {
+        self.init(title: title, timestamp: timestamp, latitude: location.latitude, longitude: location.longitude)
+    }
 }
 
 extension Step: Identifiable {}

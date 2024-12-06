@@ -63,27 +63,18 @@ struct TripDetailView: View {
             .toolbar {
                 Button("Add Step", systemImage: "plus") {
                     isAddStepViewPresented.toggle()
-                    
                 }
 //                .matchedTransitionSource(id: newStep.id, in: stepList)
             }
             
             .navigationDestination(for: Step.self) { step in
-                StepDetailView(
-                    step: step
-                )
+                StepDetailView(step: step)
             }
-//            .sheet(isPresented: $isAddStepViewPresented) {
-//                
-//            } content: {
-//                let newStep = Step(
-//                    title: "New Step",
-//                    latitude: 51.5094,
-//                    longitude: 0.0
-//                )
-//                StepDetailView(step: newStep, mapItem: newStep.mapItem)
-////                StepEditingView(step: newStep)
-//            }
+            .sheet(isPresented: $isAddStepViewPresented) {
+                
+            } content: {
+                AddStepView(trip: trip)
+            }
     }
     
     func getTimestamp(selectedStep: Step?) -> Date {

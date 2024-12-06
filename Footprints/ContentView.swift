@@ -19,7 +19,7 @@ struct ContentView: View {
                 TripView()
             }
             Tab(Tabs.steps.name, systemImage: Tabs.steps.symbol, value: .steps) {
-                Steps()
+                
             }
             Tab(Tabs.locations.name, systemImage: Tabs.locations.symbol, value: .locations) {
                 LocationView()

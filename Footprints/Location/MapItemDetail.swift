@@ -9,10 +9,11 @@ import MapKit
 import SwiftUI
 
 struct MapItemDetail: View {
+    @Environment(\.dismiss) var dismiss
     @State var loadingState: LoadingState = .loading
     @State private var locationService = LocationService()
     let mapFeature: MapFeature
-    @State private var mapItem: MKMapItem?
+    @Binding var mapItem: MKMapItem?
     @State var errorMessage: String?
     
     var body: some View {
@@ -34,6 +35,11 @@ struct MapItemDetail: View {
                 Text("Coordiantes")
             }
             
+            if loadingState == .success {
+                Button("Select location") {
+                    dismiss()
+                }
+            }
         }
         .navigationTitle("Location")
         .navigationBarTitleDisplayMode(.large)
