@@ -63,7 +63,6 @@ struct TripDetailView: View {
             .toolbar {
                 Button("Add Step", systemImage: "plus") {
                     isAddStepViewPresented.toggle()
-                    
                 }
 //                .matchedTransitionSource(id: newStep.id, in: stepList)
             }
@@ -74,13 +73,7 @@ struct TripDetailView: View {
             .sheet(isPresented: $isAddStepViewPresented) {
                 
             } content: {
-                let newStep = Step(
-                    title: "New Step",
-                    latitude: 51.5094,
-                    longitude: 0.0
-                )
-                StepDetailView(step: newStep)
-//                StepEditingView(step: newStep)
+                AddStepView(trip: trip)
             }
     }
     

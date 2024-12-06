@@ -13,10 +13,10 @@ struct StepRow: View {
     var body: some View {
         HStack {
 //            Image(systemName: "car")
-            Image(systemName: step.location?.locationCategory?.icon ?? "car")
+            Image(systemName: "car")
 //            step.location?.locationCategoryType?.icon
 //                .font(.title)
-                .foregroundStyle(step.location?.locationCategory?.color ?? Color.gray)
+                .foregroundStyle(Color.gray)
             VStack(alignment: .leading) {
                 Text(step.stepTitle)
                     .font(.headline)

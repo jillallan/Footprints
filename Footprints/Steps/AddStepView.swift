@@ -2,168 +2,80 @@
 //  AddStepView.swift
 //  Footprints
 //
-//  Created by Jill Allan on 06/10/2024.
+//  Created by Jill Allan on 06/12/2024.
 //
 
+import CoreLocation
 import MapKit
+import SwiftData
 import SwiftUI
 
-enum LoadingState {
-    case empty, loading, success, failed
-}
-
-
 struct AddStepView: View {
+    @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var modelContext
-    let trip: Trip
-    @Bindable var step: Step
-    @State var stepIsNotSet: Bool = true
-    @State var mapRegion = MapCameraPosition.automatic
-    @Environment(\.dismiss) private var dismiss
-    @State var date: Date = Date.now
-    @State var coordinate: CLLocationCoordinate2D
-    let locationService = LocationService()
-    @State private var loadingState = LoadingState.empty
-    @State var placemarkName: String = ""
-    @State var presentationDetents: PresentationDetent = .height(400)
-    @State var mapItem: MKMapItem?
+    @State private var isLocationDetailViewPresented: Bool = false
+    @State private var date: Date = .now
+    @State private var locationTitle: String = ""
+    @State private var selectedMapItem: MKMapItem?
+    @Bindable var trip: Trip
 
-   
     var body: some View {
-        MapReader { mapProxy in
-            Map(position: $mapRegion) {
-                if step.hasChanges {
-                    Annotation("", coordinate: step.coordinate) {
-                        DefaultStepMapAnnotation()
+        NavigationStack {
+            Form {
+                Button {
+                    isLocationDetailViewPresented.toggle()
+                } label: {
+                    Map {
+                        if let selectedMapItem {
+                            Marker(item: selectedMapItem)
+                        }
+                        
                     }
+                        .frame(height: 400)
                 }
-                if let mapItem {
-                    if let region = mapItem.placemark.region,
-                       let coordinate = mapItem.placemark.location?.coordinate {
-                        MapCircle(
-                            center: coordinate,
-                            radius: CLRegion.getRadius(from: region) ?? 0.0
-                        )
-                        .stroke(Color.accentColor, lineWidth: 25/10)
-                        .foregroundStyle(Color.clear)
-                    }
-                }
-            }
-            .onTapGesture { value in
-                if let coordinate = mapProxy.convert(value, from: .local) {
-
-                    step.latitude = coordinate.latitude
-                    step.longitude = coordinate.longitude
-                    step.timestamp = date
-                    let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-                    Task {
-                        await fetchPlacemark(for: location)
-                    }
-                    loadingState = .loading
-                    
-                    stepIsNotSet = false
-                }
-            }
-            .safeAreaInset(edge: .bottom) {
-                Color(.clear)
-                .frame(height: 400)
-            }
-            .onChange(of: date) {
-                step.timestamp = date
-            }
-            .onChange(of: mapItem) {
-                if let mapItem {
-                    mapRegion = MapCameraPosition.item(mapItem)
-                }
+                .buttonStyle(.plain)
                 
+                TextField("Location Name", text: $locationTitle)
+                DatePicker("Step Date", selection: $date, displayedComponents: [.date, .hourAndMinute])
+                if let selectedMapItem {
+                    Button("Add Step") {
+                        addStep(mapItem: selectedMapItem)
+                        dismiss()
+                    }
+                }
             }
-            
+            .navigationTitle("New Step")
+            .toolbarBackgroundVisibility(.hidden, for: .navigationBar)
+            .sheet(isPresented: $isLocationDetailViewPresented) {
+                // TODO: -
+            } content: {
+                LocationDetailView(currentLocation: CLLocationCoordinate2D.defaultCoordinate()) { mapItem in
+                    selectedMapItem = mapItem
+                    if locationTitle == "" {
+                        locationTitle = selectedMapItem?.name ?? "Unknown Location"
+                    }
+                }
+            }
         }
-        .onAppear {
-            mapRegion = MapCameraPosition.region(
-                MKCoordinateRegion(
-                    center: coordinate,
-                    span: MKCoordinateSpan.defaultSpan()
-                )
-            )
-//            Task {
-//                do {
-//                    if step.placemark == nil {
-//                        if let clPlacemark = try await locationService.fetchPlacemark(for: CLLocation(latitude: step.latitude, longitude: step.longitude)) {
-//                            let placemark = Placemark(title: clPlacemark.name ?? "", subtitle: clPlacemark.name ?? "", placemark: clPlacemark)
-//                            modelContext.insert(placemark)
-//                            placemark.steps.append(step)
-//                        }
-//                    }
-//                    
-//                    
-//                } catch {
-//                    
-//                }
-//            }
-        }
-        .navigationTitle(step.location?.name ?? "New step")
-#if !os(macOS)
-        .toolbarBackground(.hidden, for: .navigationBar)
+    }
+    
+    func addStep(mapItem: MKMapItem) {
+        let newLocation = Location(mapItem: mapItem)
+        modelContext.insert(newLocation)
+    
+        let newStep = Step(
+            title: locationTitle,
+            timestamp: date,
+            latitude: newLocation.latitude,
+            longitude: newLocation.longitude
+        )
+        modelContext.insert(newStep)
         
-    
-#elseif os(macOS)
-        .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
-        //        .navigationTransition(.automatic)
-#endif
-        .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                Button("back", systemImage: "chevron.left") {
-                    deleteStep()
-                    dismiss()
-                }
-            }
-        }
-        .sheet(isPresented: .constant(true)) {
-            
-        } content: {
-            EditStepForm(loadingState: .empty, placemarkName: placemarkName, date: date, mapItem: $mapItem, step: step)
-                .interactiveDismissDisabled()
-                .presentationDetents([.height(400), .large], selection: $presentationDetents)
-        }
-
-
-  
-    }
-    
-    func fetchPlacemark(for location: CLLocation) async {
-        do {
-            if let tempPlacemark = try await locationService.fetchPlacemark(for: location) {
-                let title  = "\(tempPlacemark.name ?? "No name"), \(tempPlacemark.locality ?? "No Locality")"
-                placemarkName = title
-                
-                loadingState = .success
-            } else {
-                loadingState = .failed
-            }
-            
-            
-        } catch {
-            print("Error fetching placemark: \(error)")
-            loadingState = .failed
-        }
-    }
-    
-    func deleteStep() {
-
-        if stepIsNotSet {
-            if let stepIndex = trip.steps.firstIndex(of: step) {
-                trip.steps.remove(at: stepIndex)
-            }
-            modelContext.delete(step)
-        }
+        newLocation.steps.append(newStep)
+        trip.steps.append(newStep)
     }
 }
 
 #Preview(traits: .previewData) {
-    NavigationStack {
-        AddStepView(trip: .bedminsterToBeijing, step: .atomium, coordinate: CLLocationCoordinate2D())
-    }
-    
+    AddStepView(trip: .anglesey)
 }

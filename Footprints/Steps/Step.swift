@@ -36,9 +36,20 @@ final class Step {
     var coordinate: CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
+    
+//    var mapItem: MKMapItem? {
+//        guard let data = location?.encodedMapItem else { return nil }
+//        guard let decodedMapItem = MKMapItem.decode(from: data) else { return nil }
+//    
+//        return decodedMapItem
+//    }
 
     var region: MKCoordinateRegion {
         return MKCoordinateRegion.calculateRegion(from: [coordinate], with: 1.5)
+    }
+    
+    var mapRegion: MapCameraPosition {
+        MapCameraPosition.region(region)
     }
     
     var regionZoomedOut: MKCoordinateRegion {
@@ -72,6 +83,10 @@ final class Step {
     ///   - timestamp: The time of the step, the defualt is the current time
     convenience init(timestamp: Date = .now) {
         self.init(title: "New step", timestamp: timestamp, latitude: 0.0, longitude: 0.0, altitude: 0.0)
+    }
+    
+    convenience init(title: String? = nil, timestamp: Date = .now, location: Location) {
+        self.init(title: title, timestamp: timestamp, latitude: location.latitude, longitude: location.longitude)
     }
 }
 

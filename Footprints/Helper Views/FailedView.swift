@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct FailedView: View {
+    let errorMessage: String
+    
     var body: some View {
-        Text("Failed.")
+        Text(errorMessage)
     }
 }
 
 #Preview {
-    FailedView()
+    FailedView(errorMessage: "Failed")
 }

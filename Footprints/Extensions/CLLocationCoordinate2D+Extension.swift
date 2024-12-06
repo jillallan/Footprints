@@ -8,6 +8,7 @@
 import CoreLocation
 import Foundation
 import MapKit
+import SwiftUI
 
 extension CLLocationCoordinate2D: Codable {
     public init(from decoder: Decoder) throws {
@@ -48,5 +49,22 @@ extension CLLocationCoordinate2D {
     func calculateRegion(metersSpan: Double) -> MKCoordinateRegion {
         return MKCoordinateRegion(center: self, latitudinalMeters: 50, longitudinalMeters: 50)
         
+    }
+}
+
+extension CLLocationCoordinate2D {
+    init(from coordinate: Coordinate) {
+        self.init(latitude: coordinate.latitude, longitude: coordinate.longitude)
+    }
+}
+
+extension CLLocationCoordinate2D {
+    var region: MKCoordinateRegion {
+        let Span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+        return MKCoordinateRegion(center: self, span: Span)
+    }
+    
+    var mapCameraPosition: MapCameraPosition {
+        MapCameraPosition.region(region)
     }
 }

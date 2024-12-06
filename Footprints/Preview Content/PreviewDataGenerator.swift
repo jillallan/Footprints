@@ -16,7 +16,7 @@ import SwiftUI
 /// The data is defined on an extension for each model
 struct PreviewDataGenerator {
     
-    let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: PreviewDataGenerator.self))
+    static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: PreviewDataGenerator.self))
 
     /// A helper function to generate the sample data
     /// - Parameter modelContext: The model context to use to generate the data
@@ -46,17 +46,20 @@ struct PreviewDataGenerator {
         
         let locationService = LocationService()
         
-        for step in steps {
+        steps.forEach { step in
             modelContext.insert(step)
             Trip.bedminsterToBeijing.steps.append(step)
-            do {
-                if let mapItem = try await locationService.findNearestMapItem(at: step.coordinate) {
-                    let location = Location(coordinate: step.coordinate, mapItem: mapItem.0, resultType: mapItem.1)
-                    print("location: \(location.debugDescription)")
-                    location.steps.append(step)
+        }
+        
+        
+        Task { @MainActor in
+            try await steps.concurrentForEach { step in
+                if let mapItem = try await locationService.fetchPointOfInterestMapItems(for: step.coordinate).first {
+                    logger.debug("map item data preview: \(mapItem.debugDescription)")
+                    let location = Location(mapItem: mapItem)
+                    modelContext.insert(location)
+                    step.location = location
                 }
-            } catch {
-                
             }
         }
     }

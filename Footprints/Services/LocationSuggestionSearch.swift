@@ -28,14 +28,18 @@ final class LocationSuggestionSearch: NSObject {
         completer.delegate = self
     }
     
-    func fetchLocationSuggestions(for query: String) async throws -> [LocationSuggestion] {
+    func fetchLocationSuggestions(for query: String, in region: MKCoordinateRegion? = nil) async throws -> [LocationSuggestion] {
         
         guard !query.isEmpty else {
             return []
         }
 
         completer.queryFragment = query
-     
+        if let region {
+            completer.region = region
+            searchLogging.debug("region: \(String(describing:region))")
+        }
+        
         for try await searchCompletions in stream {
             let locationSuggestions = searchCompletions.map { searchCompletion in
                 LocationSuggestion(title: searchCompletion.title, subtitle: searchCompletion.subtitle)
