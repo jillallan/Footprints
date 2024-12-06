@@ -33,9 +33,9 @@ struct EditStepForm: View {
         NavigationStack {
             Form {
                 switch loadingState {
-                case .loading: LoadingView()
+                case .loading: LoadingView(message: "Fetching location details...")
                 case .success: SuccessView()
-                case .failed: FailedView()
+                case .failed: FailedView(errorMessage: "Failed")
                 }
                 DatePicker("Step Date", selection: $date, displayedComponents: [.date, .hourAndMinute])
             }

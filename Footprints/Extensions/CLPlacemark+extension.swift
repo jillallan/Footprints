@@ -8,6 +8,16 @@
 import CoreLocation
 import Foundation
 
+enum PlaceType: String {
+    case road
+    case other
+    case lake
+    case river
+    case stream
+    case pond
+    case inlandWater
+}
+
 extension CLPlacemark {
     var firstLineOfAddress: String? {
         if let subThoroughfare,
@@ -103,10 +113,27 @@ extension CLPlacemark {
         }
     }
     
-    var placemarkType: String {
-        if subThoroughfare == nil && thoroughfare == nil && subLocality == nil && locality != nil {
-            return "city"
+    var placemarkType: PlaceType {
+        if subThoroughfare == nil && thoroughfare != nil {
+            return .road
         }
-        return "None"
+        if let inlandWater {
+            if inlandWater.lowercased().contains("lake") {
+                return .lake
+            } else if inlandWater.lowercased().contains("river") {
+                return .river
+            } else if inlandWater.lowercased().contains("stream") {
+                return .stream
+            } else if inlandWater.lowercased().contains("pond") {
+                return .pond
+            }
+            else {
+                return .inlandWater
+            }
+        }
+//        if subThoroughfare == nil && thoroughfare == nil && subLocality == nil && locality != nil {
+//            return "city"
+//        }
+        return .other
     }
 }

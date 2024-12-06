@@ -21,11 +21,14 @@ struct ContentView: View {
             Tab(Tabs.steps.name, systemImage: Tabs.steps.symbol, value: .steps) {
                 Steps()
             }
+            Tab(Tabs.locations.name, systemImage: Tabs.locations.symbol, value: .locations) {
+                LocationView()
+            }
         }
         .tabViewStyle(.sidebarAdaptable)
     }
 }
 
-#Preview(traits: .previewData) {
+#Preview(traits: .previewData, .previewNavigation) {
     ContentView()
 }

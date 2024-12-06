@@ -70,8 +70,7 @@ struct TripDetailView: View {
             
             .navigationDestination(for: Step.self) { step in
                 StepDetailView(
-                    step: step,
-                    mapItem: step.mapItem
+                    step: step
                 )
             }
 //            .sheet(isPresented: $isAddStepViewPresented) {

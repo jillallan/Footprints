@@ -37,13 +37,12 @@ final class Step {
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
     
-    var mapItem: MKMapItem {
-        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate))
-        guard let data = location?.encodedMapItem else { return mapItem }
-        guard let decodedMapItem = MKMapItem.decode(from: data) else { return mapItem }
-    
-        return decodedMapItem
-    }
+//    var mapItem: MKMapItem? {
+//        guard let data = location?.encodedMapItem else { return nil }
+//        guard let decodedMapItem = MKMapItem.decode(from: data) else { return nil }
+//    
+//        return decodedMapItem
+//    }
 
     var region: MKCoordinateRegion {
         return MKCoordinateRegion.calculateRegion(from: [coordinate], with: 1.5)

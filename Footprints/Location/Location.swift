@@ -37,10 +37,9 @@ final class Location {
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
     
-    var mapItem: MKMapItem {
-        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate))
-        guard let data = encodedMapItem else { return mapItem }
-        guard let decodedMapItem = MKMapItem.decode(from: data) else { return mapItem }
+    var mapItem: MKMapItem? {
+        guard let data = encodedMapItem else { return nil }
+        guard let decodedMapItem = MKMapItem.decode(from: data) else { return nil }
     
         return decodedMapItem
     }
@@ -84,6 +83,20 @@ final class Location {
             name: mapItem.name ?? "Unknown Location",
             latitude: mapItem.placemark.coordinate.latitude,
             longitude: mapItem.placemark.coordinate.longitude,
+            radius: radius,
+            encodedMapItem: data
+        )
+    }
+    
+    convenience init(placemark: MKPlacemark) {
+        let mapItem = MKMapItem(placemark: placemark)
+        let radius = placemark.region?.getRadius() ?? 0.0
+        let data = mapItem.encode() ?? Data()
+        
+        self.init(
+            name: placemark.name ?? "Unknown Location",
+            latitude: placemark.coordinate.latitude,
+            longitude: placemark.coordinate.longitude,
             radius: radius,
             encodedMapItem: data
         )

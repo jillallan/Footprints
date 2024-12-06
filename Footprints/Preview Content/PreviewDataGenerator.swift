@@ -16,7 +16,7 @@ import SwiftUI
 /// The data is defined on an extension for each model
 struct PreviewDataGenerator {
     
-    let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: PreviewDataGenerator.self))
+    static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: PreviewDataGenerator.self))
 
     /// A helper function to generate the sample data
     /// - Parameter modelContext: The model context to use to generate the data
@@ -34,33 +34,31 @@ struct PreviewDataGenerator {
             Step.bedminsterStation,
             Step.templeMeads,
             Step.paddington,
-//            Step.stPancras,
-//            Step.brusselsMidi,
-//            Step.grandPlace,
-//            Step.atomium,
-//            Step.cologne,
-//            Step.warsaw,
-//            Step.everestBaseCamp,
-//            Step.statueOfLiberty
+            Step.stPancras,
+            Step.brusselsMidi,
+            Step.grandPlace,
+            Step.atomium,
+            Step.cologne,
+            Step.warsaw,
+            Step.everestBaseCamp,
+            Step.statueOfLiberty
         ]
         
         let locationService = LocationService()
         
-        for step in steps {
+        steps.forEach { step in
             modelContext.insert(step)
             Trip.bedminsterToBeijing.steps.append(step)
-            
-            Task {
-                do {
-                    if let mapItem = try await locationService.findNearestMapItem(at: step.coordinate)?.0 {
-                        let location = Location(mapItem: mapItem)
-                        modelContext.insert(location)
-                        step.location = location
-                        print(String(describing: step.mapItem.name))
-                        print(location.debugDescription)
-                    }
-                } catch {
-                    
+        }
+        
+        
+        Task { @MainActor in
+            try await steps.concurrentForEach { step in
+                if let mapItem = try await locationService.fetchPointOfInterestMapItems(for: step.coordinate).first {
+                    logger.debug("map item data preview: \(mapItem.debugDescription)")
+                    let location = Location(mapItem: mapItem)
+                    modelContext.insert(location)
+                    step.location = location
                 }
             }
         }
@@ -72,5 +70,4 @@ struct PreviewDataGenerator {
         let randomInt = Int.random(in: 0...2)
         return images[randomInt]
     }
-
 }

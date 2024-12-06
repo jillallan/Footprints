@@ -12,6 +12,7 @@ struct StepDetailView: View {
     @Environment(\.modelContext) private var modelContext
     @Bindable var step: Step
     @State private var isEditLocationViewPresented: Bool = false
+//    @State private var location: Location?
     
     var body: some View {
         ScrollView {
@@ -39,24 +40,21 @@ struct StepDetailView: View {
         .sheet(isPresented: $isEditLocationViewPresented) {
             // TODO: -
         } content: {
-            if let location = step.location {
-                EditLocationView(location: location) { locationID in
-                    if let location = modelContext.model(for: locationID) as? Location {
-                        step.location = location
-                    }
-                }
+            LocationDetailView(currentLocation: step.coordinate) { location in
+                
             }
+        
+//            EditLocationView(mapItem: step.location?.mapItem) { locationID in
+//                guard let locationID else { return }
+//                if let location = modelContext.model(for: locationID) as? Location {
+//                    step.location = location
+//                }
+//            }
         }
     }
     
-    func fetchMapItem(for identifier: String) async -> MKMapItem? {
-        var mapItem: MKMapItem? = nil
-        do {
-            mapItem = try await locationService.fetchMapItem(for: identifier)
-        } catch {
-            
-        }
-        return mapItem
+    func addToStep(location: Location) {
+        location.steps.append(step)
     }
 }
 

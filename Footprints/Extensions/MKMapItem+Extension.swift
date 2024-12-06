@@ -22,4 +22,11 @@ extension MKMapItem {
         }
         return unarchivedObject
     }
+    
+    func contains(coordinate: CLLocationCoordinate2D) -> Bool {
+        let region = self.placemark.region
+        guard let radius = region?.getRadius() else { return false }
+        let circularRegion = CLCircularRegion(center: coordinate, radius: radius, identifier: "mapItemRegion")
+        return circularRegion.contains(coordinate)
+    }
 }
