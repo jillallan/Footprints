@@ -12,7 +12,7 @@ import SwiftUI
 struct MapFeatureMap: View {
     private let logger = Logger(
         subsystem: Bundle.main.bundleIdentifier!,
-        category: String(describing: EditLocationView.self)
+        category: String(describing: MapFeatureMap.self)
     )
     
     @Binding var mapCameraPosition: MapCameraPosition

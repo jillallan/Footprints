@@ -18,6 +18,7 @@ struct LocationDetailView: View {
     @State var mapCameraPosition: MapCameraPosition = .automatic
     @State private var isPlacemarkSheetPresented: Bool = false
     @State private var isMapItemSheetPresented: Bool = false
+    @State private var isSearchSuggestionSheetPresented: Bool = false
     let mapItem: (MKMapItem?) -> Void
     
     enum MapType: String, CaseIterable, Identifiable {
@@ -26,6 +27,12 @@ struct LocationDetailView: View {
     }
 
     @State private var selectedMap: MapType = .mapFeatures
+    
+    // MARK: - Search Properties
+    @State private var locationSuggestionSearch = LocationSuggestionSearch()
+    @State private var locationSuggestions: [LocationSuggestion] = []
+    @State private var selectedLocationSuggestion: LocationSuggestion?
+    @State private var searchQuery: String = ""
     
     var safeAreaInset: Double {
         if isPlacemarkSheetPresented || isMapItemSheetPresented {
@@ -65,6 +72,17 @@ struct LocationDetailView: View {
                 Color.clear
                     .frame(height: safeAreaInset)
             }
+            .searchable(text: $searchQuery, prompt: "Search for a location")
+            .searchSuggestions {
+                ForEach(locationSuggestions) { suggestion in
+                    Button {
+                        selectedLocationSuggestion = suggestion
+                    } label: {
+                        LocationSuggestionRow(locationSuggestion: suggestion)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
             // MARK: Navigation
             .navigationTitle("Location Details")
             .toolbarBackground(.hidden, for: .navigationBar)
@@ -94,6 +112,19 @@ struct LocationDetailView: View {
                     .mapDetailPresentationStyle()
                 }
             }
+            .sheet(isPresented: $isSearchSuggestionSheetPresented, onDismiss: {
+                mapItem(selectedMapItem)
+                dismiss()
+            }, content: {
+                if let selectedLocationSuggestion {
+                    SearchSuggestionDetail(
+                        searchSuggestion: selectedLocationSuggestion,
+                        mapItem: $selectedMapItem
+                    )
+                    .mapDetailPresentationStyle()
+                }
+            })
+
     
             // MARK: View Updates
             .onAppear {
@@ -108,7 +139,23 @@ struct LocationDetailView: View {
             .onChange(of: selectedMap) {
                 isMapItemSheetPresented = false
                 isPlacemarkSheetPresented = false
+                isSearchSuggestionSheetPresented = false
             }
+            .onChange(of: searchQuery) {
+                Task { await updateSearchResults() }
+            }
+            .onChange(of: selectedLocationSuggestion) {
+                isSearchSuggestionSheetPresented = true
+            }
+        }
+    }
+    
+    func updateSearchResults() async {
+        let region = MKCoordinateRegion.defaultRegion()
+        do {
+            locationSuggestions = try await locationSuggestionSearch.fetchLocationSuggestions(for: searchQuery, in: region)
+        } catch {
+//             logger.error("Failed to fetch search results: \(error.localizedDescription)")
         }
     }
 }
