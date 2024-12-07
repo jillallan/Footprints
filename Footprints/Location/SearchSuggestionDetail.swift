@@ -1,18 +1,18 @@
 //
-//  MapItemDetail.swift
+//  SearchSuggestionDetail.swift
 //  Footprints
 //
-//  Created by Jill Allan on 22/11/2024.
+//  Created by Jill Allan on 07/12/2024.
 //
 
 import MapKit
 import SwiftUI
 
-struct MapItemDetail: View {
+struct SearchSuggestionDetail: View {
     @Environment(\.dismiss) var dismiss
-    @State var loadingState: LoadingState = .loading
     @State private var locationService = LocationService()
-    let mapFeature: MapFeature
+    @State var loadingState: LoadingState = .loading
+    let searchSuggestion: LocationSuggestion
     @Binding var mapItem: MKMapItem?
     @State var errorMessage: String?
     
@@ -30,7 +30,7 @@ struct MapItemDetail: View {
             }
             
             Section {
-                Text(Coordinate(from: mapFeature.coordinate).coordinateString)
+//                Text(Coordinate(from: mapFeature.coordinate).coordinateString)
             } header: {
                 Text("Coordiantes")
             }
@@ -41,11 +41,9 @@ struct MapItemDetail: View {
                 }
             }
         }
-        .navigationTitle("Location")
-        .navigationBarTitleDisplayMode(.large)
         .onAppear {
             Task {
-                let result = await fetchMapItem(for: mapFeature)
+                let result = await fetchMapItem(for: searchSuggestion)
                 switch result {
                     case .success(let mapItem):
                     self.mapItem = mapItem
@@ -56,9 +54,9 @@ struct MapItemDetail: View {
                 }
             }
         }
-        .onChange(of: mapFeature) {
+        .onChange(of: searchSuggestion) {
             Task {
-                let result = await fetchMapItem(for: mapFeature)
+                let result = await fetchMapItem(for: searchSuggestion)
                 switch result {
                     case .success(let mapItem):
                     self.mapItem = mapItem
@@ -69,12 +67,13 @@ struct MapItemDetail: View {
                 }
             }
         }
-
     }
-    
-    func fetchMapItem(for mapFeature: MapFeature) async -> Result<MKMapItem, Error> {
+    func fetchMapItem(for locationSuggestion: LocationSuggestion?) async -> Result<MKMapItem, Error> {
+        guard let searchQuery = locationSuggestion?.mapItemSearchTerm else {
+            return .failure(Error.self as! Error)
+        }
         do {
-            if let mapItem = try await locationService.fetchMapItem(for: mapFeature) {
+            if let mapItem = try await locationService.fetchMapItems(for: searchQuery).first {
                 return .success(mapItem)
             } else {
                 return .failure(Error.self as! Error)
@@ -86,5 +85,5 @@ struct MapItemDetail: View {
 }
 
 //#Preview {
-//    MapItemDetail()
+//    SearchSuggestionDetail()
 //}
