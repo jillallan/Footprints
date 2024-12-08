@@ -65,14 +65,10 @@ struct LocationDetailView: View {
             }
             .searchable(text: $searchQuery, prompt: "Search for a location")
             .searchSuggestions {
-                ForEach(locationSuggestions) { suggestion in
-                    Button {
-                        selectedLocationSuggestion = suggestion
-                    } label: {
-                        LocationSuggestionRow(locationSuggestion: suggestion)
-                    }
-                    .buttonStyle(.plain)
-                }
+                SearchSuggestionsList(
+                    locationSuggestions: $locationSuggestions,
+                    selectedLocationSuggestion: $selectedLocationSuggestion
+                )
             }
             // MARK: Navigation
             .navigationTitle("Location Details")
