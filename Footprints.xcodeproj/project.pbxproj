@@ -38,28 +38,16 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
-				Location/TappedLocationMap.swift,
 			);
 			target = 786B175D2C664E570097C3E3 /* Footprints */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		78D97AA32D046D5400FEEFDD /* Exceptions for "Footprints" folder in "Copy Bundle Resources" phase from "Footprints" target */ = {
-			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
-			buildPhase = 786B175C2C664E570097C3E3 /* Resources */;
-			membershipExceptions = (
-				Location/TappedLocationMap.swift,
-			);
-		};
-/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		786B17602C664E570097C3E3 /* Footprints */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				786B17842C664E590097C3E3 /* Exceptions for "Footprints" folder in "Footprints" target */,
-				78D97AA32D046D5400FEEFDD /* Exceptions for "Footprints" folder in "Copy Bundle Resources" phase from "Footprints" target */,
 			);
 			path = Footprints;
 			sourceTree = "<group>";

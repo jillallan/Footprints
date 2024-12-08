@@ -15,6 +15,7 @@ struct SearchSuggestionDetail: View {
     let searchSuggestion: LocationSuggestion
     @Binding var mapItem: MKMapItem?
     @State var errorMessage: String?
+    @Binding var isMapItemSelected: Bool
     
     var body: some View {
         List {
@@ -37,6 +38,7 @@ struct SearchSuggestionDetail: View {
             
             if loadingState == .success {
                 Button("Select location") {
+                    isMapItemSelected = true
                     dismiss()
                 }
             }
