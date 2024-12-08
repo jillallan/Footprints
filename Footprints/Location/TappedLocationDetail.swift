@@ -15,6 +15,7 @@ struct TappedLocationDetail: View {
     @State var loadingState: LoadingState = .loading
     @Binding var mapItem: MKMapItem?
     @State var errorMessage: String?
+    @Binding var isMapItemSelected: Bool
     
     var body: some View {
         List {
@@ -37,6 +38,7 @@ struct TappedLocationDetail: View {
             
             if loadingState == .success {
                 Button("Select location") {
+                    isMapItemSelected = true
                     dismiss()
                 }
             }
@@ -102,7 +104,7 @@ struct TappedLocationDetail: View {
     let coordinate = Coordinate(latitude: 51.5, longitude: -2.45)
     
     NavigationStack {
-        TappedLocationDetail(coordinate: coordinate, loadingState: .loading, mapItem: .constant(nil))
+        TappedLocationDetail(coordinate: coordinate, loadingState: .loading, mapItem: .constant(nil), isMapItemSelected: .constant(false))
     }
 }
 
@@ -110,7 +112,7 @@ struct TappedLocationDetail: View {
     let coordinate = Coordinate(latitude: 51.5, longitude: -2.45)
     
     NavigationStack {
-        TappedLocationDetail(coordinate: coordinate, loadingState: .failed, mapItem: .constant(nil))
+        TappedLocationDetail(coordinate: coordinate, loadingState: .failed, mapItem: .constant(nil), isMapItemSelected: .constant(false))
     }
 }
 
@@ -120,6 +122,6 @@ struct TappedLocationDetail: View {
     let mapItem = MKMapItem(placemark: placemark)
     
     NavigationStack {
-        TappedLocationDetail(coordinate: coordinate, loadingState: .success, mapItem: .constant(mapItem))
+        TappedLocationDetail(coordinate: coordinate, loadingState: .success, mapItem: .constant(mapItem), isMapItemSelected: .constant(false))
     }
 }

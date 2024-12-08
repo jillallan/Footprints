@@ -19,6 +19,7 @@ struct LocationDetailView: View {
     @State private var isPlacemarkSheetPresented: Bool = false
     @State private var isMapItemSheetPresented: Bool = false
     @State private var isSearchSuggestionSheetPresented: Bool = false
+    @State private var isMapItemSelected: Bool = false
     let mapItem: (MKMapItem?) -> Void
     
     enum MapType: String, CaseIterable, Identifiable {
@@ -89,37 +90,46 @@ struct LocationDetailView: View {
             
             // Is sheet(isPresented) used here instead of sheet(item) otherwise when the item changes the view is dismissed rather than updated
             .sheet(isPresented: $isPlacemarkSheetPresented) {
-                mapItem(selectedMapItem)
-                dismiss()
+                if isMapItemSelected {
+                    mapItem(selectedMapItem)
+                    dismiss()
+                }
             } content: {
                 if let tappedLocation {
                     TappedLocationDetail(
                         coordinate: tappedLocation,
-                        mapItem: $selectedMapItem
+                        mapItem: $selectedMapItem,
+                        isMapItemSelected: $isMapItemSelected
                     )
                     .mapDetailPresentationStyle()
                 }
             }
             .sheet(isPresented: $isMapItemSheetPresented) {
-                mapItem(selectedMapItem)
-                dismiss()
+                if isMapItemSelected {
+                    mapItem(selectedMapItem)
+                    dismiss()
+                }
             } content: {
                 if let mapFeature {
                     MapFeatureDetail(
                         mapFeature: mapFeature,
-                        mapItem: $selectedMapItem
+                        mapItem: $selectedMapItem,
+                        isMapItemSelected: $isMapItemSelected
                     )
                     .mapDetailPresentationStyle()
                 }
             }
             .sheet(isPresented: $isSearchSuggestionSheetPresented, onDismiss: {
-                mapItem(selectedMapItem)
-                dismiss()
+                if isMapItemSelected {
+                    mapItem(selectedMapItem)
+                    dismiss()
+                }
             }, content: {
                 if let selectedLocationSuggestion {
                     SearchSuggestionDetail(
                         searchSuggestion: selectedLocationSuggestion,
-                        mapItem: $selectedMapItem
+                        mapItem: $selectedMapItem,
+                        isMapItemSelected: $isMapItemSelected
                     )
                     .mapDetailPresentationStyle()
                 }
@@ -136,6 +146,9 @@ struct LocationDetailView: View {
             .onChange(of: mapFeature) {
                 isMapItemSheetPresented = true
             }
+            .onChange(of: selectedLocationSuggestion) {
+                isSearchSuggestionSheetPresented = true
+            }
             .onChange(of: selectedMap) {
                 isMapItemSheetPresented = false
                 isPlacemarkSheetPresented = false
@@ -143,9 +156,6 @@ struct LocationDetailView: View {
             }
             .onChange(of: searchQuery) {
                 Task { await updateSearchResults() }
-            }
-            .onChange(of: selectedLocationSuggestion) {
-                isSearchSuggestionSheetPresented = true
             }
         }
     }
