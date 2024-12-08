@@ -21,11 +21,6 @@ struct LocationDetailView: View {
     @State private var isSearchSuggestionSheetPresented: Bool = false
     @State private var isMapItemSelected: Bool = false
     let mapItem: (MKMapItem?) -> Void
-    
-    enum MapType: String, CaseIterable, Identifiable {
-        case mapFeatures, anyLocation
-        var id: Self { self }
-    }
 
     @State private var selectedMap: MapType = .mapFeatures
     
@@ -62,12 +57,7 @@ struct LocationDetailView: View {
                 }
             }
             .overlay(alignment: .top) {
-                Picker("Map Type", selection: $selectedMap) {
-                    Text("Map Features").tag(MapType.mapFeatures)
-                    Text("Any Location").tag(MapType.anyLocation)
-                }
-                .pickerStyle(.segmented)
-                .padding(.horizontal)
+                MapPicker(selectedMap: $selectedMap)
             }
             .safeAreaInset(edge: .bottom) {
                 Color.clear
